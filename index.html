@@ -188,11 +188,16 @@
   #hud.side-right{ flex-direction:row-reverse; }
   #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-avatar{
-    width:80px; height:80px;
+    width:100px; height:100px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative; pointer-events:all;
   }
-  #hud-avatar svg.bird{ width:72px; height:72px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.25)); }
+  #hud-avatar video.bird{
+    width:100px; height:100px; object-fit:contain;
+    mix-blend-mode:multiply;
+    filter:drop-shadow(0 4px 10px rgba(58,46,34,0.2));
+  }
+  #hud-avatar svg.bird{ display:none; }
   #hud-branch{
     position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
     width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
@@ -473,6 +478,7 @@
       <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
       <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
     </svg>
+    <video class="bird" src="hudhud.mp4" autoplay loop muted playsinline></video>
     <svg class="bird" viewBox="0 0 48 48" fill="none">
       <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
       <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
