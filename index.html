@@ -216,15 +216,21 @@
   footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
-  /* ================= HUD-HUD, THE GUIDE ================= */
-  #hud{ position:fixed; z-index:80; width:80px; height:80px; pointer-events:none; }
+  /* ================= HUD-HUD, THE GUIDE — pinned to the side, out of the way ================= */
+  #hud{
+    position:fixed; z-index:80; width:74px; height:74px;
+    left:16px; bottom:22px; pointer-events:none;
+    transition:opacity 0.4s ease, transform 0.4s ease;
+  }
   #hud.hidden{ display:none; }
+  #hud.dismissed{ opacity:0; transform:translateX(-16px) scale(0.9); pointer-events:none; }
   #hud-avatar{
     width:100%; height:100%;
     display:flex; align-items:center; justify-content:center;
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative;
+    pointer-events:all;
   }
-  #hud-avatar svg.bird{ width:74px; height:74px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.22)); }
+  #hud-avatar svg.bird{ width:68px; height:68px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.22)); }
   #hud-branch{
     position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
     width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
@@ -237,13 +243,38 @@
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
+
+  /* small close button, top-right of the bird */
+  #hud-close{
+    position:absolute; top:-4px; right:-4px; width:20px; height:20px; border-radius:50%;
+    background:rgba(255,252,247,0.95); border:1px solid var(--gold-soft); color:var(--ink-soft);
+    font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; pointer-events:all; opacity:0; transition:opacity 0.25s ease;
+  }
+  #hud-avatar:hover #hud-close, #hud-close:focus{ opacity:1; }
+  @media(max-width:640px){ #hud-close{ opacity:0.85; } }
+
+  /* small tab to bring him back once dismissed */
+  #hud-revive{
+    position:fixed; left:14px; bottom:20px; z-index:80;
+    width:40px; height:40px; border-radius:50%;
+    background:rgba(255,252,247,0.95); border:1.2px solid var(--gold-soft);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    box-shadow:0 3px 12px rgba(58,46,34,0.15);
+    opacity:0; transform:scale(0.8); pointer-events:none;
+    transition:opacity 0.35s ease, transform 0.35s ease;
+  }
+  #hud-revive svg{ width:24px; height:24px; }
+  #hud-revive.show{ opacity:1; transform:scale(1); pointer-events:all; }
+
   @media(max-width:640px){
-    #hud{ width:58px; height:58px; }
+    #hud{ width:56px; height:56px; left:10px; bottom:16px; }
     #hud-avatar svg.bird{ width:50px; height:50px; }
     #hud-branch{ width:66px; bottom:-9px; }
+    #hud-revive{ left:10px; bottom:16px; width:36px; height:36px; }
   }
 
-  /* ── speech bubble — anchored to bird, flips side ── */
+  /* ── speech bubble — anchored to bird, always opens rightward ── */
   #hud-bubble{
     position:absolute; bottom:calc(100% + 8px); left:calc(100% - 18px);
     width:max-content; max-width:230px;
@@ -255,14 +286,10 @@
     opacity:0; transform:translateY(6px) scale(0.96); transform-origin:bottom left;
     transition:opacity 0.45s ease, transform 0.45s cubic-bezier(0.34,1.4,0.64,1);
   }
-  #hud.side-right #hud-bubble{
-    left:auto; right:calc(100% - 18px);
-    border-radius:14px 14px 3px 14px; transform-origin:bottom right;
-  }
   #hud-bubble.visible{ opacity:1; transform:translateY(0) scale(1); }
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:19px; color:var(--gold); line-height:1.2; margin-bottom:2px; }
   @media(max-width:640px){
-    #hud-bubble{ font-size:13.5px; padding:8px 12px; max-width:min(200px, calc(100vw - 90px)); }
+    #hud-bubble{ font-size:13.5px; padding:8px 12px; max-width:min(200px, calc(100vw - 80px)); }
     .who{ font-size:16px; }
   }
 
@@ -872,12 +899,22 @@
       <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
     </svg>
+    <button id="hud-close" aria-label="Hide Hud-hud" title="Hide Hud-hud">&times;</button>
   </div>
   <div id="hud-bubble">
     <span class="who">Hud-hud</span>
     <span id="hud-text"></span>
   </div>
 </div>
+
+<button id="hud-revive" aria-label="Bring back Hud-hud" title="Bring back Hud-hud">
+  <svg viewBox="0 0 48 48" fill="none">
+    <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
+    <path d="M8 24 C 4 18, 6 10, 12 8 C 10 13, 11 18, 14 21 Z" fill="#B8912F"/>
+    <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
+    <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
+  </svg>
+</button>
 
 </div><!-- /#site -->
 
@@ -1067,127 +1104,52 @@
   function initHud(){
     const hud = document.getElementById('hud');
     const branch = document.getElementById('hud-branch');
-    hud.classList.remove('hidden');
+    const closeBtn = document.getElementById('hud-close');
+    const reviveBtn = document.getElementById('hud-revive');
 
-    // Greet from the left, clear of the hero text
-    let hudX = Math.max(12, window.innerWidth * 0.12);
-    let hudY = window.innerHeight * 0.3;
-    hud.style.left = hudX + 'px';
-    hud.style.top  = hudY + 'px';
-
-    function perch(){ hud.classList.remove('flying'); hud.classList.add('perched'); branch.style.opacity='1'; }
-    function unperch(){ hideBubble(); hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; }
-    function setSide(){ hud.classList.toggle('side-right', hudX > window.innerWidth/2); }
-
-    let flightId = 0;   // lets a new flight cleanly interrupt an old one
-
-    function flyTo(tx, ty, onDone){
-      const myId = ++flightId;
-      const sx=hudX, sy=hudY;
-      const dist = Math.sqrt((tx-sx)**2+(ty-sy)**2);
-      if(dist < 4){ setSide(); perch(); if(onDone) onDone(); return; }
-      // graceful but not sluggish
-      const duration = Math.min(2600, Math.max(1200, dist * 1.6));
-      const t0 = performance.now();
-      unperch();
-      function step(now){
-        if(myId !== flightId) return;   // superseded by a newer flight
-        const raw = Math.min((now-t0)/duration, 1);
-        const ease = raw<0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
-        const arc = Math.sin(Math.PI*raw) * -Math.min(90, dist*0.28);
-        hudX = sx+(tx-sx)*ease; hudY = sy+(ty-sy)*ease+arc;
-        hud.style.left = hudX+'px'; hud.style.top = hudY+'px';
-        hud.style.transform = 'rotate('+(( tx>sx?10:-10)*Math.sin(Math.PI*raw))+'deg)';
-        if(raw<1){ requestAnimationFrame(step); }
-        else{
-          hudX=tx; hudY=ty;
-          hud.style.left=tx+'px'; hud.style.top=ty+'px';
-          hud.style.transform='';
-          setSide(); perch();
-          if(onDone) onDone();
-        }
-      }
-      requestAnimationFrame(step);
+    // Dismissed for the session? Stay hidden, show only the little revive tab.
+    if(sessionStorage.getItem('hudDismissed') === '1'){
+      hud.classList.add('dismissed');
+      reviveBtn.classList.add('show');
+    } else {
+      hud.classList.remove('hidden');
     }
+    branch.style.opacity = '1';
+    hud.classList.add('perched');
 
-    // Clamp a position to keep the bird fully on-screen and below the nav
-    function clamp(tx, ty){
-      const birdW = 90, birdH = 90;
-      const nav = document.querySelector('nav');
-      const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
-      tx = Math.max(8, Math.min(tx, window.innerWidth - birdW - 8));
-      ty = Math.max(navBottom + 10, Math.min(ty, window.innerHeight - birdH - 8));
-      return [tx, ty];
-    }
+    closeBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      hideBubble();
+      if(cycleTimer) clearTimeout(cycleTimer);
+      hud.classList.add('dismissed');
+      reviveBtn.classList.add('show');
+      sessionStorage.setItem('hudDismissed', '1');
+    });
+    reviveBtn.addEventListener('click', function(){
+      hud.classList.remove('hidden', 'dismissed');
+      reviveBtn.classList.remove('show');
+      sessionStorage.removeItem('hudDismissed');
+      cycleKey = null;
+      if(currentKey) cycle(currentKey);
+      else say(hudLines.greeting);
+    });
 
-    // Fly to the + toggle button of a card — offset LEFT so bird doesn't cover the button
-    function flyToToggle(toggleBtn, onDone){
-      const r = toggleBtn.getBoundingClientRect();
-      let tx = r.left - 80;   // land to the LEFT of the button
-      let ty = r.top - 30;
-      [tx, ty] = clamp(tx, ty);
-      flyTo(tx, ty, onDone);
-    }
-    // Fly to top-right corner of an open card
-    function flyToCardTop(wrap, onDone){
-      const r = wrap.getBoundingClientRect();
-      let tx = r.right - 110;
-      let ty = r.top + 14;
-      [tx, ty] = clamp(tx, ty);
-      flyTo(tx, ty, onDone);
-    }
-    // Fly to a section without a toggle (registry, rsvp, venue)
-    function flyToSection(section, onDone){
-      const r = section.getBoundingClientRect();
-      let tx = r.left + r.width * 0.72;
-      let ty = r.top + 20;
-      [tx, ty] = clamp(tx, ty);
-      flyTo(tx, ty, onDone);
-    }
-
-    let currentKey = null;   // which section Hud-hud is currently attending
+    let currentKey = null;   // which section the guest is currently reading
 
     function visitSection(section){
       const key = section.getAttribute('data-hud-key');
       if(!key || key === currentKey) return;
       currentKey = key;
-      const wrap = section.querySelector('.wrap');
-      const toggle = section.querySelector('.card-toggle');
-      const speak = function(){ setTimeout(function(){ cycle(key); }, 350); };
-      if(wrap && wrap.classList.contains('open')){
-        flyToCardTop(wrap, speak);
-      } else if(toggle){
-        flyToToggle(toggle, speak);
-      } else {
-        flyToSection(section, speak);
-      }
+      if(hud.classList.contains('dismissed')) return;   // stay quiet if closed
+      cycle(key);
     }
 
-    // React to card toggles — class management lives in the standalone listener
-    document.querySelectorAll('.card-toggle').forEach(function(btn){
-      const wrap = btn.closest('.wrap');
-      const section = btn.closest('section');
-      const key = section ? section.getAttribute('data-hud-key') : null;
+    // Greeting once, from his fixed corner spot
+    setTimeout(function(){
+      if(!hud.classList.contains('dismissed')) say(hudLines.greeting);
+    }, 700);
 
-      btn.addEventListener('click', function(){
-        if(key) currentKey = key;
-        setTimeout(function(){
-          if(wrap.classList.contains('open')){
-            flyToCardTop(wrap, function(){
-              if(key) setTimeout(function(){ cycle(key); }, 300);
-            });
-          } else {
-            flyToToggle(btn);
-          }
-        }, 60);
-      });
-    });
-
-    // Greeting centre-stage, off to the side of the hero text
-    setSide(); perch();
-    setTimeout(function(){ say(hudLines.greeting); }, 700);
-
-    // Hud-hud follows your scrolling — every section, not just some
+    // Bubble updates with the section as you scroll — he never moves or covers content
     const secObs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting && e.intersectionRatio >= 0.4) visitSection(e.target);
