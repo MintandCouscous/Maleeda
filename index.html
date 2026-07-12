@@ -245,16 +245,20 @@
 
   /* ── speech bubble ── */
   #hud-bubble{
-    max-width:260px; background:rgba(255,252,247,0.97);
+    max-width:min(260px, 54vw); background:rgba(255,252,247,0.97);
     border:1.2px solid var(--gold-soft); border-radius:16px 16px 16px 4px;
-    padding:12px 16px; box-shadow:0 4px 18px rgba(58,46,34,0.14);
-    font-family:'Cormorant Garamond',serif; font-size:15px; line-height:1.55;
+    padding:11px 14px; box-shadow:0 4px 18px rgba(58,46,34,0.14);
+    font-family:'Cormorant Garamond',serif; font-size:15px; line-height:1.5;
     color:var(--ink); pointer-events:none; position:relative;
-    opacity:0; transition:opacity 0.4s ease; min-width:160px;
+    opacity:0; transition:opacity 0.4s ease; min-width:130px;
   }
   #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-bubble.visible{ opacity:1; }
-  .who{ display:block; font-family:'Beau Rivage',cursive; font-size:20px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
+  .who{ display:block; font-family:'Beau Rivage',cursive; font-size:19px; color:var(--gold); line-height:1.2; margin-bottom:2px; }
+  @media(max-width:640px){
+    #hud-bubble{ font-size:13.5px; padding:9px 12px; max-width:min(220px,52vw); }
+    .who{ font-size:17px; }
+  }
 
   /* ── bougainvillea vine ── */
   #vine{
@@ -776,41 +780,44 @@
 
   const hudLines = {
     greeting: [
-      "Salaam! I'm Hud-hud, royal bird and chief of wedding announcements. Welcome to this shadikhana!",
-      "Bismillah and welcome, dear guest! Three days of celebration await — let me show you around.",
-      "Ah, you made it! I've been perched here waiting. The festivities begin soon — read on!"
+      "Salaam! I am Hud-hud — royal hoopoe, wedding correspondent, and frankly the most stylish creature here. Welcome!",
+      "Oh you pressed play! Bold. I respect that. Welcome to Azhar and Zeenath's shadikhana — I'll be your guide. Try to keep up.",
+      "Bismillah and welcome! I have been perched here since Tuesday waiting for someone interesting to arrive. Here you are!"
     ],
     manja: [
-      "The Manja! Turmeric on the hands, chaos in the house, absolute joy in the heart. Classic.",
-      "Yellow everything, singing aunties, that one relative who always cries at the Manja — you know who you are.",
-      "Manja morning: nobody sleeps, everyone eats, and the bride glows yellow for days. Worth it."
+      "Manja! Turmeric paste, chaotic aunties, and someone ALWAYS cries. Love it. Tap + to see the details.",
+      "The Manja is basically organised chaos with excellent snacks. Hyderabad's answer to Haldi and honestly? Superior.",
+      "Fun fact: hoopoes don't turn yellow in turmeric. I checked. Tap + and see what the humans get up to."
     ],
     mehendi: [
-      "Mehendi! The henna artist arrives and suddenly everyone wants intricate floral patterns. Patience is a virtue.",
-      "The Mehendi evening smells of henna and roses. Also possibly biryani. Mostly biryani.",
-      "Mehendi tip: the darker the stain, the stronger the love. Also the longer you left it on."
+      "Mehendi & Choodi! The henna artist has magical hands and a three-hour waitlist. Worth every minute.",
+      "The darker the mehendi the stronger the love, they say. Also the longer you sat still. Both require patience.",
+      "Mehendi night: smells like roses, sounds like laughter, tastes like... biryani, because there is always biryani."
     ],
     nikah: [
-      "The Nikah — two words, a lifetime of adventure. I've witnessed many; this one already has my heart.",
-      "Qubool hai, qubool hai, qubool hai. Three words that change everything. Tissues recommended.",
-      "The Nikah is the still centre of all this beautiful noise. Pay attention — it's over in a blink."
+      "The Nikah. Qubool hai said three times and suddenly everything changes. Bring tissues. I'm not crying, YOU'RE crying.",
+      "Two minutes of ceremony, a lifetime of adventure. I have witnessed many nikaahs — this one already has my heart.",
+      "Psst — the Nikah is the quiet centre of all this beautiful noise. Pay attention. It moves fast and it moves you."
     ],
     reception: [
-      "The Reception! Everyone is dressed magnificently, the lights are golden, and the biryani is non-negotiable.",
-      "Grand finale time. Three days of love and laughter ending in one glorious party. Come hungry.",
-      "Reception night: the couple finally gets to eat their own wedding food. A triumph of planning."
+      "The Reception! Everyone in their finest, the lights golden, the music loud, and the biryani non-negotiable. COME HUNGRY.",
+      "Grand finale energy. Three days of love and celebration ending in one glorious party. I'll be near the dessert table.",
+      "Reception night is when the couple finally gets to eat their own wedding food. A triumph. A miracle. A joy."
     ],
     registry: [
-      "Oh, gifts! I myself prefer shiny objects but apparently cash is also acceptable. The couple agrees.",
-      "Registry time — they've made it very easy for you. Even I could do it, and I have wings for hands."
+      "Gifts! I myself collect shiny things and interesting twigs, but cash also works. The couple has confirmed this.",
+      "They've made it delightfully easy. Even I could navigate it, and I have wings instead of hands. Tap and see.",
+      "The registry: thoughtfully curated, graciously received. One click from you, one very happy couple."
     ],
     rsvp: [
-      "RSVP! Let them know you're coming so they can reserve you a place at the biryani table. Important.",
-      "Please do RSVP. The caterer needs numbers and I need to know how many chairs to supervise."
+      "Please RSVP! The caterer needs a headcount and I need to know how many chairs to dramatically swoop past.",
+      "Your seat at the biryani table is not guaranteed without an RSVP. I cannot stress this enough. Fill the form.",
+      "RSVP is just a fancy French way of saying 'tell them you're coming so they don't run out of food.' Do it."
     ],
     venue: [
-      "Heritage Palace, Attapur! Very grand. Very Hyderabadi. Wear your best and arrive with appetite.",
-      "The venue has been chosen with care. Arrive early, leave late, eat everything."
+      "Heritage Palace, Attapur! Grand arches, golden lights, marble floors. Wear your best. Arrive hungry. Leave happy.",
+      "The venue was chosen with care and excellent taste — much like everything else about this wedding, if I do say so.",
+      "Heritage Palace has hosted many great evenings. This one will be the finest. I have very good instincts about these things."
     ]
   };
 
@@ -874,18 +881,28 @@
       requestAnimationFrame(step);
     }
 
-    // Fly to the + toggle button of a card
+    // Clamp a position to keep the bird fully on-screen
+    function clamp(tx, ty){
+      const birdW = 90, birdH = 90;
+      tx = Math.max(8, Math.min(tx, window.innerWidth - birdW - 8));
+      ty = Math.max(8, Math.min(ty, window.innerHeight - birdH - 8));
+      return [tx, ty];
+    }
+
+    // Fly to the + toggle button of a card — offset LEFT so bird doesn't cover the button
     function flyToToggle(toggleBtn, onDone){
       const r = toggleBtn.getBoundingClientRect();
-      const tx = r.left + r.width/2 - 37;   // center bird on button
-      const ty = r.top - 68;                  // feet land on button
+      let tx = r.left - 80;   // land to the LEFT of the button
+      let ty = r.top - 30;
+      [tx, ty] = clamp(tx, ty);
       flyTo(tx, ty, onDone);
     }
-    // Fly to top of an open card
+    // Fly to top-right corner of an open card
     function flyToCardTop(wrap, onDone){
       const r = wrap.getBoundingClientRect();
-      const tx = r.right - 100;
-      const ty = r.top + 10;
+      let tx = r.right - 110;
+      let ty = r.top + 14;
+      [tx, ty] = clamp(tx, ty);
       flyTo(tx, ty, onDone);
     }
 
@@ -922,16 +939,21 @@
       if(firstToggle) flyToToggle(firstToggle, function(){ cycle('manja'); });
     }, 2200);
 
-    // Section observers for registry / rsvp / venue
+    // Section observers — fire only when section is prominently in view
     var sectionKeys = { registry:'registry', rsvp:'rsvp', venue:'venue' };
     Object.keys(sectionKeys).forEach(function(id){
       var el = document.getElementById(id);
       if(!el) return;
+      var fired = false;
       var obs = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if(e.isIntersecting) cycle(sectionKeys[id]);
+          if(e.isIntersecting && e.intersectionRatio >= 0.5 && !fired){
+            fired = true;
+            cycle(sectionKeys[id]);
+          }
+          if(!e.isIntersecting) fired = false;
         });
-      }, { threshold: 0.35 });
+      }, { threshold: [0.5] });
       obs.observe(el);
     });
   }
