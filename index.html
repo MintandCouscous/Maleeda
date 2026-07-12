@@ -276,8 +276,30 @@
     position:fixed; right:0; top:0; width:clamp(260px,28vw,400px); height:100vh;
     pointer-events:none; z-index:1; overflow:visible;
   }
-  #vine svg{ width:100%; height:100%; }
-  @media(max-width:640px){ #vine{ display:none; } }
+  #vine svg{
+    width:100%; height:100%;
+    transform-origin:100% 100%;
+    animation:vine-sway 9s ease-in-out infinite alternate;
+  }
+  @keyframes vine-sway{ from{ transform:rotate(0.35deg); } to{ transform:rotate(-0.45deg); } }
+  #vine .petal{
+    position:absolute; top:-4vh; width:12px; height:9px;
+    border-radius:62% 38% 55% 45%; background:#E8607E; opacity:0;
+    animation-name:petal-fall; animation-timing-function:linear; animation-iteration-count:infinite;
+  }
+  @keyframes petal-fall{
+    0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    6%{ opacity:0.85; }
+    60%{ transform:translateY(62vh) translateX(-55px) rotate(200deg); opacity:0.7; }
+    100%{ transform:translateY(106vh) translateX(-95px) rotate(340deg); opacity:0.1; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    #vine svg{ animation:none; }
+    #vine .petal{ display:none; }
+  }
+  @media(max-width:640px){
+    #vine{ width:150px; opacity:0.92; }
+  }
 </style>
 </head>
 <body>
@@ -491,7 +513,97 @@
     <ellipse cx="115" cy="48" rx="11" ry="5.5" transform="rotate(20 115 48)"/>
     <ellipse cx="58" cy="22" rx="11" ry="5.5" transform="rotate(-30 58 22)"/>
   </g>
+
+  <!-- ═══ SPRING BURST — extra clusters hugging the trunk ═══ -->
+  <g transform="translate(292,845)">
+    <ellipse rx="16" ry="10" fill="#D9436A" transform="rotate(-20) translate(0,-16)"/>
+    <ellipse rx="16" ry="10" fill="#E8607E" transform="rotate(40) translate(0,-16)"/>
+    <ellipse rx="16" ry="10" fill="#C83060" transform="rotate(100) translate(0,-16)"/>
+    <ellipse rx="15" ry="9" fill="#F07898" transform="rotate(160) translate(0,-14)"/>
+    <ellipse rx="15" ry="9" fill="#E04878" transform="rotate(220) translate(0,-14)"/>
+    <ellipse rx="15" ry="9" fill="#D03868" transform="rotate(280) translate(0,-14)"/>
+    <ellipse rx="13" ry="8" fill="#F89AB0" transform="rotate(340) translate(0,-12)"/>
+    <circle r="4.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+  <g transform="translate(238,600)">
+    <ellipse rx="13" ry="8" fill="#E05078" transform="rotate(10) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#D03A68" transform="rotate(80) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#F06888" transform="rotate(150) translate(0,-13)"/>
+    <ellipse rx="12" ry="7" fill="#E85880" transform="rotate(220) translate(0,-11)"/>
+    <ellipse rx="12" ry="7" fill="#C83060" transform="rotate(290) translate(0,-11)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+  <g transform="translate(248,432)">
+    <ellipse rx="14" ry="8.5" fill="#D8406A" transform="rotate(-5) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#E85878" transform="rotate(65) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#F07090" transform="rotate(135) translate(0,-14)"/>
+    <ellipse rx="13" ry="8" fill="#C83060" transform="rotate(205) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#E04878" transform="rotate(275) translate(0,-12)"/>
+    <circle r="4" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+  <g transform="translate(230,242)">
+    <ellipse rx="13" ry="8" fill="#E04A70" transform="rotate(20) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#D03860" transform="rotate(90) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#F06880" transform="rotate(160) translate(0,-13)"/>
+    <ellipse rx="12" ry="7" fill="#E85878" transform="rotate(230) translate(0,-11)"/>
+    <ellipse rx="12" ry="7" fill="#F89AB0" transform="rotate(300) translate(0,-11)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+  <g transform="translate(226,98)">
+    <ellipse rx="12" ry="7.5" fill="#D83A68" transform="rotate(0) translate(0,-12)"/>
+    <ellipse rx="12" ry="7.5" fill="#E85070" transform="rotate(72) translate(0,-12)"/>
+    <ellipse rx="12" ry="7.5" fill="#F06880" transform="rotate(144) translate(0,-12)"/>
+    <ellipse rx="11" ry="7" fill="#E04068" transform="rotate(216) translate(0,-10)"/>
+    <ellipse rx="11" ry="7" fill="#C83060" transform="rotate(288) translate(0,-10)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- ═══ ROSEBUDS — tight pink teardrops with green sepals ═══ -->
+  <g id="rosebuds">
+    <g transform="translate(196,662) rotate(-30)">
+      <path d="M0 0 C-5 -4 -4.5 -13 0 -17 C4.5 -13 5 -4 0 0 Z" fill="#E0507A"/>
+      <path d="M0 0 C-6 -3 -6 -10 -3 -14" fill="none" stroke="#3A6828" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M0 0 C6 -3 6 -10 3 -14" fill="none" stroke="#3A6828" stroke-width="1.4" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(105,595) rotate(25)">
+      <path d="M0 0 C-4.5 -3.5 -4 -11.5 0 -15 C4 -11.5 4.5 -3.5 0 0 Z" fill="#D84070"/>
+      <path d="M0 0 C-5.5 -2.5 -5.5 -9 -2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M0 0 C5.5 -2.5 5.5 -9 2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(90,485) rotate(-15)">
+      <path d="M0 0 C-4.5 -3.5 -4 -11.5 0 -15 C4 -11.5 4.5 -3.5 0 0 Z" fill="#E85880"/>
+      <path d="M0 0 C-5.5 -2.5 -5.5 -9 -2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M0 0 C5.5 -2.5 5.5 -9 2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(178,470) rotate(40)">
+      <path d="M0 0 C-4 -3 -3.5 -10 0 -13 C3.5 -10 4 -3 0 0 Z" fill="#D0386A"/>
+      <path d="M0 0 C-5 -2 -5 -8 -2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0 0 C5 -2 5 -8 2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(128,275) rotate(-35)">
+      <path d="M0 0 C-4.5 -3.5 -4 -11.5 0 -15 C4 -11.5 4.5 -3.5 0 0 Z" fill="#E0507A"/>
+      <path d="M0 0 C-5.5 -2.5 -5.5 -9 -2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M0 0 C5.5 -2.5 5.5 -9 2.5 -12.5" fill="none" stroke="#3A6828" stroke-width="1.3" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(75,150) rotate(15)">
+      <path d="M0 0 C-4 -3 -3.5 -10 0 -13 C3.5 -10 4 -3 0 0 Z" fill="#E85880"/>
+      <path d="M0 0 C-5 -2 -5 -8 -2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0 0 C5 -2 5 -8 2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+    <g transform="translate(168,42) rotate(-20)">
+      <path d="M0 0 C-4 -3 -3.5 -10 0 -13 C3.5 -10 4 -3 0 0 Z" fill="#D84070"/>
+      <path d="M0 0 C-5 -2 -5 -8 -2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+      <path d="M0 0 C5 -2 5 -8 2 -11" fill="none" stroke="#3A6828" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
 </svg>
+
+<!-- drifting petals -->
+<span class="petal" style="right:8%;  animation-duration:11s; animation-delay:0s;"></span>
+<span class="petal" style="right:18%; animation-duration:14s; animation-delay:3s; width:9px; height:7px;"></span>
+<span class="petal" style="right:4%;  animation-duration:12s; animation-delay:6s;"></span>
+<span class="petal" style="right:26%; animation-duration:16s; animation-delay:1.5s; width:10px; height:8px;"></span>
+<span class="petal" style="right:13%; animation-duration:13s; animation-delay:9s;"></span>
 </div>
 
 <div id="site">
@@ -837,44 +949,44 @@
 
   const hudLines = {
     greeting: [
-      "Salaam! I am Hud-hud — royal hoopoe, wedding correspondent, and frankly the most stylish creature here. Welcome!",
-      "Oh you pressed play! Bold. I respect that. Welcome to Azhar and Zeenath's shadikhana — I'll be your guide. Try to keep up.",
-      "Bismillah and welcome! I have been perched here since Tuesday waiting for someone interesting to arrive. Here you are!"
+      "Oh good, you're here. I'm Hud-hud — royal hoopoe, carrier of secrets, and the only one at this wedding with a crown. Follow me.",
+      "You pressed play. Brave. I'm Hud-hud, your guide — I've seen every wedding since Suleiman's and this one might actually top them.",
+      "Salaam. Hud-hud. Yes, THE Hud-hud. I don't do this for just any wedding, so consider yourself somewhere important."
     ],
     manja: [
-      "Manja! Turmeric paste, chaotic aunties, and someone ALWAYS cries. Love it. Tap + to see the details.",
-      "The Manja is basically organised chaos with excellent snacks. Hyderabad's answer to Haldi and honestly? Superior.",
-      "Fun fact: hoopoes don't turn yellow in turmeric. I checked. Tap + and see what the humans get up to."
+      "Manja. They will put turmeric on the bride and call it tradition. She will glow for days. The aunties take no prisoners.",
+      "Hyderabad's answer to Haldi — except louder, later, and with better food. Tap the + if you can handle it.",
+      "Someone WILL cry at the Manja. Someone always cries. My money's on the uncle who says he won't."
     ],
     mehendi: [
-      "Mehendi & Choodi! The henna artist has magical hands and a three-hour waitlist. Worth every minute.",
-      "The darker the mehendi the stronger the love, they say. Also the longer you sat still. Both require patience.",
-      "Mehendi night: smells like roses, sounds like laughter, tastes like... biryani, because there is always biryani."
+      "Mehendi & Choodi. Sit still for two hours, receive art. Some of you can't sit still for two minutes — this will be entertaining.",
+      "They say the darker the mehendi, the stronger the love. By that logic this marriage is already unbreakable. I've seen the artist.",
+      "Bangles, henna, chai on repeat. Peak civilisation, honestly. Humans occasionally get things right."
     ],
     nikah: [
-      "The Nikah. Qubool hai said three times and suddenly everything changes. Bring tissues. I'm not crying, YOU'RE crying.",
-      "Two minutes of ceremony, a lifetime of adventure. I have witnessed many nikaahs — this one already has my heart.",
-      "Psst — the Nikah is the quiet centre of all this beautiful noise. Pay attention. It moves fast and it moves you."
+      "The Nikah. Three qubool hais and it's done — fastest life-changing paperwork in existence. Blink and you'll miss it. Don't blink.",
+      "I've witnessed a thousand nikaahs. I still get something in my eye every single time. It's dust. Obviously dust.",
+      "Everything else is decoration. THIS is the wedding. Twelve noon, be there, phones down."
     ],
     reception: [
-      "The Reception! Everyone in their finest, the lights golden, the music loud, and the biryani non-negotiable. COME HUNGRY.",
-      "Grand finale energy. Three days of love and celebration ending in one glorious party. I'll be near the dessert table.",
-      "Reception night is when the couple finally gets to eat their own wedding food. A triumph. A miracle. A joy."
+      "The Reception. Golden lights, dangerous levels of biryani, everyone dressed to destroy. Come hungry or don't come at all.",
+      "The grand finale — where the couple finally eats their own wedding food. Historic. I'll be supervising the desserts personally.",
+      "Fair warning: the biryani at this thing will ruin all other biryani for you. Forever. You've been warned."
     ],
     registry: [
-      "Gifts! I myself collect shiny things and interesting twigs, but cash also works. The couple has confirmed this.",
-      "They've made it delightfully easy. Even I could navigate it, and I have wings instead of hands. Tap and see.",
-      "The registry: thoughtfully curated, graciously received. One click from you, one very happy couple."
+      "Gifts. I collect shiny things and enemies' secrets; the couple accepts something simpler. One tap, don't be stingy.",
+      "The registry is so easy even a pigeon could do it. And pigeons are idiots. No offence to pigeons. Some offence.",
+      "You were going to ask what to give. They already answered. That's called consideration — repay it in kind."
     ],
     rsvp: [
-      "Please RSVP! The caterer needs a headcount and I need to know how many chairs to dramatically swoop past.",
-      "Your seat at the biryani table is not guaranteed without an RSVP. I cannot stress this enough. Fill the form.",
-      "RSVP is just a fancy French way of saying 'tell them you're coming so they don't run out of food.' Do it."
+      "RSVP. Now. The caterer counts heads and I count no-shows — and I have an exceptional memory and a sharp beak.",
+      "No RSVP, no biryani seat. I don't make the rules. Actually I do — I'm the messenger. Fill the form.",
+      "It takes thirty seconds. You've spent longer deciding what to watch tonight. Go on."
     ],
     venue: [
-      "Heritage Palace, Attapur! Grand arches, golden lights, marble floors. Wear your best. Arrive hungry. Leave happy.",
-      "The venue was chosen with care and excellent taste — much like everything else about this wedding, if I do say so.",
-      "Heritage Palace has hosted many great evenings. This one will be the finest. I have very good instincts about these things."
+      "Heritage Palace, Attapur. Arches, marble, golden light — almost worthy of my presence. Wear your absolute best.",
+      "I've flown over every rooftop in Hyderabad. This venue? Top tier. The couple has taste — clearly, they hired me.",
+      "Arrive early, leave late, dance badly with confidence. That's the whole assignment."
     ]
   };
 
@@ -957,11 +1069,13 @@
       requestAnimationFrame(step);
     }
 
-    // Clamp a position to keep the bird fully on-screen
+    // Clamp a position to keep the bird fully on-screen and below the nav
     function clamp(tx, ty){
       const birdW = 90, birdH = 90;
+      const nav = document.querySelector('nav');
+      const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
       tx = Math.max(8, Math.min(tx, window.innerWidth - birdW - 8));
-      ty = Math.max(8, Math.min(ty, window.innerHeight - birdH - 8));
+      ty = Math.max(navBottom + 10, Math.min(ty, window.innerHeight - birdH - 8));
       return [tx, ty];
     }
 
