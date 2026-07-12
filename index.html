@@ -81,7 +81,7 @@
   #gate.playing .caption{ opacity:0.9; }
 
   /* ================= SITE ================= */
-  #site{ visibility:hidden; }
+  #site{ visibility:hidden; position:relative; z-index:2; }
   body.unlocked #site{ visibility:visible; }
 
   section{ scroll-snap-align:start; }
@@ -101,7 +101,12 @@
 
   .strip{ padding:30px 28px 54px; min-height:auto; }
   .strip-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:900px; margin:0 auto; }
-  .strip-card{ text-align:center; padding:18px 8px; border:1px solid var(--gold-soft); border-radius:3px; background:rgba(255,252,247,0.85); }
+  .strip-card{
+    text-align:center; padding:18px 8px; border:1px solid var(--gold-soft); border-radius:3px;
+    background:rgba(255,252,247,0.85); cursor:pointer;
+    transition:transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .strip-card:hover{ transform:translateY(-4px); box-shadow:0 8px 22px rgba(184,145,47,0.16); border-color:var(--gold); }
   .strip-card .tag{ font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
   .strip-card .ev{ font-family:'Beau Rivage',cursive; font-size:26px; color:var(--gold); margin:2px 0; }
   .strip-card .tm{ font-size:12px; color:var(--ink-soft); }
@@ -129,10 +134,10 @@
   .wrap.open .card-toggle{ transform:translateY(-50%) rotate(45deg); }
   .card-body{
     overflow:hidden; max-height:0;
-    transition:max-height 0.8s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease 0.1s;
+    transition:max-height 0.65s cubic-bezier(0.22,1,0.36,1), opacity 0.45s ease 0.08s;
     opacity:0;
   }
-  .wrap.open .card-body{ max-height:3000px; opacity:1; }
+  .wrap.open .card-body{ opacity:1; }
   .event .wrap::before{
     content:''; position:absolute; inset:0; border:1.5px solid currentColor; opacity:0.55; pointer-events:none;
   }
@@ -212,19 +217,14 @@
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
   /* ================= HUD-HUD, THE GUIDE ================= */
-  #hud{ position:fixed; z-index:80; display:flex; align-items:flex-end; gap:10px; flex-direction:row; pointer-events:none; }
+  #hud{ position:fixed; z-index:80; width:80px; height:80px; pointer-events:none; }
   #hud.hidden{ display:none; }
-  #hud.side-right{ flex-direction:row-reverse; }
   #hud-avatar{
-    width:80px; height:80px;
-    display:flex; align-items:center; justify-content:center; flex-shrink:0;
-    cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative; pointer-events:all;
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative;
   }
   #hud-avatar svg.bird{ width:74px; height:74px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.22)); }
-  @media(max-width:640px){
-    #hud-avatar{ width:60px; height:60px; }
-    #hud-avatar svg.bird{ width:54px; height:54px; }
-  }
   #hud-branch{
     position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
     width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
@@ -237,28 +237,39 @@
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
-  @media (max-width:640px){
-
-    #hud-avatar{ width:58px; height:58px; }
-    #hud-avatar svg.bird{ width:38px; height:38px; }
+  @media(max-width:640px){
+    #hud{ width:58px; height:58px; }
+    #hud-avatar svg.bird{ width:50px; height:50px; }
+    #hud-branch{ width:66px; bottom:-9px; }
   }
 
-  /* ── speech bubble ── */
+  /* ── speech bubble — anchored to bird, flips side ── */
   #hud-bubble{
-    max-width:min(260px, 54vw); background:rgba(255,252,247,0.97);
-    border:1.2px solid var(--gold-soft); border-radius:16px 16px 16px 4px;
-    padding:11px 14px; box-shadow:0 4px 18px rgba(58,46,34,0.14);
+    position:absolute; bottom:calc(100% + 8px); left:calc(100% - 18px);
+    width:max-content; max-width:230px;
+    background:rgba(255,252,247,0.98);
+    border:1.2px solid var(--gold-soft); border-radius:14px 14px 14px 3px;
+    padding:10px 14px; box-shadow:0 4px 18px rgba(58,46,34,0.15);
     font-family:'Cormorant Garamond',serif; font-size:15px; line-height:1.5;
-    color:var(--ink); pointer-events:none; position:relative;
-    opacity:0; transition:opacity 0.4s ease; min-width:130px;
+    color:var(--ink); pointer-events:none;
+    opacity:0; transform:translateY(6px) scale(0.96); transform-origin:bottom left;
+    transition:opacity 0.45s ease, transform 0.45s cubic-bezier(0.34,1.4,0.64,1);
   }
-  #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
-  #hud-bubble.visible{ opacity:1; }
+  #hud.side-right #hud-bubble{
+    left:auto; right:calc(100% - 18px);
+    border-radius:14px 14px 3px 14px; transform-origin:bottom right;
+  }
+  #hud-bubble.visible{ opacity:1; transform:translateY(0) scale(1); }
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:19px; color:var(--gold); line-height:1.2; margin-bottom:2px; }
   @media(max-width:640px){
-    #hud-bubble{ font-size:13.5px; padding:9px 12px; max-width:min(220px,52vw); }
-    .who{ font-size:17px; }
+    #hud-bubble{ font-size:13.5px; padding:8px 12px; max-width:min(200px, calc(100vw - 90px)); }
+    .who{ font-size:16px; }
   }
+
+  /* ── gentle rise-in on scroll ── */
+  .reveal{ opacity:0; transform:translateY(26px); transition:opacity 0.9s ease, transform 0.9s cubic-bezier(0.22,1,0.36,1); }
+  .reveal.in{ opacity:1; transform:none; }
+  @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
 
   /* ── bougainvillea vine ── */
   #vine{
@@ -482,6 +493,8 @@
   </g>
 </svg>
 </div>
+
+<div id="site">
 
 <nav>
   <div class="wrap">
@@ -761,18 +774,62 @@
     document.body.classList.add('unlocked');
     setTimeout(function(){
       gate.style.display = 'none';
-      document.getElementById('manja').scrollIntoView({behavior:'instant', block:'start'});
+      window.scrollTo({top:0, behavior:'instant'});
       initHud();
     }, 900);
   }
 
+  // ── Rise-in reveals as sections scroll into view ──
+  (function(){
+    const els = document.querySelectorAll('#site section .wrap, .strip-card');
+    els.forEach(function(el){ el.classList.add('reveal'); });
+    const obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(function(el){ obs.observe(el); });
+    // safety net: never leave content hidden if the observer misbehaves
+    setTimeout(function(){
+      document.querySelectorAll('.reveal:not(.in)').forEach(function(el){
+        const r = el.getBoundingClientRect();
+        if(r.top < window.innerHeight && r.bottom > 0) el.classList.add('in');
+      });
+    }, 2500);
+  })();
+
+  // ── Strip cards jump to their event section ──
+  (function(){
+    const targets = ['manja','mehendi','nikah','reception'];
+    document.querySelectorAll('.strip-card').forEach(function(card, i){
+      card.addEventListener('click', function(){
+        const el = document.getElementById(targets[i]);
+        if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+      });
+    });
+  })();
+
   // ── Card expand/collapse — standalone, no dependency on Hud-hud ──
+  function closeCard(w){
+    const body = w.querySelector('.card-body');
+    if(body){ body.style.maxHeight = body.scrollHeight + 'px'; requestAnimationFrame(function(){ body.style.maxHeight = '0px'; }); }
+    w.classList.remove('open');
+  }
+  function openCard(w){
+    const body = w.querySelector('.card-body');
+    w.classList.add('open');
+    if(body){
+      body.style.maxHeight = body.scrollHeight + 'px';
+      // release the clamp once fully open so content reflows naturally
+      setTimeout(function(){ if(w.classList.contains('open')) body.style.maxHeight = 'none'; }, 700);
+    }
+  }
   document.querySelectorAll('.card-toggle').forEach(function(btn){
     btn.addEventListener('click', function(){
       const wrap = btn.closest('.wrap');
       const isOpen = wrap.classList.contains('open');
-      document.querySelectorAll('.wrap.open').forEach(function(w){ w.classList.remove('open'); });
-      if(!isOpen) wrap.classList.add('open');
+      document.querySelectorAll('.wrap.open').forEach(closeCard);
+      if(!isOpen) openCard(wrap);
     });
   });
 
@@ -821,23 +878,37 @@
     ]
   };
 
+  const lastLine = {};   // avoid repeating the same line per section
+
+  function hideBubble(){
+    const bubble = document.getElementById('hud-bubble');
+    if(bubble) bubble.classList.remove('visible');
+    clearTimeout(say._timer);
+  }
+
   function say(lines){
     const bubble = document.getElementById('hud-bubble');
     const textEl = document.getElementById('hud-text');
     if(!bubble || !textEl) return;
-    const line = lines[Math.floor(Math.random() * lines.length)];
+    let line = lines[Math.floor(Math.random() * lines.length)];
+    if(lines.length > 1 && line === lastLine[lines[0]]){
+      line = lines[(lines.indexOf(line)+1) % lines.length];
+    }
+    lastLine[lines[0]] = line;
     textEl.textContent = line;
     bubble.classList.add('visible');
     clearTimeout(say._timer);
-    say._timer = setTimeout(function(){ bubble.classList.remove('visible'); }, 6000);
+    // linger long enough to read — scale with length
+    const readTime = Math.max(4500, line.length * 55);
+    say._timer = setTimeout(function(){ bubble.classList.remove('visible'); }, readTime);
   }
 
+  // One thoughtful line per arrival — no nagging repeats
   function cycle(key){
-    if(cycleTimer) clearInterval(cycleTimer);
+    if(cycleTimer) clearTimeout(cycleTimer);
     const lines = hudLines[key];
     if(!lines) return;
     say(lines);
-    cycleTimer = setInterval(function(){ say(lines); }, 9000);
   }
 
   function initHud(){
@@ -845,27 +916,32 @@
     const branch = document.getElementById('hud-branch');
     hud.classList.remove('hidden');
 
-    // Start centre-screen for the greeting
-    let hudX = window.innerWidth / 2 - 40;
-    let hudY = window.innerHeight * 0.32;
+    // Greet from the left, clear of the hero text
+    let hudX = Math.max(12, window.innerWidth * 0.12);
+    let hudY = window.innerHeight * 0.3;
     hud.style.left = hudX + 'px';
     hud.style.top  = hudY + 'px';
 
     function perch(){ hud.classList.remove('flying'); hud.classList.add('perched'); branch.style.opacity='1'; }
-    function unperch(){ hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; }
+    function unperch(){ hideBubble(); hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; }
     function setSide(){ hud.classList.toggle('side-right', hudX > window.innerWidth/2); }
 
+    let flightId = 0;   // lets a new flight cleanly interrupt an old one
+
     function flyTo(tx, ty, onDone){
+      const myId = ++flightId;
       const sx=hudX, sy=hudY;
       const dist = Math.sqrt((tx-sx)**2+(ty-sy)**2);
-      // slow and graceful — minimum 1.8s, scales with distance
-      const duration = Math.max(1800, dist * 2.2);
+      if(dist < 4){ setSide(); perch(); if(onDone) onDone(); return; }
+      // graceful but not sluggish
+      const duration = Math.min(2600, Math.max(1200, dist * 1.6));
       const t0 = performance.now();
       unperch();
       function step(now){
+        if(myId !== flightId) return;   // superseded by a newer flight
         const raw = Math.min((now-t0)/duration, 1);
         const ease = raw<0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
-        const arc = Math.sin(Math.PI*raw) * -Math.min(100, dist*0.3);
+        const arc = Math.sin(Math.PI*raw) * -Math.min(90, dist*0.28);
         hudX = sx+(tx-sx)*ease; hudY = sy+(ty-sy)*ease+arc;
         hud.style.left = hudX+'px'; hud.style.top = hudY+'px';
         hud.style.transform = 'rotate('+(( tx>sx?10:-10)*Math.sin(Math.PI*raw))+'deg)';
@@ -905,57 +981,64 @@
       [tx, ty] = clamp(tx, ty);
       flyTo(tx, ty, onDone);
     }
+    // Fly to a section without a toggle (registry, rsvp, venue)
+    function flyToSection(section, onDone){
+      const r = section.getBoundingClientRect();
+      let tx = r.left + r.width * 0.72;
+      let ty = r.top + 20;
+      [tx, ty] = clamp(tx, ty);
+      flyTo(tx, ty, onDone);
+    }
 
-    // Wire up card toggles
+    let currentKey = null;   // which section Hud-hud is currently attending
+
+    function visitSection(section){
+      const key = section.getAttribute('data-hud-key');
+      if(!key || key === currentKey) return;
+      currentKey = key;
+      const wrap = section.querySelector('.wrap');
+      const toggle = section.querySelector('.card-toggle');
+      const speak = function(){ setTimeout(function(){ cycle(key); }, 350); };
+      if(wrap && wrap.classList.contains('open')){
+        flyToCardTop(wrap, speak);
+      } else if(toggle){
+        flyToToggle(toggle, speak);
+      } else {
+        flyToSection(section, speak);
+      }
+    }
+
+    // React to card toggles — class management lives in the standalone listener
     document.querySelectorAll('.card-toggle').forEach(function(btn){
       const wrap = btn.closest('.wrap');
       const section = btn.closest('section');
       const key = section ? section.getAttribute('data-hud-key') : null;
 
       btn.addEventListener('click', function(){
-        const opening = !wrap.classList.contains('open');
-        // close all other cards
-        document.querySelectorAll('.wrap.open').forEach(function(w){ w.classList.remove('open'); });
-
-        if(opening){
-          wrap.classList.add('open');
-          if(cycleTimer) clearInterval(cycleTimer);
-          // fly to card top after short delay (card is expanding)
-          setTimeout(function(){
-            flyToCardTop(wrap, function(){ if(key) cycle(key); });
-          }, 200);
-        } else {
-          // closed — fly to the + button
-          flyToToggle(btn, function(){ if(key) cycle(key); });
-        }
+        if(key) currentKey = key;
+        setTimeout(function(){
+          if(wrap.classList.contains('open')){
+            flyToCardTop(wrap, function(){
+              if(key) setTimeout(function(){ cycle(key); }, 300);
+            });
+          } else {
+            flyToToggle(btn);
+          }
+        }, 60);
       });
     });
 
-    // Greeting, then fly to first card
+    // Greeting centre-stage, off to the side of the hero text
     setSide(); perch();
-    say(hudLines.greeting);
-    setTimeout(function(){
-      const firstToggle = document.querySelector('.card-toggle');
-      if(firstToggle) flyToToggle(firstToggle, function(){ cycle('manja'); });
-    }, 2200);
+    setTimeout(function(){ say(hudLines.greeting); }, 700);
 
-    // Section observers — fire only when section is prominently in view
-    var sectionKeys = { registry:'registry', rsvp:'rsvp', venue:'venue' };
-    Object.keys(sectionKeys).forEach(function(id){
-      var el = document.getElementById(id);
-      if(!el) return;
-      var fired = false;
-      var obs = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting && e.intersectionRatio >= 0.5 && !fired){
-            fired = true;
-            cycle(sectionKeys[id]);
-          }
-          if(!e.isIntersecting) fired = false;
-        });
-      }, { threshold: [0.5] });
-      obs.observe(el);
-    });
+    // Hud-hud follows your scrolling — every section, not just some
+    const secObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting && e.intersectionRatio >= 0.4) visitSection(e.target);
+      });
+    }, { threshold: [0.4] });
+    document.querySelectorAll('section[data-hud-key]').forEach(function(s){ secObs.observe(s); });
   }
 
   function startPlayback(){
