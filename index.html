@@ -181,36 +181,39 @@
   footer .verse{ font-style:italic; max-width:460px; margin:0 auto 10px; font-size:15px; }
 
   /* ================= HUD-HUD, THE GUIDE ================= */
-  #hud{ position:fixed; right:20px; bottom:20px; z-index:80; display:flex; align-items:flex-end; gap:12px; flex-direction:row-reverse; }
+  #hud{ position:fixed; z-index:80; display:flex; align-items:flex-end; gap:10px; flex-direction:row; pointer-events:none; }
   #hud.hidden{ display:none; }
-  #hud.flying-in{ animation:hud-swoop-in 1.1s cubic-bezier(.2,.8,.3,1) both; }
-  @keyframes hud-swoop-in{
-    0%{ transform:translate(160px,-60px) rotate(14deg); opacity:0; }
-    60%{ opacity:1; }
-    100%{ transform:translate(0,0) rotate(0deg); opacity:1; }
-  }
+  #hud.side-right{ flex-direction:row-reverse; }
+  #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-avatar{
     width:72px; height:72px; border-radius:50%; background:var(--cream); border:1.5px solid var(--gold);
     display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:0 4px 18px rgba(58,46,34,0.2);
-    cursor:default; animation:hud-bob 2.6s ease-in-out infinite;
+    cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative; pointer-events:all;
   }
-  #hud-avatar svg{ width:46px; height:46px; }
+  #hud-avatar svg.bird{ width:46px; height:46px; }
+  #hud-branch{
+    position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
+    width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
+  }
+  #hud.perched #hud-branch{ opacity:1; }
   #wing-l, #wing-r{ transform-origin:24px 24px; animation:hud-flap 0.9s ease-in-out infinite; }
   #wing-r{ animation-delay:0.05s; }
+  #hud.flying #wing-l, #hud.flying #wing-r{ animation:hud-flap-fast 0.26s ease-in-out infinite; }
+  #hud.flying #hud-avatar{ animation:none; }
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
+  @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
   #hud-bubble{
-    max-width:270px; background:#fff; border:1px solid var(--gold-soft); border-radius:16px 16px 4px 16px;
+    max-width:270px; background:#fff; border:1px solid var(--gold-soft); border-radius:16px 16px 16px 4px;
     padding:12px 16px; font-family:'EB Garamond',serif; font-size:15.5px; line-height:1.48; color:var(--ink);
-    box-shadow:0 3px 16px rgba(58,46,34,0.15); opacity:0; transform:translateY(6px); transition:opacity 0.4s ease, transform 0.4s ease;
+    box-shadow:0 3px 16px rgba(58,46,34,0.15); opacity:0; transform:translateY(6px); transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:all;
   }
   #hud-bubble.show{ opacity:1; transform:translateY(0); }
   #hud-bubble .who{ display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold); margin-bottom:3px; }
   @media (max-width:640px){
-    #hud{ right:14px; bottom:14px; }
     #hud-bubble{ max-width:200px; font-size:14px; }
     #hud-avatar{ width:58px; height:58px; }
-    #hud-avatar svg{ width:38px; height:38px; }
+    #hud-avatar svg.bird{ width:38px; height:38px; }
   }
 </style>
 </head>
@@ -459,7 +462,16 @@
 
 <div id="hud" class="hidden">
   <div id="hud-avatar">
-    <svg viewBox="0 0 48 48" fill="none">
+    <svg id="hud-branch" viewBox="0 0 90 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M4 18 C 28 14, 56 14, 86 18" stroke="#7A5A12" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M24 15 C 25 9, 29 4, 27 1" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M54 14 C 56 8, 60 3, 58 0" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="26" cy="2" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-22 26 2)"/>
+      <ellipse cx="30" cy="4" rx="3.5" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(18 30 4)"/>
+      <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
+      <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
+    </svg>
+    <svg class="bird" viewBox="0 0 48 48" fill="none">
       <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
       <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
       <path id="wing-r" d="M26 26 C 30 32, 27 38, 20 39 C 19 33, 22 28, 26 26 Z" fill="#C3A46B" stroke="#B8912F" stroke-width="1"/>
@@ -498,35 +510,37 @@
   // ============ Hud-hud, the guide ============
   const hudLines = {
     manja: [
-      "Turmeric doesn't wash off in one try. Wear something you've made peace with.",
-      "Azhar's side is doing the exact same thing tonight, across town at his place.",
-      "First gift of the wedding, technically. It's a pot of turmeric. Still counts."
+      "Turmeric doesn't wash off in one go. I say this with love: wear something you've already made your peace with.",
+      "Azhar is doing exactly this tonight — different house, same chaos, identical yellow. Across town they're covered in the stuff as we speak.",
+      "The pot of turmeric is technically the first gift of the whole wedding. More thoughtful than anything on the registry, honestly. Not that I'm biased."
     ],
     mehendi: [
-      "Yes, you. Sit down, we're doing your hands too.",
-      "Multiple artists today — nobody's waiting an hour for a swirl.",
-      "Pick your own bangles. No committee involved."
+      "Sit down, sit down — there's an artist for you too. I didn't fly all this way for you to just watch other people get their hands done.",
+      "The henna hides Azhar's name somewhere in Zeenath's pattern. He has to find it on the wedding night. Every time I hear this tradition I find it funnier.",
+      "Pick whatever bangles speak to you. The aunties will have opinions. The bangles won't care. Neither should you, frankly."
     ],
     nikah: [
-      "Watch closely — they won't even be in the same room until the Jalwa.",
-      "Qubool Hai, said three times. That's the whole thing, really.",
-      "Tap the questions below if you want the real detail. I did the reading so you don't have to."
+      "They won't even see each other until the Jalwa. The suspense is completely intentional and I, personally, love it.",
+      "Qubool Hai, said three times out loud. That's the whole contract. The simplest sentence in the world and also the largest.",
+      "Those Q&As below? I helped write those. Well — I dictated, they typed. Essentially the same contribution."
     ],
     reception: [
-      "Honestly? This is the invite I was proudest to deliver.",
-      "If the biryani isn't the best thing you eat this year, take it up with the caterer, not me."
+      "This is the night they've been quietly planning since before they'd admit to each other they were planning anything.",
+      "If the biryani isn't the best thing you eat this year, take it up with the caterer. Not me. I already know how good it's going to be.",
+      "Married now, everyone they love in one room, full formalwear, no ritual left on the list. Just dinner and all of you. That's the whole point of this one."
     ],
     rsvp: [
-      "Tell me you're coming. I'll fly it straight to them.",
-      "Yes or no, either's fine — just don't leave me hanging."
+      "Come on. I've flown between their houses more times than I can count this year. One more trip to carry your yes? Absolutely nothing.",
+      "Your name here is the only wedding present they actually asked for. And they meant it sincerely.",
+      "Yes, no, either's fine — just don't leave me hovering here. I have three more houses to visit before sundown."
     ],
     registry: [
-      "I tried to talk them out of this section. I lost.",
-      "For the record: they'd genuinely rather just see your face."
+      "I argued against this section. At some length. They outvoted me two to one and I want that on the record.",
+      "For the record: their actual wishlist is your company, the party, and possibly biryani leftovers. This list exists only because people kept asking."
     ],
     venue: [
-      "Need directions? I fly. You'll probably want to drive.",
-      "Heritage Palace, Attapur. Google knows the way even when I don't explain it well."
+      "I fly there in twelve minutes flat. Your GPS will get you there too — just give it Heritage Palace, Attapur and trust it completely.",
+      "Heritage Palace, Attapur, Hyderabad. Google Maps knows the way better than I can explain it in words. Just tap the link and go."
     ]
   };
 
@@ -534,17 +548,25 @@
     const hud = document.getElementById('hud');
     const bubble = document.getElementById('hud-bubble');
     const text = document.getElementById('hud-text');
+    const branch = document.getElementById('hud-branch');
     hud.classList.remove('hidden');
-    hud.classList.add('flying-in');
+
+    // Start bottom-right
+    let hudX = window.innerWidth - 90;
+    let hudY = window.innerHeight - 90;
+    hud.style.left = hudX + 'px';
+    hud.style.top  = hudY + 'px';
+    hud.classList.add('side-right');
 
     let cycleTimer = null;
+    let lastKey = null;
 
     function say(msg){
       bubble.classList.remove('show');
       setTimeout(function(){
         text.textContent = msg;
         bubble.classList.add('show');
-      }, 200);
+      }, 220);
     }
 
     function cycle(key){
@@ -559,50 +581,117 @@
       }, 5500);
     }
 
+    function perch(){
+      hud.classList.remove('flying');
+      hud.classList.add('perched');
+      branch.style.opacity = '1';
+    }
+    function unperch(){
+      hud.classList.add('flying');
+      hud.classList.remove('perched');
+      branch.style.opacity = '0';
+      bubble.classList.remove('show');
+    }
+    function setSide(){
+      if(hudX < window.innerWidth / 2){ hud.classList.remove('side-right'); }
+      else { hud.classList.add('side-right'); }
+    }
+
+    function flyTo(tx, ty, onDone){
+      const sx = hudX, sy = hudY;
+      const dist = Math.sqrt((tx-sx)*(tx-sx) + (ty-sy)*(ty-sy));
+      const duration = Math.max(700, Math.min(1500, dist * 1.3));
+      const t0 = performance.now();
+      unperch();
+
+      function step(now){
+        const raw = Math.min((now - t0) / duration, 1);
+        const ease = raw < 0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
+        const arc = Math.sin(Math.PI * raw) * -Math.min(130, dist * 0.38);
+        const cx = sx + (tx - sx) * ease;
+        const cy = sy + (ty - sy) * ease + arc;
+        hudX = cx; hudY = cy;
+        hud.style.left = cx + 'px';
+        hud.style.top  = cy + 'px';
+        const tilt = (tx > sx ? 13 : -13) * Math.sin(Math.PI * raw);
+        hud.style.transform = 'rotate('+tilt+'deg)';
+        if(raw < 1){ requestAnimationFrame(step); }
+        else{
+          hudX = tx; hudY = ty;
+          hud.style.left = tx + 'px';
+          hud.style.top  = ty + 'px';
+          hud.style.transform = '';
+          setSide();
+          perch();
+          if(onDone) onDone();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+
+    // Where Hud-hud perches for each section
+    const perches = {
+      manja:     function(){ return { x:18, y:Math.max(80, window.innerHeight*0.22) }; },
+      mehendi:   function(){ return { x:window.innerWidth-88, y:Math.max(60, window.innerHeight*0.18) }; },
+      nikah:     function(){ return { x:18, y:window.innerHeight*0.44 }; },
+      reception: function(){ return { x:window.innerWidth-88, y:window.innerHeight*0.38 }; },
+      rsvp:      function(){ return { x:18, y:window.innerHeight*0.64 }; },
+      registry:  function(){ return { x:Math.max(18,window.innerWidth/2-36), y:Math.max(60,window.innerHeight*0.14) }; },
+      venue:     function(){ return { x:window.innerWidth-88, y:window.innerHeight*0.56 }; },
+    };
+
+    function goToSection(key){
+      const fn = perches[key]; if(!fn) return;
+      const pos = fn();
+      if(cycleTimer) clearInterval(cycleTimer);
+      setTimeout(function(){ flyTo(pos.x, pos.y, function(){ cycle(key); }); }, 250);
+    }
+
     const sections = document.querySelectorAll('[data-hud-key]');
     let introDone = false;
     const observer = new IntersectionObserver(function(entries){
       if(!introDone) return;
       entries.forEach(function(entry){
         if(entry.isIntersecting){
-          cycle(entry.target.getAttribute('data-hud-key'));
+          const key = entry.target.getAttribute('data-hud-key');
+          if(key !== lastKey){ lastKey = key; goToSection(key); }
         }
       });
-    }, { threshold:0.45 });
+    }, { threshold:0.4 });
     sections.forEach(function(s){ observer.observe(s); });
 
+    // Intro — perch bottom-right and say hello
+    setSide(); perch();
     const intro = [
-      "Salaam. I'm Hud-hud.",
+      "Salaam! I'm Hud-hud.",
       "Messenger bird — I've been flying between these two houses since the Mangni. Figured I'd walk you through the rest, too.",
       "Three days, four functions, one very long guest list. Let's go."
     ];
-    let t = 500;
-    intro.forEach(function(line){
-      setTimeout(function(){ say(line); }, t);
-      t += 2600;
-    });
-    setTimeout(function(){ introDone = true; }, t);
+    let t = 400;
+    intro.forEach(function(line){ setTimeout(function(){ say(line); }, t); t += 2700; });
+    setTimeout(function(){
+      introDone = true;
+      const p = perches['manja']();
+      flyTo(p.x, p.y);
+    }, t);
 
-    // Reactions to what the guest actually does on the page
     document.querySelectorAll('.toggle button.opt').forEach(function(btn){
       btn.addEventListener('click', function(){
         if(cycleTimer) clearInterval(cycleTimer);
         const val = btn.dataset.val;
         const reactions = val === 'yes'
-          ? ["Noted. See you there.", "Wonderful — I'll carry that one myself."]
-          : ["Noted, sadly.", "We'll miss you for that one."];
+          ? ["Yes! Wonderful — I'll carry that one myself.", "Noted. I will personally make sure they know.", "That made my wings happy."]
+          : ["Noted, sadly. We'll miss you for that one.", "They'll understand. I won't, but they will."];
         say(reactions[Math.floor(Math.random()*reactions.length)]);
-        setTimeout(function(){
-          const current = document.querySelector('[data-hud-key="rsvp"]');
-          if(current) cycle('rsvp');
-        }, 3200);
+        setTimeout(function(){ cycle('rsvp'); }, 3200);
       });
     });
+
     const regBtn = document.getElementById('registry-btn');
     if(regBtn){
       regBtn.addEventListener('click', function(){
         if(cycleTimer) clearInterval(cycleTimer);
-        say("Fine. Here it is. On the record, I did try to talk them out of it.");
+        say("Fine. Here it is. On the record, I did try to talk them out of it. Multiple times.");
       });
     }
   }
