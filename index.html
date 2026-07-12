@@ -8,27 +8,26 @@
   @import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
   :root{
-    --cream:#FBF4E8;
-    --page-bg:#0E1428;
-    --ink:#2A1708;
-    --ink-soft:#6B5538;
-    --gold:#C49A35;
-    --gold-soft:#DEC278;
+    --cream:#FFFCF7;
+    --page-bg:#FFFCF7;
+    --ink:#3A2E22;
+    --ink-soft:#7A6A54;
+    --gold:#B8912F;
+    --gold-soft:#D9BE85;
     --gold-pale:#F0DFA8;
+    --rose:#C0707C;
 
-    --manja-a:#FEF0CE; --manja-b:#F4D88A; --manja-ink:#7A4A0A;
-    --mehendi-a:#E8F2E4; --mehendi-b:#B8D8A8; --mehendi-ink:#1E4028;
-    --nikah-a:#FAE5DC; --nikah-b:#E8A898; --nikah-ink:#6B1C1C;
-    --reception-a:#E4E8F8; --reception-b:#A8B0E0; --reception-ink:#1C2458;
+    --manja-a:#FCEFCE; --manja-b:#F4DCA0; --manja-ink:#7A5A12;
+    --mehendi-a:#EAF1E4; --mehendi-b:#CFE0C4; --mehendi-ink:#2E4E33;
+    --nikah-a:#F7E5DE; --nikah-b:#E7BFAE; --nikah-ink:#6B2E22;
+    --reception-a:#E9EBF6; --reception-b:#C7CDEB; --reception-ink:#28315C;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
   html{ scroll-behavior:smooth; }
   body{
-    background: var(--page-bg);
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='none' stroke='rgba(196%2C154%2C53%2C0.22)' stroke-width='0.9'%3E%3Cpath d='M60 6L66 54 114 60 66 66 60 114 54 66 6 60 54 54Z'/%3E%3Cpath d='M60 28L63 57 92 60 63 63 60 92 57 63 28 60 57 57Z'/%3E%3Cpath d='M60 44L61.5 58.5 76 60 61.5 61.5 60 76 58.5 61.5 44 60 58.5 58.5Z' fill='rgba(196%2C154%2C53%2C0.08)'/%3E%3C/g%3E%3Cg stroke='rgba(196%2C154%2C53%2C0.1)' stroke-width='0.5' fill='none'%3E%3Cline x1='0' y1='60' x2='120' y2='60'/%3E%3Cline x1='60' y1='0' x2='60' y2='120'/%3E%3Cline x1='0' y1='0' x2='120' y2='120'/%3E%3Cline x1='120' y1='0' x2='0' y2='120'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='3' fill='rgba(196%2C154%2C53%2C0.15)'/%3E%3Ccircle cx='120' cy='0' r='3' fill='rgba(196%2C154%2C53%2C0.15)'/%3E%3Ccircle cx='0' cy='120' r='3' fill='rgba(196%2C154%2C53%2C0.15)'/%3E%3Ccircle cx='120' cy='120' r='3' fill='rgba(196%2C154%2C53%2C0.15)'/%3E%3C/svg%3E");
-    background-size: 120px 120px;
+    background: var(--page-bg) url('pattern.svg') repeat;
+    background-size: 260px 260px;
     color:var(--ink); font-family:'EB Garamond', serif; font-size:18px; line-height:1.7; overflow:hidden; height:100vh;
   }
   body.unlocked{ overflow:auto; height:auto; }
@@ -89,31 +88,32 @@
   section{ scroll-snap-align:start; }
   #site{ scroll-snap-type:y proximity; }
 
-  nav{ position:sticky; top:0; z-index:60; background:rgba(30,14,6,0.96); backdrop-filter:blur(10px); border-bottom:1.5px solid var(--gold); }
+  nav{ position:sticky; top:0; z-index:60; background:rgba(255,252,247,0.92); backdrop-filter:blur(10px); border-bottom:1px solid var(--gold-soft); }
   nav .wrap{ display:flex; align-items:center; justify-content:space-between; padding:14px 28px; max-width:960px; }
   nav .brand{ font-family:'Beau Rivage', cursive; font-size:30px; color:var(--gold); }
   nav ul{ list-style:none; display:flex; gap:24px; }
-  nav a{ text-decoration:none; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-soft); }
-  nav a:hover{ color:var(--gold-pale); }
+  nav a{ text-decoration:none; font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); }
+  nav a:hover{ color:var(--ink); }
   @media (max-width:640px){ nav ul{ display:none; } }
 
   .hero-sub{ text-align:center; padding:48px 28px 16px; }
-  .hero-sub .date{ font-size:14px; letter-spacing:0.18em; text-transform:uppercase; color:var(--gold-soft); }
-  .hero-sub .place{ margin-top:5px; font-size:17px; font-style:italic; color:var(--gold-pale); }
+  .hero-sub .date{ font-size:14px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-soft); }
+  .hero-sub .place{ margin-top:5px; font-size:17px; font-style:italic; color:var(--ink); }
 
   .strip{ padding:30px 28px 54px; min-height:auto; }
   .strip-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:900px; margin:0 auto; }
-  .strip-card{ text-align:center; padding:18px 8px; border:1px solid rgba(196,154,53,0.4); border-radius:4px; background:rgba(196,154,53,0.08); backdrop-filter:blur(4px); }
-  .strip-card .tag{ font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-soft); }
+  .strip-card{ text-align:center; padding:18px 8px; border:1px solid var(--gold-soft); border-radius:3px; background:rgba(255,252,247,0.85); }
+  .strip-card .tag{ font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
   .strip-card .ev{ font-family:'Beau Rivage',cursive; font-size:26px; color:var(--gold); margin:2px 0; }
-  .strip-card .tm{ font-size:12px; color:var(--gold-soft); opacity:0.8; }
+  .strip-card .tm{ font-size:12px; color:var(--ink-soft); }
   @media (max-width:640px){ .strip-grid{ grid-template-columns:repeat(2,1fr);} }
 
   .event{ padding:16px 28px; position:relative; text-align:center; }
   .event .wrap{
     max-width:820px; margin:0 auto; position:relative; padding:38px 52px 42px;
-    background:var(--cream);
-    box-shadow:0 8px 60px rgba(0,0,0,0.45), 0 2px 8px rgba(0,0,0,0.3);
+    background:rgba(255,252,247,0.92);
+    box-shadow:0 4px 32px rgba(58,46,34,0.1), 0 1px 6px rgba(58,46,34,0.08);
+    border:1px solid rgba(184,145,47,0.25);
   }
 
   /* Collapsible cards */
@@ -186,7 +186,7 @@
   #reception .tl-row{ border-color:var(--reception-ink); }
 
   .rsvp{ padding:60px 28px; text-align:center; display:flex; align-items:center; }
-  .rsvp .wrap{ max-width:560px; margin:0 auto; background:var(--cream); box-shadow:0 8px 60px rgba(0,0,0,0.45); padding:52px 48px; }
+  .rsvp .wrap{ max-width:560px; margin:0 auto; background:rgba(255,252,247,0.92); box-shadow:0 4px 32px rgba(58,46,34,0.1); border:1px solid rgba(184,145,47,0.25); padding:52px 48px; }
   .rsvp h2{ font-family:'Beau Rivage',cursive; font-size:52px; color:var(--gold); margin-bottom:6px; }
   .rsvp p.lead{ color:var(--ink-soft); margin-bottom:38px; font-style:italic; }
   .rsvp input[type=text]{ width:100%; font-family:'EB Garamond',serif; font-size:17px; padding:10px 4px; text-align:center; border:none; border-bottom:1px solid var(--gold-soft); background:transparent; margin-bottom:30px; }
@@ -205,18 +205,17 @@
 
   .venue{ padding:20px 28px 70px; text-align:center; }
   .venue h2{ font-family:'Beau Rivage',cursive; font-size:40px; color:var(--gold); margin-bottom:8px; }
-  .venue p{ color:var(--gold-soft); margin-bottom:3px; font-size:17px; }
+  .venue p{ color:var(--ink-soft); margin-bottom:3px; font-size:17px; }
   .venue .map-link{ display:inline-block; margin-top:18px; padding:11px 28px; border:1px solid var(--gold); text-decoration:none; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold); transition:all 0.2s; }
-  .venue .map-link:hover{ background:var(--gold); color:var(--page-bg); }
+  .venue .map-link:hover{ background:var(--gold); color:#fff; }
 
-  footer{ text-align:center; padding:36px 28px 60px; color:var(--gold-soft); font-size:14px; border-top:1px solid rgba(196,154,53,0.25); }
+  footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
   /* ================= HUD-HUD, THE GUIDE ================= */
   #hud{ position:fixed; z-index:80; display:flex; align-items:flex-end; gap:10px; flex-direction:row; pointer-events:none; }
   #hud.hidden{ display:none; }
   #hud.side-right{ flex-direction:row-reverse; }
-  #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-avatar{
     width:80px; height:80px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -239,18 +238,8 @@
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
-  #hud-bubble{
-    max-width:300px; background:#FEF8E8;
-    border:1px solid var(--gold-soft); border-radius:16px 16px 16px 3px;
-    padding:14px 18px; font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:19px; line-height:1.52; color:var(--ink);
-    box-shadow:0 8px 32px rgba(0,0,0,0.28), inset 0 1px 2px rgba(196,154,53,0.1);
-    opacity:0; transform:translateY(8px); transition:opacity 0.4s ease, transform 0.4s ease; pointer-events:all;
-  }
-  #hud-bubble.show{ opacity:1; transform:translateY(0); }
-  #hud-bubble .who{ display:block; font-size:10.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; font-style:normal; font-family:'EB Garamond',serif; font-weight:600; opacity:0.9; }
   @media (max-width:640px){
-    #hud-bubble{ max-width:200px; font-size:14px; }
+
     #hud-avatar{ width:58px; height:58px; }
     #hud-avatar svg.bird{ width:38px; height:38px; }
   }
@@ -300,7 +289,7 @@
 <div class="hero-sub">
   <div class="date">28 – 30 August 2026</div>
   <div class="place">Heritage Palace, Attapur, Hyderabad</div>
-  <div style="margin-top:14px; font-size:14px; font-style:italic; color:var(--gold-soft); opacity:0.85;">Your guide today is Hud-hud — the messenger bird who's been flying between these two houses all season. Tap a card, he'll meet you there.</div>
+  <div style="margin-top:14px; font-size:14px; font-style:italic; color:var(--ink-soft);">Your guide today is Hud-hud — the messenger bird who's been flying between these two houses all season. Tap a card, he'll meet you there.</div>
 </div>
 
 <section class="strip">
@@ -541,7 +530,6 @@
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
     </svg>
   </div>
-  <div id="hud-bubble"><span class="who">Hud-hud</span><span id="hud-text"></span></div>
 </div>
 
 </div><!-- /#site -->
@@ -564,48 +552,18 @@
     }, 900);
   }
 
-  // ============ Hud-hud, the guide ============
-  const hudLines = {
-    manja: [
-      "Turmeric doesn't come off in one wash. I say this with genuine affection: wear something you've already said goodbye to.",
-      "Azhar is doing the exact same thing tonight, across town. Different house, same yellow, same chaos. They're both covered in the stuff right now as we speak.",
-      "The pot comes from his family first — turmeric, sandalwood, rosewater. First thing exchanged between the two houses. More romantic than any ring, honestly."
-    ],
-    mehendi: [
-      "Yes, you. Sit down — there's an artist here for your hands too. No excuses. I didn't fly here for you to watch.",
-      "Multiple artists today so nobody waits an hour for a single swirl. Get in line, pick your pattern, and pick your bangles on pure vibes. The aunties will have opinions. The bangles won't care.",
-      "Azhar's name is hidden somewhere in Zeenath's pattern and he has to find it later. This tradition gets funnier to me every single year."
-    ],
-    nikah: [
-      "They won't even be in the same room until the Jalwa. The suspense is entirely intentional and I think it's the best part of the whole weekend.",
-      "Qubool Hai, three times, out loud. That's the whole marriage contract. The most ordinary sentence in the world and also the most enormous.",
-      "Tap the questions below — I helped write those. Well, I dictated. Someone typed. Essentially the same contribution."
-    ],
-    reception: [
-      "This is the party they've been quietly planning since before either of them admitted to the other they were planning a party.",
-      "The biryani at a Hyderabadi wedding is a character statement. I have insider knowledge on this one. You are going to be very, very fine.",
-      "No ritual left. No programme. Just the two of them, married, wanting everyone they love in one room at the same time. That's the whole beautiful point."
-    ],
-    rsvp: [
-      "Tell me you're coming. I'll carry it to them personally — I've done the route enough times this year.",
-      "Your name here is genuinely the only thing on their list. They meant it. I was in the room when they wrote it.",
-      "Yes or no, either is fine — just don't leave me hovering. I have other houses and the light's going."
-    ],
-    registry: [
-      "I lobbied against this page existing. Formally. Lost, two to one. I want it on record that I tried.",
-      "Their real wishlist is you in the room, having eaten well. This section is a courtesy to the people who kept asking.",
-      "Fine — it's here. For the record, I did try to talk them out of it. Multiple times. They're stubborn."
-    ],
-    venue: [
-      "Heritage Palace, Attapur — I do the route in twelve minutes. Your GPS will manage it too, I promise.",
-      "Just tap the map. It's a beautiful building. You'll be glad you showed up."
-    ]
-  };
+  // ── Card expand/collapse — standalone, no dependency on Hud-hud ──
+  document.querySelectorAll('.card-toggle').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const wrap = btn.closest('.wrap');
+      const isOpen = wrap.classList.contains('open');
+      document.querySelectorAll('.wrap.open').forEach(function(w){ w.classList.remove('open'); });
+      if(!isOpen) wrap.classList.add('open');
+    });
+  });
 
   function initHud(){
     const hud = document.getElementById('hud');
-    const bubble = document.getElementById('hud-bubble');
-    const text = document.getElementById('hud-text');
     const branch = document.getElementById('hud-branch');
     hud.classList.remove('hidden');
 
@@ -615,20 +573,8 @@
     hud.style.left = hudX + 'px';
     hud.style.top  = hudY + 'px';
 
-    let cycleTimer = null;
-
-    function say(msg){
-      bubble.classList.remove('show');
-      setTimeout(function(){ text.textContent = msg; bubble.classList.add('show'); }, 220);
-    }
-    function cycle(key){
-      const lines = hudLines[key]; if(!lines) return;
-      let i = 0; say(lines[i]);
-      if(cycleTimer) clearInterval(cycleTimer);
-      cycleTimer = setInterval(function(){ i=(i+1)%lines.length; say(lines[i]); }, 5500);
-    }
     function perch(){ hud.classList.remove('flying'); hud.classList.add('perched'); branch.style.opacity='1'; }
-    function unperch(){ hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; bubble.classList.remove('show'); }
+    function unperch(){ hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; }
     function setSide(){ hud.classList.toggle('side-right', hudX > window.innerWidth/2); }
 
     function flyTo(tx, ty, onDone){
@@ -697,54 +643,27 @@
       });
     });
 
-    // Observe non-card sections (registry, rsvp, venue) for Hud-hud lines
-    const staticSections = document.querySelectorAll('[data-hud-key="registry"],[data-hud-key="rsvp"],[data-hud-key="venue"]');
-    let lastStaticKey = null;
-    const staticObserver = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          const key = entry.target.getAttribute('data-hud-key');
-          if(key !== lastStaticKey){
-            lastStaticKey = key;
-            if(cycleTimer) clearInterval(cycleTimer);
-            bubble.classList.remove('show');
-            setTimeout(function(){ cycle(key); }, 400);
-          }
-        }
-      });
-    }, { threshold: 0.3 });
-    staticSections.forEach(function(s){ staticObserver.observe(s); });
-
-    // Intro — appear centre screen
+    // Appear centre screen, then fly to first card after a beat
     setSide(); perch();
-    const intro = [
-      "Salaam! I'm Hud-hud.",
-      "Messenger bird. I've been flying between these two houses since the Mangni — figured I'd stay on and walk you through the rest.",
-      "Three days, four functions, one very long guest list. Tap a card below and I'll meet you there."
-    ];
-    let t = 400;
-    intro.forEach(function(line){ setTimeout(function(){ say(line); }, t); t += 2800; });
-
-    // After intro fly to first card toggle
     setTimeout(function(){
       const firstToggle = document.querySelector('.card-toggle');
       if(firstToggle) flyToToggle(firstToggle);
-    }, t);
+    }, 1200);
 
-    document.querySelectorAll('.toggle button.opt').forEach(function(btn){
+    // Fly to card top when a card opens, back to toggle when it closes
+    document.querySelectorAll('.card-toggle').forEach(function(btn){
       btn.addEventListener('click', function(){
-        if(cycleTimer) clearInterval(cycleTimer);
-        const val = btn.dataset.val;
-        const reactions = val==='yes'
-          ? ["Yes! Wonderful — I'll carry that one myself.", "Noted. I will personally make sure they know.", "That made my wings happy."]
-          : ["Noted, sadly. We'll miss you for that one.", "They'll understand. I won't, but they will."];
-        say(reactions[Math.floor(Math.random()*reactions.length)]);
-        setTimeout(function(){ cycle('rsvp'); }, 3200);
+        const wrap = btn.closest('.wrap');
+        // slight delay so the class has already toggled by standalone listener above
+        setTimeout(function(){
+          if(wrap.classList.contains('open')){
+            flyToCardTop(wrap);
+          } else {
+            flyToToggle(btn);
+          }
+        }, 80);
       });
     });
-
-    const regBtn = document.getElementById('registry-btn');
-    if(regBtn){ regBtn.addEventListener('click', function(){ if(cycleTimer) clearInterval(cycleTimer); say("Fine. Here it is. On the record, I did try to talk them out of it. Multiple times."); }); }
   }
 
   function startPlayback(){
