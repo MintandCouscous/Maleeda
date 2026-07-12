@@ -188,16 +188,20 @@
   #hud.side-right{ flex-direction:row-reverse; }
   #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-avatar{
-    width:100px; height:100px;
+    width:300px; height:300px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative; pointer-events:all;
   }
-  #hud-avatar video.bird{
-    width:100px; height:100px; object-fit:contain;
-    mix-blend-mode:multiply;
-    filter:drop-shadow(0 4px 10px rgba(58,46,34,0.2));
+  #hud-bird-canvas{
+    width:300px; height:300px; object-fit:contain;
+    filter:drop-shadow(0 6px 14px rgba(58,46,34,0.22));
   }
+  #hud-avatar video.bird{ display:none; }
   #hud-avatar svg.bird{ display:none; }
+  @media(max-width:640px){
+    #hud-avatar{ width:160px; height:160px; }
+    #hud-bird-canvas{ width:160px; height:160px; }
+  }
   #hud-branch{
     position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
     width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
@@ -478,7 +482,8 @@
       <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
       <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
     </svg>
-    <video class="bird" src="hudhud.mp4" autoplay loop muted playsinline></video>
+    <canvas id="hud-bird-canvas" width="300" height="300"></canvas>
+    <video class="bird" id="hud-bird-video" src="hudhud.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
     <svg class="bird" viewBox="0 0 48 48" fill="none">
       <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
       <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
@@ -710,6 +715,33 @@
     requestAnimationFrame(function(){ fill.style.width = '100%'; });
     setTimeout(enterSite, PLAY_DURATION_MS);
   }
+
+  // ============ Bird canvas chroma-key ============
+  (function(){
+    const video = document.getElementById('hud-bird-video');
+    const canvas = document.getElementById('hud-bird-canvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+    function processFrame(){
+      if(!video.paused && !video.ended && video.readyState >= 2){
+        ctx.drawImage(video, 0, 0, 300, 300);
+        const img = ctx.getImageData(0, 0, 300, 300);
+        const d = img.data;
+        for(let i = 0; i < d.length; i += 4){
+          const r = d[i], g = d[i+1], b = d[i+2];
+          // knock out light/white background
+          if(r > 210 && g > 200 && b > 190){
+            d[i+3] = 0;
+          }
+        }
+        ctx.putImageData(img, 0, 0);
+      }
+      requestAnimationFrame(processFrame);
+    }
+
+    video.addEventListener('play', processFrame);
+    video.play().catch(function(){});
+  })();
 
   playBtn.addEventListener('click', startPlayback);
   skipBtn.addEventListener('click', enterSite);
