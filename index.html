@@ -216,14 +216,14 @@
   footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
-  /* ================= HUD-HUD, THE GUIDE — pinned to the side, out of the way ================= */
+  /* ================= HUD-HUD, THE GUIDE — flies the left margin, never over content ================= */
   #hud{
     position:fixed; z-index:80; width:74px; height:74px;
-    left:16px; bottom:22px; pointer-events:none;
+    left:16px; top:calc(100vh - 96px); pointer-events:none;
     transition:opacity 0.4s ease, transform 0.4s ease;
   }
   #hud.hidden{ display:none; }
-  #hud.dismissed{ opacity:0; transform:translateX(-16px) scale(0.9); pointer-events:none; }
+  #hud.dismissed{ opacity:0; transform:translateX(-16px) scale(0.9) !important; pointer-events:none; }
   #hud-avatar{
     width:100%; height:100%;
     display:flex; align-items:center; justify-content:center;
@@ -1108,17 +1108,17 @@
     const reviveBtn = document.getElementById('hud-revive');
 
     // Dismissed for the session? Stay hidden, show only the little revive tab.
-    if(sessionStorage.getItem('hudDismissed') === '1'){
+    let dismissed = sessionStorage.getItem('hudDismissed') === '1';
+    if(dismissed){
       hud.classList.add('dismissed');
       reviveBtn.classList.add('show');
     } else {
       hud.classList.remove('hidden');
     }
-    branch.style.opacity = '1';
-    hud.classList.add('perched');
 
     closeBtn.addEventListener('click', function(e){
       e.stopPropagation();
+      dismissed = true;
       hideBubble();
       if(cycleTimer) clearTimeout(cycleTimer);
       hud.classList.add('dismissed');
@@ -1126,6 +1126,7 @@
       sessionStorage.setItem('hudDismissed', '1');
     });
     reviveBtn.addEventListener('click', function(){
+      dismissed = false;
       hud.classList.remove('hidden', 'dismissed');
       reviveBtn.classList.remove('show');
       sessionStorage.removeItem('hudDismissed');
@@ -1134,22 +1135,74 @@
       else say(hudLines.greeting);
     });
 
+    // Is there safe margin beside the centred content to fly around in?
+    function marginX(){
+      const wrapWidth = 720;
+      const margin = (window.innerWidth - wrapWidth) / 2;
+      if(margin < 110) return null;   // too tight — stay put, don't risk covering text
+      return Math.max(16, Math.min(margin * 0.42, 130));
+    }
+
+    const vh0 = Math.max(window.innerHeight, document.documentElement.clientHeight, 480);
+    let hudX = 16, hudY = vh0 - 96;
+    hud.style.left = hudX + 'px';
+    hud.style.top  = hudY + 'px';
+
+    function perch(){ hud.classList.remove('flying'); hud.classList.add('perched'); branch.style.opacity='1'; }
+    function unperch(){ hideBubble(); hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; }
+    perch();
+
+    let flightId = 0;
+    function flyTo(tx, ty, onDone){
+      const myId = ++flightId;
+      const sx=hudX, sy=hudY;
+      const dist = Math.sqrt((tx-sx)**2+(ty-sy)**2);
+      if(dist < 4){ perch(); if(onDone) onDone(); return; }
+      const duration = Math.min(2200, Math.max(1000, dist * 1.5));
+      const t0 = performance.now();
+      unperch();
+      function step(now){
+        if(myId !== flightId) return;
+        const raw = Math.min((now-t0)/duration, 1);
+        const ease = raw<0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
+        const arc = Math.sin(Math.PI*raw) * -Math.min(60, dist*0.22);
+        hudX = sx+(tx-sx)*ease; hudY = sy+(ty-sy)*ease+arc;
+        hud.style.left = hudX+'px'; hud.style.top = hudY+'px';
+        if(raw<1){ requestAnimationFrame(step); }
+        else{ hudX=tx; hudY=ty; hud.style.left=tx+'px'; hud.style.top=ty+'px'; perch(); if(onDone) onDone(); }
+      }
+      requestAnimationFrame(step);
+    }
+
     let currentKey = null;   // which section the guest is currently reading
 
     function visitSection(section){
       const key = section.getAttribute('data-hud-key');
       if(!key || key === currentKey) return;
       currentKey = key;
-      if(hud.classList.contains('dismissed')) return;   // stay quiet if closed
-      cycle(key);
+      if(dismissed) return;   // stay quiet if closed
+
+      const mx = marginX();
+      const speak = function(){ setTimeout(function(){ cycle(key); }, 300); };
+      if(mx === null){
+        // no safe margin (narrow viewport) — stay in the corner, just speak
+        speak();
+        return;
+      }
+      const r = section.getBoundingClientRect();
+      const nav = document.querySelector('nav');
+      const navBottom = nav ? nav.getBoundingClientRect().bottom : 0;
+      let ty = r.top + Math.min(r.height * 0.35, 220);
+      ty = Math.max(navBottom + 16, Math.min(ty, window.innerHeight - 90));
+      flyTo(mx, ty, speak);
     }
 
-    // Greeting once, from his fixed corner spot
+    // Greet from the corner, then settle in for the scroll
     setTimeout(function(){
-      if(!hud.classList.contains('dismissed')) say(hudLines.greeting);
+      if(!dismissed) say(hudLines.greeting);
     }, 700);
 
-    // Bubble updates with the section as you scroll — he never moves or covers content
+    // Bubble + position update with the section as you scroll
     const secObs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(e.isIntersecting && e.intersectionRatio >= 0.4) visitSection(e.target);
