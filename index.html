@@ -101,9 +101,28 @@
   .strip-card .tm{ font-size:12px; color:var(--ink-soft); }
   @media (max-width:640px){ .strip-grid{ grid-template-columns:repeat(2,1fr);} }
 
-  .event{ padding:90px 28px; position:relative; text-align:center; min-height:100vh; display:flex; align-items:center;
+  .event{ padding:20px 28px; position:relative; text-align:center;
     background:radial-gradient(ellipse at top, #FFF8EA 0%, var(--cream) 65%); }
-  .event .wrap{ max-width:820px; margin:0 auto; position:relative; padding:48px 52px; }
+  .event .wrap{ max-width:820px; margin:0 auto; position:relative; padding:38px 52px 42px; }
+
+  /* Collapsible cards */
+  .card-header{ position:relative; padding-right:52px; }
+  .card-toggle{
+    position:absolute; top:50%; right:0; transform:translateY(-50%);
+    width:38px; height:38px; border-radius:50%; border:1.5px solid currentColor;
+    background:none; cursor:pointer; font-family:'EB Garamond',serif; font-size:22px;
+    color:inherit; display:flex; align-items:center; justify-content:center;
+    transition:transform 0.35s ease, background 0.2s ease;
+    line-height:1;
+  }
+  .card-toggle:hover{ background:rgba(184,145,47,0.08); }
+  .wrap.open .card-toggle{ transform:translateY(-50%) rotate(45deg); }
+  .card-body{
+    overflow:hidden; max-height:0;
+    transition:max-height 0.75s cubic-bezier(0.4,0,0.2,1), opacity 0.5s ease;
+    opacity:0;
+  }
+  .wrap.open .card-body{ max-height:3000px; opacity:1; }
   .event .wrap::before{
     content:''; position:absolute; inset:0; border:1.5px solid currentColor; opacity:0.55; pointer-events:none;
   }
@@ -188,19 +207,14 @@
   #hud.side-right{ flex-direction:row-reverse; }
   #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
   #hud-avatar{
-    width:300px; height:300px;
+    width:80px; height:80px;
     display:flex; align-items:center; justify-content:center; flex-shrink:0;
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative; pointer-events:all;
   }
-  #hud-bird-canvas{
-    width:300px; height:300px; object-fit:contain;
-    filter:drop-shadow(0 6px 14px rgba(58,46,34,0.22));
-  }
-  #hud-avatar video.bird{ display:none; }
-  #hud-avatar svg.bird{ display:none; }
+  #hud-avatar svg.bird{ width:74px; height:74px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.22)); }
   @media(max-width:640px){
-    #hud-avatar{ width:160px; height:160px; }
-    #hud-bird-canvas{ width:160px; height:160px; }
+    #hud-avatar{ width:60px; height:60px; }
+    #hud-avatar svg.bird{ width:54px; height:54px; }
   }
   #hud-branch{
     position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
@@ -290,20 +304,22 @@
     <svg class="frame-corner tl" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
     <svg class="frame-corner tr" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
 
-    <div class="event-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
-    <h2 class="event-title">Manja</h2>
-    <div class="event-sub">Hyderabad's answer to Haldi</div>
-    <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
-
-    <p class="story">The turmeric isn't technically Zeenath's — Azhar's family sends it over first, mixed with sandalwood and rosewater, and that's what opens the evening at the house in Shadnagar. The first thing exchanged between the two houses, before anything else. Azhar has his own Manja that same evening too, at his family's place — same paste, same ritual, on the other side of the city.</p>
-    <p class="story">The women of the family take turns working it into Zeenath's hands, face and feet, each one with a quiet dua. Older than either family, this one — and the house rule after tonight is simple: she doesn't step out again until Sunday.</p>
-
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early.</div></div></div>
-      <div class="tl-row"><div class="tl-time">After</div><div><div class="tl-event">The Manja</div><div class="tl-note">Turmeric, laughter, and a lot of yellow that won't fully wash off by morning.</div></div></div>
+    <div class="card-header">
+      <div class="event-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
+      <h2 class="event-title">Manja</h2>
+      <div class="event-sub">Hyderabad's answer to Haldi</div>
+      <button class="card-toggle" aria-label="Expand Manja"><span>+</span></button>
     </div>
-
-    <p class="guest-note">Wear something you like, not something precious. Join us as the festivities begin.</p>
+    <div class="card-body">
+      <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
+      <p class="story">The turmeric isn't technically Zeenath's — Azhar's family sends it over first, mixed with sandalwood and rosewater, and that's what opens the evening at the house in Shadnagar. The first thing exchanged between the two houses, before anything else. Azhar has his own Manja that same evening too, at his family's place — same paste, same ritual, on the other side of the city.</p>
+      <p class="story">The women of the family take turns working it into Zeenath's hands, face and feet, each one with a quiet dua. Older than either family, this one — and the house rule after tonight is simple: she doesn't step out again until Sunday.</p>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early.</div></div></div>
+        <div class="tl-row"><div class="tl-time">After</div><div><div class="tl-event">The Manja</div><div class="tl-note">Turmeric, laughter, and a lot of yellow that won't fully wash off by morning.</div></div></div>
+      </div>
+      <p class="guest-note">Wear something you like, not something precious. Join us as the festivities begin.</p>
+    </div>
   </div>
 </section>
 
@@ -313,23 +329,25 @@
     <svg class="frame-corner tl" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
     <svg class="frame-corner tr" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
 
-    <div class="event-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
-    <h2 class="event-title">Mehendi</h2>
-    <div class="event-sub">&amp; Choodi</div>
-    <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
-
-    <p class="story">Same house as last night, but daylight, breakfast, and a lot less turmeric to worry about. The whole point of today is very simple: someone's going to paint your hands, and you're going to let them.</p>
-    <p class="story">There'll be several henna artists set up around the room — not one overworked artist and a queue that eats your whole morning, but enough of them that you can wander over, pick a pattern off the wall or off your phone, and get it done between cups of chai. The Choodi happens right alongside it, and nobody's assigned anything: everyone picks their own bangles, Zeenath included, purely on vibes and whatever colour's calling to them that day.</p>
-    <p class="story">Small thing worth knowing, since it comes up: henna isn't a Muslim wedding exclusive. Hindu brides wear it, so do Jewish brides across North Africa, so do people at celebrations that otherwise share almost nothing in common. Nice to be part of a tradition that old and that widely borrowed.</p>
-
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+    <div class="card-header">
+      <div class="event-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
+      <h2 class="event-title">Mehendi</h2>
+      <div class="event-sub">&amp; Choodi</div>
+      <button class="card-toggle" aria-label="Expand Mehendi"><span>+</span></button>
     </div>
-
-    <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
+    <div class="card-body">
+      <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
+      <p class="story">Same house as last night, but daylight, breakfast, and a lot less turmeric to worry about. The whole point of today is very simple: someone's going to paint your hands, and you're going to let them.</p>
+      <p class="story">There'll be several henna artists set up around the room — not one overworked artist and a queue that eats your whole morning, but enough of them that you can wander over, pick a pattern off the wall or off your phone, and get it done between cups of chai. The Choodi happens right alongside it, and nobody's assigned anything: everyone picks their own bangles, Zeenath included, purely on vibes and whatever colour's calling to them that day.</p>
+      <p class="story">Small thing worth knowing, since it comes up: henna isn't a Muslim wedding exclusive. Hindu brides wear it, so do Jewish brides across North Africa, so do people at celebrations that otherwise share almost nothing in common. Nice to be part of a tradition that old and that widely borrowed.</p>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+      </div>
+      <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
+    </div>
   </div>
 </section>
 
@@ -339,9 +357,13 @@
     <svg class="frame-corner tl" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
     <svg class="frame-corner tr" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
 
-    <div class="event-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
-    <h2 class="event-title">Nikah</h2>
-    <div class="event-sub">&amp; the Jalwa</div>
+    <div class="card-header">
+      <div class="event-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
+      <h2 class="event-title">Nikah</h2>
+      <div class="event-sub">&amp; the Jalwa</div>
+      <button class="card-toggle" aria-label="Expand Nikah"><span>+</span></button>
+    </div>
+    <div class="card-body">
     <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
 
     <p class="story">A Nikah isn't a sacrament, it's a contract — a khutbah, a proposal, an acceptance, a signature. That's the whole shape of it. Tap through below for the actual detail, rather than one long wall of text about it.</p>
@@ -388,6 +410,7 @@
       <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
       <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, then Arsi Mushaf — the first time they're brought together — then Salaami, elders first.</div></div></div>
     </div>
+    </div><!-- /.card-body -->
   </div>
 </section>
 
@@ -397,20 +420,22 @@
     <svg class="frame-corner tl" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
     <svg class="frame-corner tr" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
 
-    <div class="event-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
-    <h2 class="event-title">Reception</h2>
-    <div class="event-sub">The evening they've been waiting to throw</div>
-    <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
-
-    <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
-    <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
-
-    <div class="couplet">
-      "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
-      <div class="attr">Mawlana Jalal al-Din Rumi</div>
+    <div class="card-header">
+      <div class="event-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
+      <h2 class="event-title">Reception</h2>
+      <div class="event-sub">The evening they've been waiting to throw</div>
+      <button class="card-toggle" aria-label="Expand Reception"><span>+</span></button>
     </div>
-
-    <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
+    <div class="card-body">
+      <div class="vine"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/></svg></div>
+      <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
+      <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
+      <div class="couplet">
+        "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
+        <div class="attr">Mawlana Jalal al-Din Rumi</div>
+      </div>
+      <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
+    </div><!-- /.card-body -->
   </div>
 </section>
 
@@ -482,16 +507,21 @@
       <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
       <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
     </svg>
-    <canvas id="hud-bird-canvas" width="300" height="300"></canvas>
-    <video class="bird" id="hud-bird-video" src="hudhud.mp4" autoplay loop muted playsinline crossorigin="anonymous"></video>
     <svg class="bird" viewBox="0 0 48 48" fill="none">
       <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
       <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
       <path id="wing-r" d="M26 26 C 30 32, 27 38, 20 39 C 19 33, 22 28, 26 26 Z" fill="#C3A46B" stroke="#B8912F" stroke-width="1"/>
       <path d="M8 24 C 4 18, 6 10, 12 8 C 10 13, 11 18, 14 21 Z" fill="#B8912F"/>
-      <path d="M12 12 C 14 8, 18 6, 22 7" stroke="#7A5A12" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <path d="M14 10 C 16 6, 20 4, 24 5" stroke="#7A5A12" stroke-width="1.4" fill="none" stroke-linecap="round"/>
-      <path d="M16 9 C 18 5, 22 3, 26 4" stroke="#7A5A12" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+      <path d="M11 14 C 9 8, 11 2, 13 4 C 13 8, 13 12, 14 13 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
+      <circle cx="13" cy="3" r="2.2" fill="#3A2E22"/>
+      <path d="M14 12 C 13 5, 16 0, 18 3 C 17 7, 16 10, 16 12 Z" fill="#D9BE85" stroke="#7A5A12" stroke-width="0.4"/>
+      <circle cx="18" cy="2" r="2.2" fill="#3A2E22"/>
+      <path d="M17 11 C 17 4, 20 0, 22 3 C 21 6, 20 9, 19 11 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
+      <circle cx="22" cy="2" r="2.2" fill="#3A2E22"/>
+      <path d="M20 12 C 21 5, 24 1, 26 4 C 25 8, 23 11, 22 12 Z" fill="#D9BE85" stroke="#7A5A12" stroke-width="0.4"/>
+      <circle cx="26" cy="4" r="2.2" fill="#3A2E22"/>
+      <path d="M22 14 C 24 8, 26 5, 27 8 C 26 11, 24 13, 23 14 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
+      <circle cx="27" cy="7" r="2.2" fill="#3A2E22"/>
       <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
       <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
@@ -564,135 +594,115 @@
     const branch = document.getElementById('hud-branch');
     hud.classList.remove('hidden');
 
-    // Start bottom-right
-    let hudX = window.innerWidth - 90;
-    let hudY = window.innerHeight - 90;
+    let hudX = window.innerWidth - 100;
+    let hudY = window.innerHeight - 100;
     hud.style.left = hudX + 'px';
     hud.style.top  = hudY + 'px';
     hud.classList.add('side-right');
 
     let cycleTimer = null;
-    let lastKey = null;
 
     function say(msg){
       bubble.classList.remove('show');
-      setTimeout(function(){
-        text.textContent = msg;
-        bubble.classList.add('show');
-      }, 220);
+      setTimeout(function(){ text.textContent = msg; bubble.classList.add('show'); }, 220);
     }
-
     function cycle(key){
-      const lines = hudLines[key];
-      if(!lines) return;
-      let i = 0;
-      say(lines[i]);
+      const lines = hudLines[key]; if(!lines) return;
+      let i = 0; say(lines[i]);
       if(cycleTimer) clearInterval(cycleTimer);
-      cycleTimer = setInterval(function(){
-        i = (i + 1) % lines.length;
-        say(lines[i]);
-      }, 5500);
+      cycleTimer = setInterval(function(){ i=(i+1)%lines.length; say(lines[i]); }, 5500);
     }
-
-    function perch(){
-      hud.classList.remove('flying');
-      hud.classList.add('perched');
-      branch.style.opacity = '1';
-    }
-    function unperch(){
-      hud.classList.add('flying');
-      hud.classList.remove('perched');
-      branch.style.opacity = '0';
-      bubble.classList.remove('show');
-    }
-    function setSide(){
-      if(hudX < window.innerWidth / 2){ hud.classList.remove('side-right'); }
-      else { hud.classList.add('side-right'); }
-    }
+    function perch(){ hud.classList.remove('flying'); hud.classList.add('perched'); branch.style.opacity='1'; }
+    function unperch(){ hud.classList.add('flying'); hud.classList.remove('perched'); branch.style.opacity='0'; bubble.classList.remove('show'); }
+    function setSide(){ hud.classList.toggle('side-right', hudX > window.innerWidth/2); }
 
     function flyTo(tx, ty, onDone){
-      const sx = hudX, sy = hudY;
-      const dist = Math.sqrt((tx-sx)*(tx-sx) + (ty-sy)*(ty-sy));
-      const duration = Math.max(700, Math.min(1500, dist * 1.3));
+      const sx=hudX, sy=hudY;
+      const dist = Math.sqrt((tx-sx)**2+(ty-sy)**2);
+      // slow and graceful — minimum 1.8s, scales with distance
+      const duration = Math.max(1800, dist * 2.2);
       const t0 = performance.now();
       unperch();
-
       function step(now){
-        const raw = Math.min((now - t0) / duration, 1);
-        const ease = raw < 0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
-        const arc = Math.sin(Math.PI * raw) * -Math.min(130, dist * 0.38);
-        const cx = sx + (tx - sx) * ease;
-        const cy = sy + (ty - sy) * ease + arc;
-        hudX = cx; hudY = cy;
-        hud.style.left = cx + 'px';
-        hud.style.top  = cy + 'px';
-        const tilt = (tx > sx ? 13 : -13) * Math.sin(Math.PI * raw);
-        hud.style.transform = 'rotate('+tilt+'deg)';
-        if(raw < 1){ requestAnimationFrame(step); }
+        const raw = Math.min((now-t0)/duration, 1);
+        const ease = raw<0.5 ? 2*raw*raw : -1+(4-2*raw)*raw;
+        const arc = Math.sin(Math.PI*raw) * -Math.min(100, dist*0.3);
+        hudX = sx+(tx-sx)*ease; hudY = sy+(ty-sy)*ease+arc;
+        hud.style.left = hudX+'px'; hud.style.top = hudY+'px';
+        hud.style.transform = 'rotate('+(( tx>sx?10:-10)*Math.sin(Math.PI*raw))+'deg)';
+        if(raw<1){ requestAnimationFrame(step); }
         else{
-          hudX = tx; hudY = ty;
-          hud.style.left = tx + 'px';
-          hud.style.top  = ty + 'px';
-          hud.style.transform = '';
-          setSide();
-          perch();
+          hudX=tx; hudY=ty;
+          hud.style.left=tx+'px'; hud.style.top=ty+'px';
+          hud.style.transform='';
+          setSide(); perch();
           if(onDone) onDone();
         }
       }
       requestAnimationFrame(step);
     }
 
-    // Where Hud-hud perches for each section
-    const perches = {
-      manja:     function(){ return { x:18, y:Math.max(80, window.innerHeight*0.22) }; },
-      mehendi:   function(){ return { x:window.innerWidth-88, y:Math.max(60, window.innerHeight*0.18) }; },
-      nikah:     function(){ return { x:18, y:window.innerHeight*0.44 }; },
-      reception: function(){ return { x:window.innerWidth-88, y:window.innerHeight*0.38 }; },
-      rsvp:      function(){ return { x:18, y:window.innerHeight*0.64 }; },
-      registry:  function(){ return { x:Math.max(18,window.innerWidth/2-36), y:Math.max(60,window.innerHeight*0.14) }; },
-      venue:     function(){ return { x:window.innerWidth-88, y:window.innerHeight*0.56 }; },
-    };
-
-    function goToSection(key){
-      const fn = perches[key]; if(!fn) return;
-      const pos = fn();
-      if(cycleTimer) clearInterval(cycleTimer);
-      setTimeout(function(){ flyTo(pos.x, pos.y, function(){ cycle(key); }); }, 250);
+    // Fly to the + toggle button of a card
+    function flyToToggle(toggleBtn, onDone){
+      const r = toggleBtn.getBoundingClientRect();
+      const tx = r.left + r.width/2 - 37;   // center bird on button
+      const ty = r.top - 68;                  // feet land on button
+      flyTo(tx, ty, onDone);
+    }
+    // Fly to top of an open card
+    function flyToCardTop(wrap, onDone){
+      const r = wrap.getBoundingClientRect();
+      const tx = r.right - 100;
+      const ty = r.top + 10;
+      flyTo(tx, ty, onDone);
     }
 
-    const sections = document.querySelectorAll('[data-hud-key]');
-    let introDone = false;
-    const observer = new IntersectionObserver(function(entries){
-      if(!introDone) return;
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          const key = entry.target.getAttribute('data-hud-key');
-          if(key !== lastKey){ lastKey = key; goToSection(key); }
+    // Wire up card toggles
+    document.querySelectorAll('.card-toggle').forEach(function(btn){
+      const wrap = btn.closest('.wrap');
+      const section = btn.closest('section');
+      const key = section ? section.getAttribute('data-hud-key') : null;
+
+      btn.addEventListener('click', function(){
+        const opening = !wrap.classList.contains('open');
+        // close all other cards
+        document.querySelectorAll('.wrap.open').forEach(function(w){ w.classList.remove('open'); });
+
+        if(opening){
+          wrap.classList.add('open');
+          if(cycleTimer) clearInterval(cycleTimer);
+          // fly to card top after short delay (card is expanding)
+          setTimeout(function(){
+            flyToCardTop(wrap, function(){ if(key) cycle(key); });
+          }, 200);
+        } else {
+          // closed — fly to the + button
+          flyToToggle(btn, function(){ if(key) cycle(key); });
         }
       });
-    }, { threshold:0.4 });
-    sections.forEach(function(s){ observer.observe(s); });
+    });
 
-    // Intro — perch bottom-right and say hello
+    // Intro
     setSide(); perch();
     const intro = [
       "Salaam! I'm Hud-hud.",
-      "Messenger bird — I've been flying between these two houses since the Mangni. Figured I'd walk you through the rest, too.",
-      "Three days, four functions, one very long guest list. Let's go."
+      "Messenger bird — I've been flying between these two houses since the Mangni. Figured I'd walk you through the rest too.",
+      "Tap any event below to open it. I'll meet you there."
     ];
     let t = 400;
     intro.forEach(function(line){ setTimeout(function(){ say(line); }, t); t += 2700; });
+
+    // After intro, fly to first card's toggle
     setTimeout(function(){
-      introDone = true;
-      const p = perches['manja']();
-      flyTo(p.x, p.y);
+      const firstToggle = document.querySelector('.card-toggle');
+      if(firstToggle) flyToToggle(firstToggle);
     }, t);
 
     document.querySelectorAll('.toggle button.opt').forEach(function(btn){
       btn.addEventListener('click', function(){
         if(cycleTimer) clearInterval(cycleTimer);
         const val = btn.dataset.val;
-        const reactions = val === 'yes'
+        const reactions = val==='yes'
           ? ["Yes! Wonderful — I'll carry that one myself.", "Noted. I will personally make sure they know.", "That made my wings happy."]
           : ["Noted, sadly. We'll miss you for that one.", "They'll understand. I won't, but they will."];
         say(reactions[Math.floor(Math.random()*reactions.length)]);
@@ -701,12 +711,7 @@
     });
 
     const regBtn = document.getElementById('registry-btn');
-    if(regBtn){
-      regBtn.addEventListener('click', function(){
-        if(cycleTimer) clearInterval(cycleTimer);
-        say("Fine. Here it is. On the record, I did try to talk them out of it. Multiple times.");
-      });
-    }
+    if(regBtn){ regBtn.addEventListener('click', function(){ if(cycleTimer) clearInterval(cycleTimer); say("Fine. Here it is. On the record, I did try to talk them out of it. Multiple times."); }); }
   }
 
   function startPlayback(){
@@ -716,32 +721,6 @@
     setTimeout(enterSite, PLAY_DURATION_MS);
   }
 
-  // ============ Bird canvas chroma-key ============
-  (function(){
-    const video = document.getElementById('hud-bird-video');
-    const canvas = document.getElementById('hud-bird-canvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
-    function processFrame(){
-      if(!video.paused && !video.ended && video.readyState >= 2){
-        ctx.drawImage(video, 0, 0, 300, 300);
-        const img = ctx.getImageData(0, 0, 300, 300);
-        const d = img.data;
-        for(let i = 0; i < d.length; i += 4){
-          const r = d[i], g = d[i+1], b = d[i+2];
-          // knock out light/white background
-          if(r > 210 && g > 200 && b > 190){
-            d[i+3] = 0;
-          }
-        }
-        ctx.putImageData(img, 0, 0);
-      }
-      requestAnimationFrame(processFrame);
-    }
-
-    video.addEventListener('play', processFrame);
-    video.play().catch(function(){});
-  })();
 
   playBtn.addEventListener('click', startPlayback);
   skipBtn.addEventListener('click', enterSite);
