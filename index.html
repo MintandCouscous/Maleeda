@@ -26,8 +26,7 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{ scroll-behavior:smooth; }
   body{
-    background: var(--page-bg) url('pattern.svg') repeat;
-    background-size: 260px 260px;
+    background: var(--page-bg);
     color:var(--ink); font-family:'EB Garamond', serif; font-size:18px; line-height:1.7; overflow:hidden; height:100vh;
   }
   body.unlocked{ overflow:auto; height:auto; }
@@ -243,6 +242,27 @@
     #hud-avatar{ width:58px; height:58px; }
     #hud-avatar svg.bird{ width:38px; height:38px; }
   }
+
+  /* ── speech bubble ── */
+  #hud-bubble{
+    max-width:260px; background:rgba(255,252,247,0.97);
+    border:1.2px solid var(--gold-soft); border-radius:16px 16px 16px 4px;
+    padding:12px 16px; box-shadow:0 4px 18px rgba(58,46,34,0.14);
+    font-family:'Cormorant Garamond',serif; font-size:15px; line-height:1.55;
+    color:var(--ink); pointer-events:none; position:relative;
+    opacity:0; transition:opacity 0.4s ease; min-width:160px;
+  }
+  #hud.side-right #hud-bubble{ border-radius:16px 16px 4px 16px; }
+  #hud-bubble.visible{ opacity:1; }
+  .who{ display:block; font-family:'Beau Rivage',cursive; font-size:20px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
+
+  /* ── bougainvillea vine ── */
+  #vine{
+    position:fixed; right:0; top:0; width:clamp(260px,28vw,400px); height:100vh;
+    pointer-events:none; z-index:1; overflow:visible;
+  }
+  #vine svg{ width:100%; height:100%; }
+  @media(max-width:640px){ #vine{ display:none; } }
 </style>
 </head>
 <body>
@@ -271,7 +291,193 @@
   <video>, drive PLAY_DURATION_MS off its actual length or its 'ended' event instead of a timer.
 -->
 
-<div id="site">
+<!-- Bougainvillea vine — fixed right side, behind everything -->
+<div id="vine" aria-hidden="true">
+<svg viewBox="0 0 380 900" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMaxYMax meet">
+  <!-- MAIN TRUNK climbing from bottom-right -->
+  <path d="M310 900 C300 860 285 830 275 790 C262 745 270 710 255 670 C240 628 218 610 225 565 C232 520 252 498 240 450 C228 402 205 382 215 330 C224 282 248 258 235 205 C222 154 198 130 210 75 C218 38 230 15 225 0" stroke="#4A2810" stroke-width="11" stroke-linecap="round"/>
+
+  <!-- BRANCH 1 — sweeps left, low -->
+  <path d="M255 680 C225 665 190 660 155 645 C118 630 85 625 50 608 C28 598 8 590 0 582" stroke="#5A3414" stroke-width="7" stroke-linecap="round"/>
+  <path d="M155 648 C140 625 130 605 120 580" stroke="#6A4020" stroke-width="4" stroke-linecap="round"/>
+  <path d="M90 618 C75 600 68 580 72 555" stroke="#6A4020" stroke-width="3.5" stroke-linecap="round"/>
+
+  <!-- BRANCH 2 — wide sweep mid -->
+  <path d="M235 520 C200 502 165 495 128 478 C92 462 60 455 22 440" stroke="#5A3414" stroke-width="6" stroke-linecap="round"/>
+  <path d="M165 490 C148 468 140 445 148 418" stroke="#6A4020" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M115 472 C98 452 92 428 100 402" stroke="#6A4020" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- BRANCH 3 — upper left -->
+  <path d="M222 330 C188 312 152 305 115 288 C80 272 48 262 15 248" stroke="#5A3414" stroke-width="5.5" stroke-linecap="round"/>
+  <path d="M148 294 C132 272 128 248 138 222" stroke="#6A4020" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- BRANCH 4 — top, spreading left -->
+  <path d="M218 165 C185 148 150 142 115 126 C82 110 52 100 22 88" stroke="#5A3414" stroke-width="5" stroke-linecap="round"/>
+  <path d="M150 135 C132 114 125 90 135 65" stroke="#6A4020" stroke-width="3" stroke-linecap="round"/>
+  <path d="M110 120 C95 100 92 75 102 50" stroke="#6A4020" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- BRANCH 5 — near top going far left -->
+  <path d="M228 80 C195 62 155 52 112 38 C75 25 38 18 5 8" stroke="#5A3414" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- ═══ BRACT CLUSTERS ═══ -->
+  <!-- Each cluster: groups of 6–9 papery bracts in magenta/hot-pink -->
+
+  <!-- CLUSTER A — tip of branch 1 (far left, low) -->
+  <g transform="translate(6,578)">
+    <ellipse rx="14" ry="9" fill="#D9436A" transform="rotate(-30) translate(0,-14)"/>
+    <ellipse rx="14" ry="9" fill="#E8607E" transform="rotate(30) translate(0,-14)"/>
+    <ellipse rx="14" ry="9" fill="#D9436A" transform="rotate(90) translate(0,-14)"/>
+    <ellipse rx="13" ry="8" fill="#F07898" transform="rotate(-70) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#F07898" transform="rotate(150) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#D9436A" transform="rotate(210) translate(0,-12)"/>
+    <circle r="4" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER B — mid on branch 1 -->
+  <g transform="translate(118,580)">
+    <ellipse rx="13" ry="8" fill="#E05078" transform="rotate(-20) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#D03A68" transform="rotate(40) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#F06888" transform="rotate(100) translate(0,-13)"/>
+    <ellipse rx="12" ry="7" fill="#E85880" transform="rotate(160) translate(0,-11)"/>
+    <ellipse rx="12" ry="7" fill="#D84070" transform="rotate(220) translate(0,-11)"/>
+    <ellipse rx="12" ry="7" fill="#F07090" transform="rotate(280) translate(0,-11)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER C — tip of sub-branch low -->
+  <g transform="translate(120,572)">
+    <ellipse rx="12" ry="7.5" fill="#E85878" transform="rotate(15) translate(0,-13)"/>
+    <ellipse rx="12" ry="7.5" fill="#D04068" transform="rotate(135) translate(0,-13)"/>
+    <ellipse rx="12" ry="7.5" fill="#F06888" transform="rotate(255) translate(0,-13)"/>
+    <ellipse rx="11" ry="7" fill="#E06080" transform="rotate(75) translate(0,-11)"/>
+    <ellipse rx="11" ry="7" fill="#D04870" transform="rotate(195) translate(0,-11)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER D — branch 2 tip -->
+  <g transform="translate(20,436)">
+    <ellipse rx="15" ry="9" fill="#D8406A" transform="rotate(-10) translate(0,-15)"/>
+    <ellipse rx="15" ry="9" fill="#E85878" transform="rotate(50) translate(0,-15)"/>
+    <ellipse rx="15" ry="9" fill="#C83060" transform="rotate(110) translate(0,-15)"/>
+    <ellipse rx="14" ry="8.5" fill="#F07090" transform="rotate(170) translate(0,-13)"/>
+    <ellipse rx="14" ry="8.5" fill="#E04878" transform="rotate(230) translate(0,-13)"/>
+    <ellipse rx="14" ry="8.5" fill="#D03868" transform="rotate(290) translate(0,-13)"/>
+    <ellipse rx="12" ry="7" fill="#F89AB0" transform="rotate(350) translate(0,-11)"/>
+    <circle r="4" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER E — mid branch 2 -->
+  <g transform="translate(148,412)">
+    <ellipse rx="13" ry="8" fill="#E04A70" transform="rotate(5) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#D03860" transform="rotate(65) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#F06880" transform="rotate(125) translate(0,-13)"/>
+    <ellipse rx="12" ry="7.5" fill="#E05878" transform="rotate(185) translate(0,-11)"/>
+    <ellipse rx="12" ry="7.5" fill="#C83060" transform="rotate(245) translate(0,-11)"/>
+    <ellipse rx="12" ry="7.5" fill="#F07890" transform="rotate(305) translate(0,-11)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER F — branch 3 tip -->
+  <g transform="translate(12,244)">
+    <ellipse rx="14" ry="8.5" fill="#D8406A" transform="rotate(-5) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#E85870" transform="rotate(55) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#C83060" transform="rotate(115) translate(0,-14)"/>
+    <ellipse rx="13" ry="8" fill="#F07088" transform="rotate(175) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#E04870" transform="rotate(235) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#D03860" transform="rotate(295) translate(0,-12)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER G — along branch 3 mid -->
+  <g transform="translate(138,218)">
+    <ellipse rx="12" ry="7.5" fill="#E04870" transform="rotate(10) translate(0,-12)"/>
+    <ellipse rx="12" ry="7.5" fill="#D03A62" transform="rotate(130) translate(0,-12)"/>
+    <ellipse rx="12" ry="7.5" fill="#F06880" transform="rotate(250) translate(0,-12)"/>
+    <ellipse rx="11" ry="7" fill="#E85878" transform="rotate(70) translate(0,-10)"/>
+    <ellipse rx="11" ry="7" fill="#C83060" transform="rotate(190) translate(0,-10)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER H — branch 4 tip -->
+  <g transform="translate(18,84)">
+    <ellipse rx="14" ry="8.5" fill="#D83A68" transform="rotate(-15) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#E85070" transform="rotate(45) translate(0,-14)"/>
+    <ellipse rx="14" ry="8.5" fill="#C82A5A" transform="rotate(105) translate(0,-14)"/>
+    <ellipse rx="13" ry="8" fill="#F06880" transform="rotate(165) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#E04068" transform="rotate(225) translate(0,-12)"/>
+    <ellipse rx="13" ry="8" fill="#D03260" transform="rotate(285) translate(0,-12)"/>
+    <ellipse rx="11" ry="7" fill="#F89AB0" transform="rotate(15) translate(0,-10)"/>
+    <circle r="3.5" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER I — along branch 4 -->
+  <g transform="translate(148,120)">
+    <ellipse rx="12" ry="7" fill="#E04870" transform="rotate(20) translate(0,-12)"/>
+    <ellipse rx="12" ry="7" fill="#D03A62" transform="rotate(140) translate(0,-12)"/>
+    <ellipse rx="12" ry="7" fill="#F06880" transform="rotate(260) translate(0,-12)"/>
+    <ellipse rx="11" ry="6.5" fill="#E05878" transform="rotate(80) translate(0,-10)"/>
+    <ellipse rx="11" ry="6.5" fill="#C83060" transform="rotate(200) translate(0,-10)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER J — branch 5 tip -->
+  <g transform="translate(4,5)">
+    <ellipse rx="13" ry="8" fill="#D83A68" transform="rotate(-25) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#E85070" transform="rotate(35) translate(0,-13)"/>
+    <ellipse rx="13" ry="8" fill="#F06880" transform="rotate(95) translate(0,-13)"/>
+    <ellipse rx="12" ry="7.5" fill="#E04068" transform="rotate(155) translate(0,-11)"/>
+    <ellipse rx="12" ry="7.5" fill="#D03260" transform="rotate(215) translate(0,-11)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- CLUSTER K — along branch 5 mid -->
+  <g transform="translate(112,30)">
+    <ellipse rx="12" ry="7" fill="#E04A70" transform="rotate(0) translate(0,-12)"/>
+    <ellipse rx="12" ry="7" fill="#D03860" transform="rotate(120) translate(0,-12)"/>
+    <ellipse rx="12" ry="7" fill="#F06882" transform="rotate(240) translate(0,-12)"/>
+    <ellipse rx="11" ry="6.5" fill="#E05878" transform="rotate(60) translate(0,-10)"/>
+    <ellipse rx="11" ry="6.5" fill="#C83060" transform="rotate(180) translate(0,-10)"/>
+    <circle r="3" fill="#FFF8F0" opacity="0.9"/>
+  </g>
+
+  <!-- ═══ LEAVES ═══ -->
+  <g fill="#3A6828" opacity="0.82">
+    <!-- Main stem leaves -->
+    <ellipse cx="268" cy="740" rx="18" ry="9" transform="rotate(-50 268 740)"/>
+    <ellipse cx="242" cy="700" rx="16" ry="8" transform="rotate(40 242 700)"/>
+    <ellipse cx="258" cy="630" rx="18" ry="9" transform="rotate(-60 258 630)"/>
+    <ellipse cx="232" cy="580" rx="15" ry="8" transform="rotate(35 232 580)"/>
+    <ellipse cx="248" cy="510" rx="17" ry="8.5" transform="rotate(-45 248 510)"/>
+    <ellipse cx="222" cy="460" rx="15" ry="7.5" transform="rotate(40 222 460)"/>
+    <ellipse cx="235" cy="390" rx="16" ry="8" transform="rotate(-55 235 390)"/>
+    <ellipse cx="215" cy="340" rx="14" ry="7" transform="rotate(38 215 340)"/>
+    <ellipse cx="228" cy="265" rx="16" ry="8" transform="rotate(-48 228 265)"/>
+    <ellipse cx="208" cy="210" rx="14" ry="7" transform="rotate(42 208 210)"/>
+    <ellipse cx="222" cy="140" rx="15" ry="7.5" transform="rotate(-50 222 140)"/>
+    <ellipse cx="210" cy="90" rx="13" ry="6.5" transform="rotate(36 210 90)"/>
+    <!-- Branch 1 leaves -->
+    <ellipse cx="200" cy="655" rx="15" ry="7.5" transform="rotate(-30 200 655)"/>
+    <ellipse cx="140" cy="640" rx="14" ry="7" transform="rotate(20 140 640)"/>
+    <ellipse cx="78" cy="618" rx="14" ry="7" transform="rotate(-40 78 618)"/>
+    <!-- Branch 2 leaves -->
+    <ellipse cx="195" cy="490" rx="14" ry="7" transform="rotate(-35 195 490)"/>
+    <ellipse cx="138" cy="474" rx="13" ry="6.5" transform="rotate(25 138 474)"/>
+    <ellipse cx="72" cy="456" rx="13" ry="6.5" transform="rotate(-38 72 456)"/>
+    <!-- Branch 3 leaves -->
+    <ellipse cx="185" cy="308" rx="13" ry="6.5" transform="rotate(-32 185 308)"/>
+    <ellipse cx="122" cy="290" rx="12" ry="6" transform="rotate(28 122 290)"/>
+    <ellipse cx="62" cy="256" rx="12" ry="6" transform="rotate(-35 62 256)"/>
+    <!-- Branch 4 leaves -->
+    <ellipse cx="185" cy="148" rx="13" ry="6.5" transform="rotate(-28 185 148)"/>
+    <ellipse cx="125" cy="128" rx="12" ry="6" transform="rotate(22 125 128)"/>
+    <ellipse cx="65" cy="100" rx="12" ry="6" transform="rotate(-32 65 100)"/>
+    <!-- Branch 5 leaves -->
+    <ellipse cx="178" cy="72" rx="12" ry="6" transform="rotate(-25 178 72)"/>
+    <ellipse cx="115" cy="48" rx="11" ry="5.5" transform="rotate(20 115 48)"/>
+    <ellipse cx="58" cy="22" rx="11" ry="5.5" transform="rotate(-30 58 22)"/>
+  </g>
+</svg>
+</div>
 
 <nav>
   <div class="wrap">
@@ -530,6 +736,10 @@
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
     </svg>
   </div>
+  <div id="hud-bubble">
+    <span class="who">Hud-hud</span>
+    <span id="hud-text"></span>
+  </div>
 </div>
 
 </div><!-- /#site -->
@@ -561,6 +771,67 @@
       if(!isOpen) wrap.classList.add('open');
     });
   });
+
+  let cycleTimer = null;
+
+  const hudLines = {
+    greeting: [
+      "Salaam! I'm Hud-hud, royal bird and chief of wedding announcements. Welcome to this shadikhana!",
+      "Bismillah and welcome, dear guest! Three days of celebration await — let me show you around.",
+      "Ah, you made it! I've been perched here waiting. The festivities begin soon — read on!"
+    ],
+    manja: [
+      "The Manja! Turmeric on the hands, chaos in the house, absolute joy in the heart. Classic.",
+      "Yellow everything, singing aunties, that one relative who always cries at the Manja — you know who you are.",
+      "Manja morning: nobody sleeps, everyone eats, and the bride glows yellow for days. Worth it."
+    ],
+    mehendi: [
+      "Mehendi! The henna artist arrives and suddenly everyone wants intricate floral patterns. Patience is a virtue.",
+      "The Mehendi evening smells of henna and roses. Also possibly biryani. Mostly biryani.",
+      "Mehendi tip: the darker the stain, the stronger the love. Also the longer you left it on."
+    ],
+    nikah: [
+      "The Nikah — two words, a lifetime of adventure. I've witnessed many; this one already has my heart.",
+      "Qubool hai, qubool hai, qubool hai. Three words that change everything. Tissues recommended.",
+      "The Nikah is the still centre of all this beautiful noise. Pay attention — it's over in a blink."
+    ],
+    reception: [
+      "The Reception! Everyone is dressed magnificently, the lights are golden, and the biryani is non-negotiable.",
+      "Grand finale time. Three days of love and laughter ending in one glorious party. Come hungry.",
+      "Reception night: the couple finally gets to eat their own wedding food. A triumph of planning."
+    ],
+    registry: [
+      "Oh, gifts! I myself prefer shiny objects but apparently cash is also acceptable. The couple agrees.",
+      "Registry time — they've made it very easy for you. Even I could do it, and I have wings for hands."
+    ],
+    rsvp: [
+      "RSVP! Let them know you're coming so they can reserve you a place at the biryani table. Important.",
+      "Please do RSVP. The caterer needs numbers and I need to know how many chairs to supervise."
+    ],
+    venue: [
+      "Heritage Palace, Attapur! Very grand. Very Hyderabadi. Wear your best and arrive with appetite.",
+      "The venue has been chosen with care. Arrive early, leave late, eat everything."
+    ]
+  };
+
+  function say(lines){
+    const bubble = document.getElementById('hud-bubble');
+    const textEl = document.getElementById('hud-text');
+    if(!bubble || !textEl) return;
+    const line = lines[Math.floor(Math.random() * lines.length)];
+    textEl.textContent = line;
+    bubble.classList.add('visible');
+    clearTimeout(say._timer);
+    say._timer = setTimeout(function(){ bubble.classList.remove('visible'); }, 6000);
+  }
+
+  function cycle(key){
+    if(cycleTimer) clearInterval(cycleTimer);
+    const lines = hudLines[key];
+    if(!lines) return;
+    say(lines);
+    cycleTimer = setInterval(function(){ say(lines); }, 9000);
+  }
 
   function initHud(){
     const hud = document.getElementById('hud');
@@ -643,26 +914,25 @@
       });
     });
 
-    // Appear centre screen, then fly to first card after a beat
+    // Greeting, then fly to first card
     setSide(); perch();
+    say(hudLines.greeting);
     setTimeout(function(){
       const firstToggle = document.querySelector('.card-toggle');
-      if(firstToggle) flyToToggle(firstToggle);
-    }, 1200);
+      if(firstToggle) flyToToggle(firstToggle, function(){ cycle('manja'); });
+    }, 2200);
 
-    // Fly to card top when a card opens, back to toggle when it closes
-    document.querySelectorAll('.card-toggle').forEach(function(btn){
-      btn.addEventListener('click', function(){
-        const wrap = btn.closest('.wrap');
-        // slight delay so the class has already toggled by standalone listener above
-        setTimeout(function(){
-          if(wrap.classList.contains('open')){
-            flyToCardTop(wrap);
-          } else {
-            flyToToggle(btn);
-          }
-        }, 80);
-      });
+    // Section observers for registry / rsvp / venue
+    var sectionKeys = { registry:'registry', rsvp:'rsvp', venue:'venue' };
+    Object.keys(sectionKeys).forEach(function(id){
+      var el = document.getElementById(id);
+      if(!el) return;
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting) cycle(sectionKeys[id]);
+        });
+      }, { threshold: 0.35 });
+      obs.observe(el);
     });
   }
 
