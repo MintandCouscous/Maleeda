@@ -951,42 +951,66 @@
     greeting: [
       "Oh, you're here! Wonderful. I'm Hud-hud — royal hoopoe, keeper of wedding secrets, and very pleased to meet you. Come, let me show you everything.",
       "Salaam, dear guest! I'm Hud-hud, your little guide. I've been flying between the two houses all season carrying news — and you are the best thing to arrive yet.",
-      "You made it! I'm Hud-hud. I have a crown, a very important job, and three days of celebration to show you. Stay close."
+      "You made it! I'm Hud-hud. I have a crown, a very important job, and three days of celebration to show you. Stay close.",
+      "Hello hello! I puffed up my feathers specially for you. Do I look important? I feel important. Let's go exploring.",
+      "Psst — over here! I'm Hud-hud, and I've been waiting on this branch so long my feet fell asleep. Worth it though, you're lovely.",
+      "*tiny bow* Hud-hud, at your service. I come with a crown, excellent gossip, and absolutely no chill about this wedding."
     ],
     manja: [
       "The Manja! Turmeric, laughter, aunties singing slightly out of tune — it's my favourite kind of chaos. Tap the + and come see.",
       "Hyderabad's answer to Haldi, and between us? Better. The bride will glow for days. So will everyone else, honestly.",
-      "Someone always happy-cries at the Manja. My money's on the uncle who swears he won't. I adore him already."
+      "Someone always happy-cries at the Manja. My money's on the uncle who swears he won't. I adore him already.",
+      "Turmeric everywhere — hands, clothes, one unlucky pillow. I tried to help and now I'm faintly yellow too. No regrets.",
+      "This is the night everyone gets sticky, glowy, and a little bit emotional. Ten out of ten, would perch here again.",
+      "Fair warning: the paste smells like a spice market fell in love. In the best way. Tap the + and be delighted."
     ],
     mehendi: [
       "Mehendi & Choodi! You sit, you sip chai, someone paints tiny gardens on your hands. Humans really do the loveliest things.",
       "They say the darker the mehendi, the deeper the love. I've peeked at the artist's work — this marriage is in excellent hands.",
-      "Bangles, henna, chai on endless refill. If I had wrists, I'd be first in line."
+      "Bangles, henna, chai on endless refill. If I had wrists, I'd be first in line.",
+      "I watched someone get a tiny hoopoe drawn into their mehendi design today. I may have cried a little. A proud little tear.",
+      "The clinking of bangles all afternoon sounds like the happiest wind chime in the world. Come hear it for yourself.",
+      "Sit still, let someone paint you pretty, drink your third chai. This is the whole plan and it is a very good one."
     ],
     nikah: [
       "The Nikah. Three little qubool hais, and two lives become one. Blink and you'll miss it — so don't blink.",
       "I've watched a thousand nikaahs and I still get something in my eye every time. It's dust. It's definitely dust.",
-      "Everything else is the party — this is the promise. Twelve noon. Be there, hold someone's hand."
+      "Everything else is the party — this is the promise. Twelve noon. Be there, hold someone's hand.",
+      "This is the bit where I go quiet, sit very still on my branch, and just feel grateful to witness it. You will too.",
+      "Two families become one family, right here, right now. Bring tissues. Bring your whole soft heart.",
+      "Twelve noon, one big moment. I'll be the small emotional bird up top, doing my best not to make a sound."
     ],
     reception: [
       "The Reception! Golden lights, everyone in their finest, and biryani that deserves its own poem. Come hungry, leave happy.",
       "The grand finale — where the couple finally gets to eat at their own wedding. I'll be near the desserts if you need me.",
-      "Gentle warning: this biryani may ruin all other biryani for you. A small price. Worth it."
+      "Gentle warning: this biryani may ruin all other biryani for you. A small price. Worth it.",
+      "Everyone's dressed like royalty tonight, so naturally I feel right at home. Come find me by the fairy lights.",
+      "This is where all the love from the last three days turns into one enormous, glittering party. Wear your dancing shoes.",
+      "I intend to eat approximately one crumb of everything. A bird's got to pace himself. Join me, wont you?"
     ],
     registry: [
       "Gifts! I collect shiny things and interesting twigs myself, but the couple has simpler taste. One little tap and you're done.",
       "They've made it so easy even I could do it — and I have wings instead of hands. Go on, have a look.",
-      "You were wondering what to bring. They've already answered, the thoughtful things. Isn't that nice of them?"
+      "You were wondering what to bring. They've already answered, the thoughtful things. Isn't that nice of them?",
+      "No pressure at all — just a little nudge from your favourite bird, because I do enjoy seeing a wishlist fulfilled.",
+      "Between us: I already peeked. Everything on here is genuinely lovely. Good choices, good couple.",
+      "One tap, a small act of love, a very happy pair of newlyweds. Simple maths, really."
     ],
     rsvp: [
       "RSVP, please! The caterer needs numbers, and I want to make sure there's a biryani seat with your name on it.",
       "Thirty little seconds, that's all the form takes. Then it's official: you're coming, and I get to see you there.",
-      "Do fill it in — I count every yes personally, and each one makes my crown stand a little taller."
+      "Do fill it in — I count every yes personally, and each one makes my crown stand a little taller.",
+      "I keep a little list. Tapping yes here means I get to add your name to it, and honestly, that would make my whole week.",
+      "Consider this your official invitation delivered by hand — well, wing. Now do the polite thing and reply.",
+      "It's just one small tap. Somewhere a seating chart is waiting anxiously for your answer. Put it out of its misery."
     ],
     venue: [
       "Heritage Palace, Attapur! Arches, marble, golden light. Wear your favourite outfit — the one that makes you feel wonderful.",
       "I've flown over every rooftop in Hyderabad, and this venue is the loveliest of them all. Wait till you see it in the evening.",
-      "Arrive early, stay late, dance badly with great joy. That's the whole assignment, and I believe in you."
+      "Arrive early, stay late, dance badly with great joy. That's the whole assignment, and I believe in you.",
+      "There's a little courtyard here where the light turns gold around sunset. I perch there sometimes just to enjoy it.",
+      "Marble floors, tall arches, and just enough grandeur to make everyone stand a little taller. My kind of place.",
+      "Come find the best spot for photos — I've already scouted it. Ask me nicely and I might show you."
     ]
   };
 
@@ -1015,12 +1039,21 @@
     say._timer = setTimeout(function(){ bubble.classList.remove('visible'); }, readTime);
   }
 
-  // One thoughtful line per arrival — no nagging repeats
+  // Chatty while you linger — a fresh line every so often, gently, never nagging
+  let cycleKey = null;
   function cycle(key){
     if(cycleTimer) clearTimeout(cycleTimer);
     const lines = hudLines[key];
     if(!lines) return;
+    cycleKey = key;
     say(lines);
+    (function scheduleNext(){
+      cycleTimer = setTimeout(function(){
+        if(cycleKey !== key) return;   // guest has moved on to another section
+        say(lines);
+        scheduleNext();
+      }, 8000 + Math.random()*2500);
+    })();
   }
 
   function initHud(){
