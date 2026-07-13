@@ -209,11 +209,15 @@
   footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
-  /* ================= HUD-HUD, THE GUIDE — perched in the orange tree, quipping ================= */
+  /* ================= HUD-HUD, THE GUIDE — perched in the orange tree, quipping =================
+     Anchored relative to the centred content column (not the raw viewport edge) so he stays
+     near the card instead of stranding in empty margin on wide desktop screens. */
+  :root{ --contentHalf:410px; --treeGap:34px; --treeW:220px; }
   #hud{
     position:fixed; z-index:80; width:74px; height:74px;
-    left:78px; top:calc(100vh - 230px); pointer-events:none;
-    transition:opacity 0.4s ease, transform 0.4s ease;
+    left:max(78px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW) + 88px));
+    top:calc(100vh - 230px); pointer-events:none;
+    transition:opacity 0.4s ease, transform 0.4s ease, left 0.3s ease;
   }
   #hud.hidden{ display:none; }
   #hud.dismissed{ opacity:0; transform:translateX(-16px) scale(0.9) !important; pointer-events:none; }
@@ -291,12 +295,14 @@
   .reveal.in{ opacity:1; transform:none; }
   @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
 
-  /* ── orange tree — Hud-hud's perch, fixed bottom-left ── */
+  /* ── orange tree — Hud-hud's perch, anchored near the content column ── */
   #tree{
-    position:fixed; left:0; bottom:0; width:clamp(180px,16vw,260px); height:min(56vh,460px);
+    position:fixed; left:max(0px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW)));
+    bottom:0; width:var(--treeW); height:min(56vh,460px);
     pointer-events:none; z-index:1; overflow:visible;
     -webkit-mask-image:linear-gradient(to top, #000 60%, transparent 98%);
     mask-image:linear-gradient(to top, #000 60%, transparent 98%);
+    transition:left 0.3s ease;
   }
   #tree svg{
     width:100%; height:100%;
