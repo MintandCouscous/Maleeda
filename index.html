@@ -103,69 +103,81 @@
   nav a:hover{ color:var(--ink); }
   @media (max-width:640px){ nav ul{ display:none; } }
 
-  /* ── grand hero: the moment the page never actually had ── */
-  .hero{ text-align:center; padding:56px 28px 8px; position:relative; }
-  .hero-flourish{ width:56px; height:auto; margin:0 auto 18px; color:var(--gold); opacity:0.9; }
+  /* ── grand hero: a full-bleed jewel-toned ribbon, not just recolored text ── */
+  .hero{ text-align:center; padding:0 0 46px; position:relative; margin-top:-1px; }
+  .hero-ribbon{
+    position:relative; width:100%; padding:64px 24px 108px;
+    background:linear-gradient(120deg, var(--manja-pop) 0%, var(--nikah-pop) 52%, var(--reception-pop) 100%);
+    clip-path:polygon(0 0, 100% 0, 100% 82%, 0 100%);
+  }
+  .hero-flourish{ width:52px; height:auto; margin:0 auto 16px; color:rgba(255,255,255,0.8); }
   .hero-names{
     font-family:'Beau Rivage', cursive; font-weight:400;
-    font-size:clamp(52px, 9vw, 108px); line-height:1; letter-spacing:0.01em;
-    background:linear-gradient(100deg, var(--gold-deep) 0%, var(--gold) 45%, #E4C267 60%, var(--gold-deep) 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    filter:drop-shadow(0 1px 0 rgba(255,255,255,0.5));
+    font-size:clamp(56px, 10vw, 124px); line-height:1; letter-spacing:0.01em;
+    color:#FFFCF2; text-shadow:0 14px 40px rgba(35,10,20,0.35), 0 2px 0 rgba(0,0,0,0.1);
   }
   .hero-names .amp{
     font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500;
-    font-size:0.5em; color:var(--rose); -webkit-text-fill-color:var(--rose); padding:0 0.12em;
+    font-size:0.48em; color:rgba(255,252,242,0.7); padding:0 0.14em;
   }
-  .hero-rule{ display:flex; align-items:center; justify-content:center; gap:14px; margin:20px auto 22px; color:var(--gold); max-width:420px; }
-  .hero-rule::before, .hero-rule::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, currentColor); opacity:0.7; }
+  .hero-rule{ display:flex; align-items:center; justify-content:center; gap:14px; margin:18px auto 0; color:rgba(255,255,255,0.75); max-width:420px; }
+  .hero-rule::before, .hero-rule::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, currentColor); opacity:0.8; }
   .hero-rule::after{ background:linear-gradient(90deg, currentColor, transparent); }
   .hero-rule svg{ width:15px; height:15px; flex-shrink:0; }
-  .hero .date{ font-size:14px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); }
+  .hero .date{ margin-top:-64px; position:relative; font-size:14px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); background:var(--page-bg); display:inline-block; padding:14px 26px 0; }
   .hero .place{ margin-top:6px; font-size:18px; font-style:italic; color:var(--ink); }
-  .hero .guide-line{ margin-top:18px; font-size:14px; font-style:italic; color:var(--ink-soft); max-width:460px; margin-left:auto; margin-right:auto; }
+  .hero .guide-line{ margin-top:18px; font-size:14px; font-style:italic; color:var(--ink-soft); max-width:460px; margin-left:auto; margin-right:auto; padding:0 20px; }
   @media (max-width:640px){
-    .hero{ padding:28px 20px 4px; }
-    .hero-flourish{ width:42px; margin-bottom:10px; }
-    .hero-rule{ margin:14px auto 16px; }
+    .hero-ribbon{ padding:44px 16px 84px; clip-path:polygon(0 0, 100% 0, 100% 88%, 0 100%); }
+    .hero-flourish{ width:40px; margin-bottom:10px; }
+    .hero .date{ margin-top:-48px; padding:10px 16px 0; }
     .hero .guide-line{ margin-top:12px; }
   }
 
-  /* ── tab bar — modern, color-coded per event ── */
-  .event-panel{ padding:16px 28px 40px; position:relative; text-align:center; }
-  .tab-bar{ display:grid; grid-template-columns:repeat(4,1fr); gap:14px; max-width:820px; margin:0 auto 0; }
-  .tab-btn{
-    font-family:'EB Garamond',serif; text-align:center; padding:18px 8px; border:2px solid transparent;
-    border-radius:14px; background:rgba(255,252,247,0.9); cursor:pointer;
-    box-shadow:0 2px 10px rgba(58,46,34,0.06);
-    transition:transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+  /* ── tab deck — a fanned hand of colour-blocked invitation cards ── */
+  .event-panel{
+    padding:8px 28px 40px; position:relative; text-align:center;
+    background:radial-gradient(ellipse 60% 100% at 50% 0%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 70%);
+    transition:background 0.4s ease;
   }
-  .tab-btn.manja{ border-color:color-mix(in srgb, var(--manja-pop) 45%, transparent); }
-  .tab-btn.mehendi{ border-color:color-mix(in srgb, var(--mehendi-pop) 40%, transparent); }
-  .tab-btn.nikah{ border-color:color-mix(in srgb, var(--nikah-pop) 40%, transparent); }
-  .tab-btn.reception{ border-color:color-mix(in srgb, var(--reception-pop) 40%, transparent); }
-  .tab-btn:hover{ transform:translateY(-4px); box-shadow:0 10px 24px rgba(58,46,34,0.14); }
-  .tab-btn .tag{ display:block; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-soft); }
-  .tab-btn .ev{ display:block; font-family:'Beau Rivage',cursive; font-size:27px; margin:2px 0; }
-  .tab-btn .tm{ display:block; font-size:12px; color:var(--ink-soft); }
-  .tab-btn.manja .ev{ color:var(--manja-pop); }
-  .tab-btn.mehendi .ev{ color:var(--mehendi-pop); }
-  .tab-btn.nikah .ev{ color:var(--nikah-pop); }
-  .tab-btn.reception .ev{ color:var(--reception-pop); }
+  .tab-bar{ position:relative; max-width:900px; height:172px; margin:0 auto 26px; }
+  .tab-btn{
+    position:absolute; top:6px; width:190px; padding:20px 12px 18px; left:50%;
+    font-family:'EB Garamond',serif; text-align:center; border:3px solid rgba(255,255,255,0.55);
+    border-radius:16px; cursor:pointer; color:#fff;
+    box-shadow:0 16px 30px rgba(40,20,10,0.22);
+    transition:transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+  }
+  .tab-btn .tag{ display:block; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.78); }
+  .tab-btn .ev{ display:block; font-family:'Beau Rivage',cursive; font-size:30px; margin:2px 0; color:#fff; }
+  .tab-btn .tm{ display:block; font-size:12px; color:rgba(255,255,255,0.78); }
 
-  .tab-btn.manja.active{ background:var(--manja-pop); border-color:var(--manja-pop); box-shadow:0 10px 26px color-mix(in srgb, var(--manja-pop) 45%, transparent); }
-  .tab-btn.mehendi.active{ background:var(--mehendi-pop); border-color:var(--mehendi-pop); box-shadow:0 10px 26px color-mix(in srgb, var(--mehendi-pop) 45%, transparent); }
-  .tab-btn.nikah.active{ background:var(--nikah-pop); border-color:var(--nikah-pop); box-shadow:0 10px 26px color-mix(in srgb, var(--nikah-pop) 45%, transparent); }
-  .tab-btn.reception.active{ background:var(--reception-pop); border-color:var(--reception-pop); box-shadow:0 10px 26px color-mix(in srgb, var(--reception-pop) 45%, transparent); }
-  .tab-btn.manja.active .tag, .tab-btn.manja.active .tm{ color:color-mix(in srgb, var(--manja-pop-text) 75%, transparent); }
-  .tab-btn.manja.active .ev{ color:var(--manja-pop-text); }
-  .tab-btn.mehendi.active .tag, .tab-btn.mehendi.active .tm{ color:rgba(255,255,255,0.82); }
-  .tab-btn.mehendi.active .ev{ color:#fff; }
-  .tab-btn.nikah.active .tag, .tab-btn.nikah.active .tm{ color:rgba(255,255,255,0.82); }
-  .tab-btn.nikah.active .ev{ color:#fff; }
-  .tab-btn.reception.active .tag, .tab-btn.reception.active .tm{ color:rgba(255,255,255,0.82); }
-  .tab-btn.reception.active .ev{ color:#fff; }
-  @media (max-width:640px){ .tab-bar{ grid-template-columns:repeat(2,1fr); } }
+  /* Each card keeps its own horizontal lane always — only lift/derotate/scale in
+     place on hover/active, so a card can never swing over and block its neighbour. */
+  .tab-btn.manja{ background:linear-gradient(160deg, var(--manja-pop), color-mix(in srgb, var(--manja-pop) 62%, black)); transform:translateX(-306px) rotate(-10deg); z-index:1; }
+  .tab-btn.mehendi{ background:linear-gradient(160deg, var(--mehendi-pop), color-mix(in srgb, var(--mehendi-pop) 62%, black)); transform:translateX(-102px) rotate(-4deg) translateY(-6px); z-index:2; }
+  .tab-btn.nikah{ background:linear-gradient(160deg, var(--nikah-pop), color-mix(in srgb, var(--nikah-pop) 62%, black)); transform:translateX(102px) rotate(4deg) translateY(-6px); z-index:3; }
+  .tab-btn.reception{ background:linear-gradient(160deg, var(--reception-pop), color-mix(in srgb, var(--reception-pop) 62%, black)); transform:translateX(306px) rotate(10deg); z-index:4; }
+  .tab-btn.manja .tag, .tab-btn.manja .tm{ color:color-mix(in srgb, var(--manja-pop-text) 70%, transparent); }
+  .tab-btn.manja .ev{ color:var(--manja-pop-text); }
+
+  .tab-btn:hover{ box-shadow:0 22px 40px rgba(40,20,10,0.3); }
+  .tab-btn.manja:hover{ transform:translateX(-306px) rotate(-10deg) translateY(-14px); }
+  .tab-btn.mehendi:hover{ transform:translateX(-102px) rotate(-4deg) translateY(-20px); }
+  .tab-btn.nikah:hover{ transform:translateX(102px) rotate(4deg) translateY(-20px); }
+  .tab-btn.reception:hover{ transform:translateX(306px) rotate(10deg) translateY(-14px); }
+
+  .tab-btn.active{ z-index:10; box-shadow:0 28px 54px rgba(40,20,10,0.32); }
+  .tab-btn.manja.active{ transform:translateX(-306px) rotate(0deg) translateY(-30px) scale(1.06); }
+  .tab-btn.mehendi.active{ transform:translateX(-102px) rotate(0deg) translateY(-30px) scale(1.06); }
+  .tab-btn.nikah.active{ transform:translateX(102px) rotate(0deg) translateY(-30px) scale(1.06); }
+  .tab-btn.reception.active{ transform:translateX(306px) rotate(0deg) translateY(-30px) scale(1.06); }
+
+  @media (max-width:640px){
+    .tab-bar{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; height:auto; max-width:400px; }
+    .tab-btn{ position:static; width:auto; transform:none !important; }
+    .tab-btn:hover{ transform:none !important; }
+  }
 
   .event-panel .wrap, .event .wrap{
     max-width:820px; margin:26px auto 0; position:relative; padding:44px 52px 46px;
@@ -519,13 +531,15 @@
 </nav>
 
 <div class="hero">
-  <svg class="hero-flourish" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M30 4 C34 16 44 26 56 30 C44 34 34 44 30 56 C26 44 16 34 4 30 C16 26 26 16 30 4 Z" stroke="currentColor" stroke-width="1.3"/>
-    <circle cx="30" cy="30" r="3.4" fill="currentColor"/>
-  </svg>
-  <h1 class="hero-names">Azhar<span class="amp">&amp;</span>Zeenath</h1>
-  <div class="hero-rule">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"/></svg>
+  <div class="hero-ribbon">
+    <svg class="hero-flourish" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M30 4 C34 16 44 26 56 30 C44 34 34 44 30 56 C26 44 16 34 4 30 C16 26 26 16 30 4 Z" stroke="currentColor" stroke-width="1.3"/>
+      <circle cx="30" cy="30" r="3.4" fill="currentColor"/>
+    </svg>
+    <h1 class="hero-names">Azhar<span class="amp">&amp;</span>Zeenath</h1>
+    <div class="hero-rule">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"/></svg>
+    </div>
   </div>
   <div class="date">28 – 30 August 2026</div>
   <div class="place">Heritage Palace, Attapur, Hyderabad</div>
