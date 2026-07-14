@@ -156,6 +156,18 @@
     box-shadow:0 16px 30px rgba(40,20,10,0.22);
     transition:transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
   }
+  /* ticket-stub notches punched into the long edges */
+  .tab-btn::before, .tab-btn::after{
+    content:''; position:absolute; top:50%; width:15px; height:15px; border-radius:50%;
+    background:var(--page-bg); transform:translateY(-50%); z-index:2; box-shadow:inset 0 0 0 2px rgba(40,20,10,0.06);
+  }
+  .tab-btn::before{ left:-7.5px; }
+  .tab-btn::after{ right:-7.5px; }
+  @media (max-width:640px){
+    .tab-btn::before, .tab-btn::after{ top:auto; bottom:-7.5px; transform:none; }
+    .tab-btn::before{ left:12px; }
+    .tab-btn::after{ right:12px; left:auto; }
+  }
   .tab-btn .tag{ display:block; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.78); }
   .tab-btn .ev{ display:block; font-family:'Beau Rivage',cursive; font-size:30px; margin:2px 0; color:#fff; }
   .tab-btn .tm{ display:block; font-size:12px; color:rgba(255,255,255,0.78); }
@@ -217,22 +229,26 @@
   .panel-head{
     background:linear-gradient(165deg, var(--accent) 0%, color-mix(in srgb, var(--accent) 60%, black) 100%);
     transition:background 0.4s ease; color:#fff;
-    padding:52px 38px; display:flex; flex-direction:column; justify-content:center;
+    padding:52px 54px 52px 38px; margin-right:-34px; display:flex; flex-direction:column; justify-content:center;
     position:relative; overflow:hidden;
+    clip-path:polygon(0 0, 100% 0, calc(100% - 34px) 100%, 0 100%);
+    z-index:2;
   }
   .panel-head::after{
-    content:'✦'; position:absolute; right:-18px; bottom:-46px; font-size:200px; line-height:1;
-    color:rgba(255,255,255,0.1); pointer-events:none;
+    content:attr(data-watermark); position:absolute; left:-0.06em; bottom:-0.14em; white-space:nowrap;
+    font-family:'Beau Rivage',cursive; font-size:clamp(60px,13vw,150px); line-height:1;
+    color:rgba(255,255,255,0.1); pointer-events:none; z-index:0;
   }
-  .panel-head .event-eyebrow{ color:rgba(255,255,255,0.8); position:relative; }
-  .panel-head .event-title{ color:#FFFCF2; font-size:clamp(48px,6vw,80px); position:relative; }
-  .panel-head .event-sub{ color:rgba(255,255,255,0.88); position:relative; }
+  .panel-head .event-eyebrow, .panel-head .event-title, .panel-head .event-sub{ position:relative; z-index:1; }
+  .panel-head .event-eyebrow{ color:rgba(255,255,255,0.8); }
+  .panel-head .event-title{ color:#FFFCF2; font-size:clamp(48px,6vw,80px); }
+  .panel-head .event-sub{ color:rgba(255,255,255,0.88); }
 
-  .panel-body{ padding:52px 48px; }
+  .panel-body{ padding:52px 48px 52px 66px; position:relative; z-index:1; }
   @media (max-width:760px){
     .tab-content.active{ grid-template-columns:1fr; min-height:0; }
-    .panel-head{ padding:38px 26px 32px; }
-    .panel-body{ padding:36px 26px 42px; }
+    .panel-head{ padding:38px 26px 34px; margin-right:0; clip-path:polygon(0 0, 100% 0, 100% calc(100% - 22px), 0 100%); }
+    .panel-body{ padding:34px 26px 42px; }
   }
 
   .frame-corner{ position:absolute; width:46px; height:46px; opacity:0.85; pointer-events:none; }
@@ -283,23 +299,34 @@
   .tab-content.reception{ color:var(--reception-ink); }
   .tab-content.reception .tl-row{ border-color:var(--reception-pop); }
 
-  .rsvp{ padding:60px 28px; text-align:center; display:flex; align-items:center; }
-  .rsvp .wrap{ max-width:560px; margin:0 auto; background:rgba(255,252,247,0.92); box-shadow:0 4px 32px rgba(58,46,34,0.1); border:1px solid rgba(184,145,47,0.25); padding:52px 48px; }
-  .rsvp h2{ font-family:'Beau Rivage',cursive; font-size:52px; color:var(--gold); margin-bottom:6px; }
-  .rsvp p.lead{ color:var(--ink-soft); margin-bottom:38px; font-style:italic; }
-  .rsvp input[type=text]{ width:100%; font-family:'EB Garamond',serif; font-size:17px; padding:10px 4px; text-align:center; border:none; border-bottom:1px solid var(--gold-soft); background:transparent; margin-bottom:30px; }
-  .rsvp input[type=text]:focus{ outline:none; border-bottom-color:var(--gold); }
-  .rsvp label.field-label{ font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-bottom:8px; }
-  .rsvp-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 0; border-top:1px solid var(--gold-soft); text-align:left; }
-  .rsvp-row:last-of-type{ border-bottom:1px solid var(--gold-soft); }
+  .rsvp{ padding:60px 20px; text-align:center; display:flex; align-items:center; }
+  .rsvp .wrap{
+    max-width:600px; margin:0 auto; position:relative; overflow:hidden;
+    background:linear-gradient(150deg, var(--manja-pop) 0%, var(--nikah-pop) 55%, var(--reception-pop) 100%);
+    box-shadow:0 26px 70px rgba(58,46,34,0.22); padding:56px 48px; border-radius:20px;
+    clip-path:polygon(0 3.5%, 100% 0, 100% 96.5%, 0 100%);
+  }
+  .rsvp .wrap::after{
+    content:'✦'; position:absolute; right:-24px; top:-40px; font-size:220px; line-height:1;
+    color:rgba(255,255,255,0.08); pointer-events:none;
+  }
+  .rsvp .wrap > *{ position:relative; }
+  .rsvp h2{ font-family:'Beau Rivage',cursive; font-size:56px; color:#FFFCF2; margin-bottom:6px; }
+  .rsvp p.lead{ color:rgba(255,255,255,0.85); margin-bottom:38px; font-style:italic; }
+  .rsvp input[type=text]{ width:100%; font-family:'EB Garamond',serif; font-size:17px; padding:10px 4px; text-align:center; border:none; border-bottom:1px solid rgba(255,255,255,0.5); background:transparent; margin-bottom:30px; color:#fff; }
+  .rsvp input[type=text]::placeholder{ color:rgba(255,255,255,0.6); }
+  .rsvp input[type=text]:focus{ outline:none; border-bottom-color:#fff; }
+  .rsvp label.field-label{ font-size:12.5px; letter-spacing:0.1em; text-transform:uppercase; color:rgba(255,255,255,0.75); display:block; margin-bottom:8px; }
+  .rsvp-row{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:15px 0; border-top:1px solid rgba(255,255,255,0.25); text-align:left; color:#fff; }
+  .rsvp-row:last-of-type{ border-bottom:1px solid rgba(255,255,255,0.25); }
   .rsvp-row .label{ font-family:'Cormorant Garamond',serif; font-size:19px; }
-  .rsvp-row .label small{ display:block; font-family:'EB Garamond',serif; font-size:12.5px; color:var(--ink-soft); font-style:italic; }
-  .toggle{ display:flex; border:1px solid var(--gold); border-radius:20px; overflow:hidden; flex-shrink:0; }
-  .toggle button{ background:none; border:none; font-family:'EB Garamond',serif; font-size:13.5px; padding:7px 16px; cursor:pointer; color:var(--gold); }
-  .toggle button.active{ background:var(--gold); color:#fff; }
-  .submit-btn{ display:block; width:100%; padding:15px; margin-top:26px; background:var(--ink); color:var(--cream); border:none; font-family:'Cormorant Garamond',serif; font-size:18px; letter-spacing:0.06em; cursor:pointer; border-radius:2px; }
-  .submit-btn:hover{ background:var(--gold); }
-  .rsvp-status{ text-align:center; margin-top:16px; font-size:14px; color:var(--ink-soft); min-height:20px; }
+  .rsvp-row .label small{ display:block; font-family:'EB Garamond',serif; font-size:12.5px; color:rgba(255,255,255,0.7); font-style:italic; }
+  .toggle{ display:flex; border:1px solid rgba(255,255,255,0.6); border-radius:20px; overflow:hidden; flex-shrink:0; }
+  .toggle button{ background:none; border:none; font-family:'EB Garamond',serif; font-size:13.5px; padding:7px 16px; cursor:pointer; color:#fff; }
+  .toggle button.active{ background:#fff; color:var(--nikah-pop); }
+  .submit-btn{ display:block; width:100%; padding:15px; margin-top:26px; background:#FFFCF2; color:var(--ink); border:none; font-family:'Cormorant Garamond',serif; font-size:18px; letter-spacing:0.06em; cursor:pointer; border-radius:2px; font-weight:600; }
+  .submit-btn:hover{ background:var(--gold-pale); }
+  .rsvp-status{ text-align:center; margin-top:16px; font-size:14px; color:rgba(255,255,255,0.85); min-height:20px; }
 
   .venue{ padding:20px 28px 70px; text-align:center; }
   .venue h2{ font-family:'Beau Rivage',cursive; font-size:40px; color:var(--gold); margin-bottom:8px; }
@@ -585,7 +612,7 @@
 
   <div class="wrap">
     <div class="tab-content manja active" data-tab-content="manja" data-hud-key="manja">
-      <div class="panel-head">
+      <div class="panel-head" data-watermark="M">
         <div class="event-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
         <h2 class="event-title">Manja</h2>
         <div class="event-sub">Hyderabad's answer to Haldi</div>
@@ -602,7 +629,7 @@
     </div>
 
     <div class="tab-content mehendi" data-tab-content="mehendi" data-hud-key="mehendi">
-      <div class="panel-head">
+      <div class="panel-head" data-watermark="M">
         <div class="event-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
         <h2 class="event-title">Mehendi</h2>
         <div class="event-sub">&amp; Choodi</div>
@@ -621,7 +648,7 @@
     </div>
 
     <div class="tab-content nikah" data-tab-content="nikah" data-hud-key="nikah">
-      <div class="panel-head">
+      <div class="panel-head" data-watermark="N">
         <div class="event-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
         <h2 class="event-title">Nikah</h2>
         <div class="event-sub">&amp; the Jalwa</div>
@@ -673,7 +700,7 @@
     </div>
 
     <div class="tab-content reception" data-tab-content="reception" data-hud-key="reception">
-      <div class="panel-head">
+      <div class="panel-head" data-watermark="R">
         <div class="event-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
         <h2 class="event-title">Reception</h2>
         <div class="event-sub">The evening they've been waiting to throw</div>
