@@ -103,14 +103,13 @@
   nav a:hover{ color:var(--ink); }
   @media (max-width:640px){ nav ul{ display:none; } }
 
-  /* ── grand hero: a full-bleed jewel-toned ribbon, not just recolored text ── */
+  /* ── grand hero: a full-bleed jewel-toned ribbon with a fluid, wavy hem ── */
   .hero{ text-align:center; padding:0 0 46px; position:relative; margin-top:-1px; }
   .hero-ribbon{
-    position:relative; width:100%; padding:64px 24px 108px;
+    position:relative; width:100%; padding:64px 24px 128px; overflow:hidden;
     background:linear-gradient(120deg, var(--manja-pop) 0%, var(--nikah-pop) 52%, var(--reception-pop) 100%);
     background-size:145% 145%;
     animation:ribbon-drift 16s ease-in-out infinite;
-    clip-path:polygon(0 0, 100% 0, 100% 82%, 0 100%);
   }
   @keyframes ribbon-drift{
     0%{ background-position:15% 20%; }
@@ -118,12 +117,37 @@
     100%{ background-position:15% 20%; }
   }
   @media (prefers-reduced-motion: reduce){ .hero-ribbon{ animation:none; } }
+
+  .wave-divider{ position:absolute; left:0; right:0; bottom:-1px; width:100%; height:90px; display:block; }
+  .wave-divider path{ fill:var(--page-bg); }
+  .wave-divider .w1{ animation:wave-drift-1 11s ease-in-out infinite; }
+  .wave-divider .w2{ animation:wave-drift-2 15s ease-in-out infinite; opacity:0.5; }
+  @keyframes wave-drift-1{ 0%,100%{ transform:translateX(0) translateY(0); } 50%{ transform:translateX(-2%) translateY(4px); } }
+  @keyframes wave-drift-2{ 0%,100%{ transform:translateX(0) translateY(0); } 50%{ transform:translateX(2%) translateY(-3px); } }
+  @media (prefers-reduced-motion: reduce){ .wave-divider .w1, .wave-divider .w2{ animation:none; } }
+
+  /* sparkle dust drifting over the ribbon */
+  .sparkle{ position:absolute; border-radius:50%; background:#fff; pointer-events:none; opacity:0; animation:twinkle ease-in-out infinite; }
+  @keyframes twinkle{ 0%,100%{ opacity:0; transform:scale(0.4); } 50%{ opacity:0.9; transform:scale(1); } }
+  @media (prefers-reduced-motion: reduce){ .sparkle{ display:none; } }
+
   .hero-flourish{ width:52px; height:auto; margin:0 auto 16px; color:rgba(255,255,255,0.8); }
   .hero-names{
+    position:relative; display:inline-block;
     font-family:'Beau Rivage', cursive; font-weight:400;
     font-size:clamp(56px, 10vw, 124px); line-height:1; letter-spacing:0.01em;
     color:#FFFCF2; text-shadow:0 14px 40px rgba(35,10,20,0.35), 0 2px 0 rgba(0,0,0,0.1);
   }
+  .hero-names::after{
+    content:'Azhar & Zeenath'; position:absolute; inset:0; pointer-events:none;
+    white-space:nowrap; overflow:hidden;
+    background:linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.85) 45%, transparent 60%);
+    background-size:260% 100%; background-position:130% 0; background-repeat:no-repeat;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shimmer-sweep 6s ease-in-out infinite; animation-delay:1.2s;
+  }
+  @keyframes shimmer-sweep{ 0%,45%{ background-position:130% 0; } 65%,100%{ background-position:-60% 0; } }
+  @media (prefers-reduced-motion: reduce){ .hero-names::after{ animation:none; display:none; } }
   .hero-names .amp{
     font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500;
     font-size:0.48em; color:rgba(255,252,242,0.7); padding:0 0.14em;
@@ -132,13 +156,13 @@
   .hero-rule::before, .hero-rule::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, currentColor); opacity:0.8; }
   .hero-rule::after{ background:linear-gradient(90deg, currentColor, transparent); }
   .hero-rule svg{ width:15px; height:15px; flex-shrink:0; }
-  .hero .date{ margin-top:-64px; position:relative; font-size:14px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); background:var(--page-bg); display:inline-block; padding:14px 26px 0; }
+  .hero .date{ margin-top:-38px; position:relative; font-size:14px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); background:var(--page-bg); display:inline-block; padding:14px 26px 0; }
   .hero .place{ margin-top:6px; font-size:18px; font-style:italic; color:var(--ink); }
   .hero .guide-line{ margin-top:18px; font-size:14px; font-style:italic; color:var(--ink-soft); max-width:460px; margin-left:auto; margin-right:auto; padding:0 20px; }
   @media (max-width:640px){
-    .hero-ribbon{ padding:44px 16px 84px; clip-path:polygon(0 0, 100% 0, 100% 88%, 0 100%); }
+    .hero-ribbon{ padding:44px 16px 100px; }
     .hero-flourish{ width:40px; margin-bottom:10px; }
-    .hero .date{ margin-top:-48px; padding:10px 16px 0; }
+    .hero .date{ margin-top:-30px; padding:10px 16px 0; }
     .hero .guide-line{ margin-top:12px; }
   }
 
@@ -231,7 +255,13 @@
     transition:background 0.4s ease; color:#fff;
     padding:52px 54px 52px 38px; margin-right:-34px; display:flex; flex-direction:column; justify-content:center;
     position:relative; overflow:hidden;
-    clip-path:polygon(0 0, 100% 0, calc(100% - 34px) 100%, 0 100%);
+    clip-path:polygon(
+      0 0, 100% 0,
+      calc(100% - 14px) 18%, 100% 32%,
+      calc(100% - 28px) 50%,
+      100% 68%, calc(100% - 14px) 82%,
+      calc(100% - 34px) 100%, 0 100%
+    );
     z-index:2;
   }
   .panel-head::after{
@@ -303,9 +333,15 @@
   .rsvp .wrap{
     max-width:600px; margin:0 auto; position:relative; overflow:hidden;
     background:linear-gradient(150deg, var(--manja-pop) 0%, var(--nikah-pop) 55%, var(--reception-pop) 100%);
-    box-shadow:0 26px 70px rgba(58,46,34,0.22); padding:56px 48px; border-radius:20px;
-    clip-path:polygon(0 3.5%, 100% 0, 100% 96.5%, 0 100%);
+    box-shadow:0 26px 70px rgba(58,46,34,0.22); padding:56px 48px;
+    border-radius:44px 36px 48px 32px / 54px 42px 50px 38px;
+    animation:blob-morph 14s ease-in-out infinite;
   }
+  @keyframes blob-morph{
+    0%,100%{ border-radius:44px 36px 48px 32px / 54px 42px 50px 38px; }
+    50%{ border-radius:34px 46px 32px 48px / 40px 52px 38px 54px; }
+  }
+  @media (prefers-reduced-motion: reduce){ .rsvp .wrap{ animation:none; } }
   .rsvp .wrap::after{
     content:'✦'; position:absolute; right:-24px; top:-40px; font-size:220px; line-height:1;
     color:rgba(255,255,255,0.08); pointer-events:none;
@@ -337,14 +373,16 @@
   footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
-  /* ================= HUD-HUD, THE GUIDE — perched in the orange tree, quipping =================
-     Anchored relative to the centred content column (not the raw viewport edge) so he stays
-     near the card instead of stranding in empty margin on wide desktop screens. */
+  /* ================= HUD-HUD, THE GUIDE — perched high on his tree, always visible, never blocking anything =================
+     Anchored at a fixed distance from the TOP of the viewport (not bottom, not scroll-height-relative),
+     so he sits proudly against the vivid hero ribbon and can never wander down into the card/tab
+     region no matter how tall the page grows. Horizontal position still tracks the content column
+     so he doesn't strand in empty margin on wide desktop screens. */
   :root{ --contentHalf:410px; --treeGap:34px; --treeW:220px; }
   #hud{
-    position:fixed; z-index:80; width:74px; height:74px;
-    left:max(78px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW) + 88px));
-    top:calc(100vh - 230px); pointer-events:none;
+    position:fixed; z-index:80; width:118px; height:118px;
+    left:max(130px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW) + 70px));
+    top:280px; pointer-events:none;
     transition:opacity 0.4s ease, transform 0.4s ease, left 0.3s ease;
   }
   #hud.hidden{ display:none; }
@@ -355,10 +393,10 @@
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative;
     pointer-events:all;
   }
-  #hud-avatar svg.bird{ width:68px; height:68px; filter:drop-shadow(0 3px 8px rgba(58,46,34,0.22)); }
+  #hud-avatar svg.bird{ width:108px; height:108px; filter:drop-shadow(0 5px 14px rgba(35,15,15,0.32)); }
   #hud-branch{
-    position:absolute; bottom:-13px; left:50%; transform:translateX(-50%);
-    width:90px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
+    position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
+    width:130px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
   }
   #hud.perched #hud-branch{ opacity:1; }
   #wing-l, #wing-r{ transform-origin:24px 24px; animation:hud-flap 0.9s ease-in-out infinite; }
@@ -393,9 +431,12 @@
   #hud-revive.show{ opacity:1; transform:scale(1); pointer-events:all; }
 
   @media(max-width:640px){
-    #hud{ width:56px; height:56px; left:44px; top:auto; bottom:14px; }
-    #hud-avatar svg.bird{ width:50px; height:50px; }
-    #hud-branch{ width:66px; bottom:-9px; }
+    /* Mobile has no safe zone up in the ribbon (title, date and guide text
+       fill it edge to edge), so he perches in the fixed bottom-left corner
+       instead — still bigger than before, still visible, never on top of text. */
+    #hud{ width:74px; height:74px; left:14px; top:auto; bottom:16px; }
+    #hud-avatar svg.bird{ width:66px; height:66px; }
+    #hud-branch{ width:82px; bottom:-10px; }
     #hud-revive{ left:10px; bottom:16px; width:36px; height:36px; }
   }
 
@@ -418,7 +459,15 @@
   }
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:19px; color:var(--gold); line-height:1.2; margin-bottom:2px; }
   @media(max-width:640px){
-    #hud-bubble{ font-size:13.5px; padding:8px 12px; max-width:min(190px, calc(100vw - 100px)); }
+    /* Anchored bottom-left rather than centred — a centred bubble on a bird
+       parked near the screen edge would clip off-screen on the left. Wider
+       and shorter (fewer wrapped lines) so it takes up less vertical room. */
+    #hud-bubble{
+      font-size:13.5px; padding:9px 13px; max-width:min(250px, calc(100vw - 30px));
+      left:0; transform:translate(0,6px) scale(0.96); transform-origin:bottom left;
+    }
+    #hud-bubble.visible{ transform:translate(0,0) scale(1); }
+    #hud-bubble::after{ left:22px; transform:none; }
     .who{ font-size:16px; }
   }
 
@@ -427,13 +476,13 @@
   .reveal.in{ opacity:1; transform:none; }
   @media (prefers-reduced-motion: reduce){ .reveal{ opacity:1; transform:none; transition:none; } }
 
-  /* ── orange tree — Hud-hud's perch, anchored near the content column ── */
+  /* ── orange tree — Hud-hud's perch, tall enough to reach him near the top of the ribbon ── */
   #tree{
     position:fixed; left:max(0px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW)));
-    bottom:0; width:var(--treeW); height:min(56vh,460px);
+    bottom:0; width:var(--treeW); height:min(74vh,640px);
     pointer-events:none; z-index:1; overflow:visible;
-    -webkit-mask-image:linear-gradient(to top, #000 60%, transparent 98%);
-    mask-image:linear-gradient(to top, #000 60%, transparent 98%);
+    -webkit-mask-image:linear-gradient(to top, #000 70%, transparent 99%);
+    mask-image:linear-gradient(to top, #000 70%, transparent 99%);
     transition:left 0.3s ease;
   }
   #tree svg{
@@ -444,7 +493,7 @@
   }
   @keyframes tree-sway{ from{ transform:rotate(0.3deg); } to{ transform:rotate(-0.35deg); } }
   @media (prefers-reduced-motion: reduce){ #tree svg{ animation:none; } }
-  @media(max-width:640px){ #tree{ width:130px; height:280px; } }
+  @media(max-width:640px){ #tree{ width:150px; height:420px; } }
 </style>
 </head>
 <body>
@@ -596,6 +645,20 @@
     <div class="hero-rule">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"/></svg>
     </div>
+
+    <span class="sparkle" style="left:8%; top:22%; width:5px; height:5px; animation-duration:3.2s; animation-delay:0s;"></span>
+    <span class="sparkle" style="left:16%; top:60%; width:3px; height:3px; animation-duration:4s; animation-delay:0.8s;"></span>
+    <span class="sparkle" style="left:27%; top:38%; width:4px; height:4px; animation-duration:3.6s; animation-delay:1.6s;"></span>
+    <span class="sparkle" style="left:72%; top:28%; width:4px; height:4px; animation-duration:3.4s; animation-delay:0.4s;"></span>
+    <span class="sparkle" style="left:83%; top:55%; width:5px; height:5px; animation-duration:4.4s; animation-delay:2s;"></span>
+    <span class="sparkle" style="left:91%; top:20%; width:3px; height:3px; animation-duration:3s; animation-delay:1.2s;"></span>
+    <span class="sparkle" style="left:50%; top:15%; width:3px; height:3px; animation-duration:3.8s; animation-delay:2.4s;"></span>
+    <span class="sparkle" style="left:60%; top:65%; width:4px; height:4px; animation-duration:4.2s; animation-delay:0.2s;"></span>
+
+    <svg class="wave-divider" viewBox="0 0 1600 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path class="w2" d="M0,40 C240,90 420,0 700,45 C980,90 1180,10 1600,50 L1600,90 L0,90 Z"/>
+      <path class="w1" d="M0,55 C260,10 460,95 760,50 C1040,8 1240,80 1600,35 L1600,90 L0,90 Z"/>
+    </svg>
   </div>
   <div class="date">28 – 30 August 2026</div>
   <div class="place">Heritage Palace, Attapur, Hyderabad</div>
@@ -892,68 +955,68 @@
 
   const hudLines = {
     greeting: [
-      "Hi hi hi! I'm Hud-hud! I have a tiny crown and a very big job and I am SO excited you're here. Look, I even did a little hop.",
-      "Oh you came! I've been hopping foot to foot with excitement, ask the branch, it saw everything. Come on, come on, let me show you around.",
-      "Salaam! I'm Hud-hud, your official small feathery guide. I already like you and we've barely met. That's just how I am, I'm very affectionate.",
-      "Hello hello! I puffed up my feathers specially for you. Do I look important? I feel important. Also a little fluffy. Let's go exploring.",
-      "Psst — over here! I've been waiting on this branch so long my feet fell asleep, but look at my little crown, was it worth it? Yes.",
-      "*tiny bow, wobbles slightly, recovers with dignity* Hud-hud, at your service. Let's go be nosy together, I know all the good bits."
+      "Salaam! I'm Hud-hud — think of me as customer support, but with a crown and significantly better hair.",
+      "Oh, you're here! I was starting to think I'd dressed up for nothing. Crown's on. Let's go.",
+      "I'm Hud-hud, official messenger bird. King Suleiman once sent me on royal errands. Now I mostly explain seating charts. Growth.",
+      "Welcome! I'd shake your hand but I don't have one, so you're getting unreasonable enthusiasm instead.",
+      "Hello! I've been perched here so long I've named the branch. We're close now. Anyway — hi.",
+      "*tiny dramatic bow, nearly falls off branch, recovers with total confidence* Hud-hud. At your service, mostly."
     ],
     manja: [
-      "The Manja! Turmeric, giggling aunties, someone's uncle attempting a dance move he really shouldn't. I am obsessed already.",
-      "Everyone gets covered in turmeric and somehow ends up glowier for it. Rude, honestly, how good they all look. I want turmeric now too.",
-      "There's a paste, there's a pillow, and by the end of tonight the paste has definitely won. Wear something you don't love too much.",
-      "This is the night everyone gets sticky, golden, and thoroughly pleased with themselves. I did one little loop of the room, ten out of ten.",
-      "The whole house smells like turmeric and good mood, which is my favourite smell after 'freshly opened biryani.'",
-      "Fair warning: someone will get turmeric on your nose and call it good luck. It is. Also it looks very cute on you, just saying."
+      "The Manja! Turmeric goes on, dignity goes out the window, everyone glows anyway. Rude, but effective.",
+      "Someone will get turmeric on their nose and call it a blessing. It is. It's also just turmeric on a nose.",
+      "There's a paste and there's a pillow and by tonight one of them has clearly lost. Dress accordingly.",
+      "The house smells like turmeric and chaos, my favourite combination after 'biryani' and 'gossip.'",
+      "Everyone leaves this one a little bit yellow and a lot more in love. Solid trade.",
+      "I once tried to join in. I do not recommend turmeric on feathers. Lesson learned, no regrets."
     ],
     mehendi: [
-      "Mehendi & Choodi! You sit, you sip chai, someone paints tiny gardens on your hands. Best use of an afternoon, hop-scotch's honour.",
-      "Apparently the darker the mehendi, the deeper the love. Very convenient theory for the artist, very delightful outcome for everyone else.",
-      "Bangles, henna, chai on endless refill. If I had wrists, I'd have signed up for three rounds and worn every colour at once.",
-      "I asked very nicely for a tiny hoopoe in someone's mehendi design today. Go check if it made the final pattern, I am SO nervous.",
-      "The clinking of bangles all afternoon sounds like the happiest wind chime in the world. I tried to match the tune. It did not go well.",
-      "Sit still, let someone paint you pretty, drink your third chai like it's your job. It sort of is, today, congratulations."
+      "Mehendi & Choodi! Sit still, get decorated, drink chai until someone takes the cup away. Perfect afternoon.",
+      "Darker mehendi means deeper love, they say — a theory invented, suspiciously, by mehendi artists.",
+      "If I had wrists I'd wear every bangle at once and regret nothing. Alas. Wings.",
+      "I asked for a tiny hoopoe hidden in someone's mehendi design. Go look. No pressure. I'm just very invested.",
+      "The bangles clink like wind chimes having the best day of their lives. I tried to sing along. Banned immediately.",
+      "Get your hands done. Genuinely. I will hold a grudge otherwise, and I have a long memory for a small bird."
     ],
     nikah: [
-      "The Nikah! Three little qubool hais and just like that, two people become a whole team. So quick, so lovely, my little heart can't take it.",
-      "Twelve noon, one big sweet moment. I'll be up on my branch, sitting very still, trying extremely hard not to make a single peep.",
-      "This is the calm, warm middle of all the noise. Hold someone's hand. Maybe hum a little. It's exactly that kind of moment.",
-      "I've seen a good number of these now and they never stop being lovely. This one might be my new favourite, don't tell the others.",
-      "Short ceremony, enormous feeling. Blink slowly, not fast — you'll want to remember every second of this bit.",
-      "Two families, one afternoon, one big yes. I'll be up here glowing quietly, being generally delighted at everyone."
+      "The Nikah! Three qubool hais and two people become a legal team. Efficient. Devastating. Beautiful.",
+      "Twelve noon. I'll be up here being very quiet, which for me is basically a miracle.",
+      "This is the calm centre of three very loud days. Hold a hand. Don't check your phone. Trust me on this one.",
+      "I've seen a lot of these. This one's already climbing my personal rankings, and I do not rank things easily.",
+      "Short ceremony, enormous feeling. Blink slowly — you'll want the whole thing, not just the highlights.",
+      "One big yes, said three times, witnessed by two people and one extremely emotional bird."
     ],
     reception: [
-      "The Reception! Golden lights, everyone in their finest, and biryani that deserves its very own little fan club. I am the president.",
-      "The grand finale — where the couple finally gets to eat at their own wedding, assuming the guests haven't finished it first.",
-      "Gentle warning: this biryani may ruin all other biryani for you forever. A small, extremely delicious price to pay.",
-      "Everyone's dressed like royalty tonight, so naturally I feel right at home. Come find me by the fairy lights, I'll be striking a pose.",
-      "This is where all the happy from the last three days turns into one enormous glittering party. Wear shoes you can dance badly in.",
-      "I intend to eat approximately one crumb of everything, purely for quality control. It's a big job but someone has to do it."
+      "The Reception! Fairy lights, best outfits, biryani with its own fan club. I founded the fan club.",
+      "Grand finale — the couple finally eats at their own wedding, assuming the guests left anything.",
+      "This biryani will ruin all future biryani for you. Small price. Extremely worth it.",
+      "Everyone's dressed like royalty, so I finally blend in. Find me near the lights. I'll be posing.",
+      "Three days of feeling builds to one enormous party. Wear shoes that forgive bad dancing.",
+      "I sample one crumb of everything for quality control. It's exhausting. Someone has to suffer for the cause."
     ],
     registry: [
-      "Okay so — I did try to talk them out of this bit. 'Just tell people to come, that's enough,' I said. They kept insisting. So. Here it is, since you kept asking too.",
-      "I want the record to show: I said your presence was plenty. They said 'yes but ALSO.' I am but a small bird, I cannot win every argument.",
-      "Truly, wholly optional, cross my little heart. But since you're already here and already curious, might as well have a peek.",
-      "I collect shiny buttons and interesting twigs myself. The couple, apparently, has more sophisticated taste. Go see what they picked.",
-      "They kept it small and sweet on purpose, bless them. Have a look, pick whatever makes you smile.",
-      "Between us I already have a favourite on this list. Not telling which. You'll just have to go find your own, won't you."
+      "I did try to talk them out of this section. 'Just come,' I said. They said 'yes, AND.' I lost that argument badly.",
+      "For the record: I voted for 'presence over presents.' Democracy failed. Here's the registry.",
+      "Truly optional. But you're here, you're curious, and I respect a person who reads the fine print.",
+      "I personally collect shiny buttons and interesting twigs. The couple wanted something you can actually wrap.",
+      "Kept it short on purpose, bless them. Have a look, pick something, feel smug about it later.",
+      "I have a favourite on this list. Not telling. Go find your own — that's half the fun, apparently."
     ],
     rsvp: [
-      "RSVP, please! The caterer needs a headcount and I need to know there's a seat with your name on it. I get very anxious about seating charts.",
-      "Thirty little seconds, that's all the form takes. Then it's official: you're coming, and I might do a small happy hop about it.",
-      "Do fill it in — I keep a little list in my head, tucked right next to my favourite twigs, and I would love to add your name to it.",
-      "Consider this your official invitation delivered by hand — well, wing. Now be a dear and reply, I'm watching hopefully.",
-      "It's just one small tap. Somewhere a seating chart is waiting hopefully for your answer, please put it out of its misery.",
-      "Tell them you're coming! I promise to personally save you a good spot near the food and near me, which is basically the same thing."
+      "RSVP, please. The caterer needs numbers and I need to stop worrying about it — I worry a lot, for a small bird.",
+      "Thirty seconds of your life. In exchange: biryani, ambiance, and my eternal gratitude.",
+      "Fill it in. I keep a mental list right next to my favourite twigs — very exclusive real estate.",
+      "This is your invitation, hand-delivered by wing. The least you can do is answer it.",
+      "Somewhere a seating chart waits anxiously for your response. Be kind. End its suffering.",
+      "Say yes. I'll personally guard you a seat near the food, which is the only currency that matters here."
     ],
     venue: [
-      "Heritage Palace, Attapur! Arches, marble, golden light. Wear your favourite outfit — the one that makes you feel like a whole main character.",
-      "I've flown over a lot of rooftops in Hyderabad, and this one might just be my favourite. Wait till you see it lit up in the evening, I get giddy.",
-      "Arrive early, stay late, dance badly with great joy. That's the whole assignment, and I believe in you completely.",
-      "There's a little courtyard here where the light turns gold around sunset. I perch there sometimes just to feel something.",
-      "Tall arches, cool marble, and just enough sparkle to make everyone feel a little bit special, including me, a bird.",
-      "Come find the best spot for photos — I've already scouted it, I did a whole recon flight. Ask me nicely and I might show you."
+      "Heritage Palace, Attapur! Arches, marble, and enough gold trim to make me feel slightly underdressed.",
+      "I've scouted rooftops all over Hyderabad. This one wins. Wait till the evening lights hit it.",
+      "Arrive early, leave late, dance badly with real conviction. That's the entire assignment.",
+      "There's a courtyard where the light turns gold at sunset. I go there to have feelings about it.",
+      "Tall arches, cool marble, just enough sparkle to make everyone feel like main character energy.",
+      "I've already scouted the best photo spot. Ask nicely. I'm charming but not free."
     ]
   };
 
@@ -965,7 +1028,26 @@
     clearTimeout(say._timer);
   }
 
+  // On narrow screens Hud-hud is bottom-fixed and the card deck can end up
+  // right where his bubble would open — so we suppress the bubble (not the
+  // bird) specifically while the deck is on-screen, and let it resume once
+  // the guest scrolls past it. Desktop never sets this, so it's a no-op there.
+  let deckObscuresHud = false;
+  (function(){
+    const deck = document.querySelector('.tab-bar');
+    if(!deck || typeof IntersectionObserver === 'undefined') return;
+    const mq = window.matchMedia('(max-width:640px)');
+    const obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        deckObscuresHud = mq.matches && e.isIntersecting;
+        if(deckObscuresHud) hideBubble();
+      });
+    }, { threshold: 0.15 });
+    obs.observe(deck);
+  })();
+
   function say(lines){
+    if(deckObscuresHud) return;   // don't speak over the cards on mobile
     const bubble = document.getElementById('hud-bubble');
     const textEl = document.getElementById('hud-text');
     if(!bubble || !textEl) return;
