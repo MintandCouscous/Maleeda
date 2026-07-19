@@ -8,27 +8,39 @@
   @import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
   :root{
-    --cream:#FFFCF7;
-    --page-bg:#FFFCF7;
-    --ink:#332617;
-    --ink-soft:#7A6A54;
-    --gold:#B8912F;
-    --gold-deep:#9A6E1E;
-    --gold-soft:#D9BE85;
-    --gold-pale:#F0DFA8;
-    --rose:#C0707C;
+    /* Victorian white + black + bougainvillea */
+    --cream:#F8F5F0;
+    --page-bg:#F8F5F0;
+    --ink:#0C0906;
+    --ink-soft:#3A3530;
+    --gold:#8A6A28;
+    --gold-deep:#6A4E18;
+    --gold-soft:#C0983A;
+    --gold-pale:#EDE0C0;
+    --rose:#C0186A;
 
-    --manja-a:#FCEFCE; --manja-b:#F4DCA0; --manja-ink:#7A5A12;
-    --mehendi-a:#EAF1E4; --mehendi-b:#CFE0C4; --mehendi-ink:#2E4E33;
-    --nikah-a:#F7E5DE; --nikah-b:#E7BFAE; --nikah-ink:#6B2E22;
-    --reception-a:#E9EBF6; --reception-b:#C7CDEB; --reception-ink:#28315C;
+    /* Bougainvillea palette */
+    --boug:#C4186A;
+    --boug-deep:#820840;
+    --boug-light:#E84880;
+    --boug-pale:#F5CCDC;
 
-    /* jewel-tone accents — one rich hue per event, Persian-miniature palette */
-    --manja-pop:#D99B0A;      --manja-pop-text:#2E1E00;
-    --mehendi-pop:#1D7A46;    --mehendi-pop-text:#FFFFFF;
-    --nikah-pop:#9B1B3D;      --nikah-pop-text:#FFFFFF;
-    --reception-pop:#1E3F7A; --reception-pop-text:#FFFFFF;
+    /* Event light washes — muted for Victorian */
+    --manja-a:#F5EDD8; --manja-b:#EDE0C0; --manja-ink:#4A3A08;
+    --mehendi-a:#E4EDE0; --mehendi-b:#C8DCC0; --mehendi-ink:#1E3E24;
+    --nikah-a:#F5E0EC;  --nikah-b:#EAC0D4;  --nikah-ink:#5A0830;
+    --reception-a:#E8E8E8; --reception-b:#D0D0D0; --reception-ink:#181818;
+
+    /* Event card accents — Victorian palette */
+    --manja-pop:#A87820;      --manja-pop-text:#F8F5F0;
+    --mehendi-pop:#1E5430;    --mehendi-pop-text:#F8F5F0;
+    --nikah-pop:#C4186A;      --nikah-pop-text:#F8F5F0;
+    --reception-pop:#0C0906;  --reception-pop-text:#F8F5F0;
     --accent: var(--manja-pop);
+
+    /* Layout */
+    --contentHalf:410px; --treeGap:34px; --treeW:220px;
+    --vineW:180px; --vineGap:20px;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -107,9 +119,9 @@
   .hero{ text-align:center; padding:0 0 46px; position:relative; margin-top:-1px; }
   .hero-ribbon{
     position:relative; width:100%; padding:64px 24px 128px; overflow:hidden;
-    background:linear-gradient(120deg, var(--manja-pop) 0%, var(--nikah-pop) 52%, var(--reception-pop) 100%);
-    background-size:145% 145%;
-    animation:ribbon-drift 16s ease-in-out infinite;
+    background:linear-gradient(145deg, #0C0906 0%, #1A0614 40%, #220818 70%, #0C0906 100%);
+    background-size:200% 200%;
+    animation:ribbon-drift 20s ease-in-out infinite;
   }
   @keyframes ribbon-drift{
     0%{ background-position:15% 20%; }
@@ -364,7 +376,7 @@
   .rsvp{ padding:60px 20px; text-align:center; display:flex; align-items:center; }
   .rsvp .wrap{
     max-width:600px; margin:0 auto; position:relative; overflow:hidden;
-    background:linear-gradient(150deg, var(--manja-pop) 0%, var(--nikah-pop) 55%, var(--reception-pop) 100%);
+    background:linear-gradient(150deg, #0C0906 0%, var(--boug-deep) 55%, #0C0906 100%);
     box-shadow:0 26px 70px rgba(58,46,34,0.22); padding:56px 48px;
     border-radius:44px 36px 48px 32px / 54px 42px 50px 38px;
     animation:blob-morph 14s ease-in-out infinite;
@@ -410,7 +422,7 @@
      so he sits proudly against the vivid hero ribbon and can never wander down into the card/tab
      region no matter how tall the page grows. Horizontal position still tracks the content column
      so he doesn't strand in empty margin on wide desktop screens. */
-  :root{ --contentHalf:410px; --treeGap:34px; --treeW:220px; }
+  /* layout vars now in main :root */
   #hud{
     position:fixed; z-index:80; width:118px; height:118px;
     left:max(130px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW) + 70px));
@@ -534,7 +546,7 @@
   /* ─ SCROLL PROGRESS BAR ─ */
   #scroll-bar{
     position:fixed; top:0; left:0; right:0; height:3px; z-index:9999;
-    background:linear-gradient(90deg, var(--manja-pop), var(--nikah-pop), var(--reception-pop));
+    background:linear-gradient(90deg, var(--boug-deep), var(--boug), var(--boug-light));
     transform-origin:0 50%; transform:scaleX(0); pointer-events:none;
   }
   @supports (animation-timeline:scroll()){
@@ -597,15 +609,181 @@
   }
   .tab-content.active .panel-head:hover::before{ background-position:-40% 0; }
 
-  /* ─ RSVP BLOB — pulse glow ─ */
+  /* ─ RSVP BLOB — pulse glow (bougainvillea) ─ */
   .rsvp .wrap{
     animation:blob-morph 14s ease-in-out infinite, blob-pulse-glow 8s ease-in-out infinite !important;
   }
   @keyframes blob-pulse-glow{
-    0%,100%{ box-shadow:0 26px 70px rgba(58,46,34,0.22), 0 0 40px rgba(155,27,61,0.15); }
-    50%{     box-shadow:0 26px 70px rgba(58,46,34,0.22), 0 0 90px rgba(155,27,61,0.40), 0 0 120px rgba(30,63,122,0.15); }
+    0%,100%{ box-shadow:0 26px 70px rgba(12,9,6,0.55), 0 0 40px rgba(196,24,106,0.20); }
+    50%{     box-shadow:0 26px 70px rgba(12,9,6,0.55), 0 0 90px rgba(196,24,106,0.55), 0 0 140px rgba(130,8,64,0.25); }
   }
   @media(prefers-reduced-motion:reduce){ .rsvp .wrap{ animation:none !important; } }
+
+  /* ══════════════════════════════════════════════
+     VICTORIAN + BOUGAINVILLEA RESKIN
+  ══════════════════════════════════════════════ */
+
+  /* Body & base */
+  body{ background:var(--page-bg); color:var(--ink); }
+
+  /* Nav — thin black border, no warm tones */
+  nav{ border-bottom:1px solid rgba(12,9,6,0.18); background:rgba(248,245,240,0.95); }
+  nav .brand{ color:var(--ink); }
+  nav a{ color:var(--ink-soft); }
+  nav a:hover{ color:var(--ink); }
+  nav a::after{ background:var(--boug); }
+
+  /* Hero — white text on black stays; add bougainvillea shimmer */
+  .hero-names{ text-shadow:0 14px 40px rgba(196,24,106,0.35), 0 2px 0 rgba(0,0,0,0.3); }
+  .hero-names::after{ content:'Azhar & Zeenath'; }
+  @keyframes shimmer-sweep{ 0%,45%{ background-position:130% 0; } 65%,100%{ background-position:-60% 0; } }
+  .hero-rule{ color:rgba(255,255,255,0.5); }
+  /* Wave fills to page bg */
+  .wave-divider path{ fill:var(--page-bg); }
+
+  /* Sparkles stay white on dark ribbon */
+
+  /* Vine ornament separators */
+  .vine{ color:var(--boug); }
+  .vine svg{ color:var(--boug); }
+
+  /* Event card tab buttons — Victorian dark */
+  .tab-btn{ border-color:rgba(255,255,255,0.35); }
+
+  /* Event panel light wash → white with ink */
+  .event-panel{ background:radial-gradient(ellipse 60% 100% at 50% 0%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 70%); }
+  .event-panel .wrap{ background:rgba(248,245,240,0.98); }
+  .panel-body .couplet{ border-left-color:var(--accent); }
+
+  /* Registry + zehar section borders */
+  .event .wrap::before{ border-color:var(--ink); opacity:0.12; }
+  .frame-corner path, .frame-corner circle, .frame-corner path{ stroke:var(--ink); fill:var(--ink); }
+
+  /* RSVP buttons */
+  .submit-btn{ background:var(--page-bg); color:var(--ink); }
+  .toggle button.active{ background:var(--page-bg); color:var(--ink); }
+
+  /* Footer */
+  footer{ border-top:1px solid rgba(12,9,6,0.15); }
+
+  /* Cursor — bougainvillea */
+  #cursor-dot{ background:var(--boug); }
+  #cursor-ring{ border-color:rgba(196,24,106,0.6); }
+  body.cursor-hover #cursor-dot{ background:var(--boug-deep); }
+  body.cursor-hover #cursor-ring{ border-color:var(--boug); }
+
+  /* ─ FALLING BOUGAINVILLEA PETALS ─ */
+  .petal{
+    position:fixed; bottom:-20px; pointer-events:none; z-index:3;
+    border-radius:50% 50% 50% 0 / 60% 60% 40% 40%;
+    opacity:0; animation:petal-fall linear infinite;
+  }
+  @keyframes petal-fall{
+    0%  { opacity:0; transform:translateY(0) rotate(0deg) translateX(0); }
+    6%  { opacity:var(--op,0.75); }
+    94% { opacity:var(--op,0.75); }
+    100%{ opacity:0; transform:translateY(-105vh) rotate(var(--rot,300deg)) translateX(var(--dx,80px)); }
+  }
+  @media(prefers-reduced-motion:reduce){ .petal{ display:none; } }
+
+  /* ─ BOUGAINVILLEA VINE (right side) ─ */
+  #boug-vine{
+    position:fixed;
+    right:max(0px, calc(50vw - var(--contentHalf) - var(--vineGap) - var(--vineW)));
+    bottom:0; width:var(--vineW); height:min(76vh,660px);
+    pointer-events:none; z-index:1; overflow:visible;
+    -webkit-mask-image:linear-gradient(to top, #000 55%, transparent 96%);
+    mask-image:linear-gradient(to top, #000 55%, transparent 96%);
+    transition:right 0.3s ease;
+  }
+  #boug-vine svg{ width:100%; height:100%; overflow:visible; }
+  @media(max-width:900px){ #boug-vine{ display:none; } }
+
+  /* Vine stem draw animation */
+  .vs{
+    stroke:#3A5C30; stroke-linecap:round; stroke-linejoin:round; fill:none;
+    stroke-dasharray:3000; stroke-dashoffset:3000;
+    animation:vine-draw 3s cubic-bezier(0.4,0,0.2,1) forwards;
+  }
+  .vs.d1{ animation-delay:0.3s; }
+  .vs.d2{ animation-delay:1.1s; }
+  .vs.d3{ animation-delay:1.6s; }
+  .vs.d4{ animation-delay:2.0s; }
+  @keyframes vine-draw{ to{ stroke-dashoffset:0; } }
+  @media(prefers-reduced-motion:reduce){ .vs{ stroke-dashoffset:0; animation:none; } }
+
+  /* Bougainvillea bracts — appear after vine draws */
+  .vb{
+    opacity:0; transform-origin:center;
+    animation:bract-burst 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  }
+  .vb.b1{ animation-delay:1.8s; } .vb.b2{ animation-delay:1.9s; } .vb.b3{ animation-delay:2.0s; }
+  .vb.b4{ animation-delay:2.4s; } .vb.b5{ animation-delay:2.5s; } .vb.b6{ animation-delay:2.6s; }
+  .vb.b7{ animation-delay:3.0s; } .vb.b8{ animation-delay:3.1s; } .vb.b9{ animation-delay:3.2s; }
+  .vb.b10{animation-delay:3.6s; } .vb.b11{animation-delay:3.7s; } .vb.b12{animation-delay:3.8s; }
+  @keyframes bract-burst{ from{opacity:0;transform:scale(0.3);} to{opacity:1;transform:scale(1);} }
+  @media(prefers-reduced-motion:reduce){ .vb{ opacity:1; animation:none; } }
+
+  /* Leaves */
+  .vl{ opacity:0; animation:leaf-in 0.4s ease forwards; }
+  .vl.l1{ animation-delay:0.8s; }  .vl.l2{ animation-delay:1.2s; }
+  .vl.l3{ animation-delay:1.4s; }  .vl.l4{ animation-delay:2.2s; }
+  .vl.l5{ animation-delay:2.8s; }  .vl.l6{ animation-delay:3.4s; }
+  @keyframes leaf-in{ from{opacity:0;} to{opacity:1;} }
+  @media(prefers-reduced-motion:reduce){ .vl{ opacity:1; animation:none; } }
+
+  /* Bracts breathe continuously */
+  .vb{ animation-fill-mode:forwards; }
+  @keyframes bract-breathe{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.08); } }
+
+  /* Victorian ornamental section divider */
+  .orn-divider{
+    display:flex; align-items:center; justify-content:center;
+    gap:16px; margin:0 auto 40px; max-width:400px; color:var(--ink-soft); opacity:0.5;
+  }
+  .orn-divider::before,.orn-divider::after{
+    content:''; flex:1; height:1px;
+    background:linear-gradient(90deg, transparent, currentColor, transparent);
+  }
+  .orn-divider span{ font-size:16px; letter-spacing:0.1em; }
+
+  /* Victorian double-rule border on key wraps */
+  .event .wrap{
+    border:1px solid rgba(12,9,6,0.14);
+    box-shadow:0 20px 60px rgba(12,9,6,0.10), 0 2px 10px rgba(12,9,6,0.05), inset 0 0 0 5px rgba(12,9,6,0.03);
+  }
+
+  /* Zehar section — ink, not warm brown */
+  .zehar-heading{ color:var(--ink); }
+  .zehar-ety{ background:var(--boug-pale); border-left-color:var(--boug); }
+  .zehar-ghost{ color:rgba(196,24,106,0.08); }
+  @keyframes zehar-turn{
+    from{ transform:translate(-50%,-52%) rotate(0deg); }
+    to  { transform:translate(-50%,-52%) rotate(360deg); }
+  }
+
+  /* Polaroids — ink border */
+  .polaroid{ background:#fff; }
+  .polaroid-pin{ background:radial-gradient(circle at 36% 36%, var(--boug), var(--boug-deep) 80%); }
+  .polaroid-frame{
+    background:linear-gradient(135deg, var(--boug-pale) 0%, color-mix(in srgb, var(--boug) 20%, white) 50%, var(--boug-pale) 100%);
+  }
+  .ph-sym{ color:var(--boug); }
+  @keyframes frame-shine{
+    0%,100%{ background-position:0% 50%; }
+    50%     { background-position:100% 50%; }
+  }
+
+  /* Photos heading */
+  .photos-heading{ color:var(--ink); }
+
+  /* Venue */
+  .venue h2{ color:var(--ink); }
+  .venue .map-link{ border-color:var(--ink); color:var(--ink); }
+  .venue .map-link:hover{ background:var(--ink); color:var(--page-bg); box-shadow:0 10px 24px rgba(12,9,6,0.25); }
+
+  /* Zehar eyebrow and photos eyebrow */
+  .zehar-eyebrow, .photos-section .photos-eyebrow{ color:var(--ink-soft); }
 
   /* ─ ZEHAR GHOST — slow rotation ─ */
   .zehar-ghost{ animation:zehar-turn 140s linear infinite; }
@@ -1172,6 +1350,51 @@
   </svg>
 </button>
 
+<!-- BOUGAINVILLEA VINE — right side, mirrors the orange tree -->
+<div id="boug-vine" aria-hidden="true">
+  <svg viewBox="0 0 180 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Main climbing stem -->
+    <path class="vs d1" d="M145,700 C135,610 158,540 130,468 C108,408 82,378 108,308 C128,252 155,215 130,148 C110,94 78,56 105,12" stroke-width="2.4"/>
+    <!-- Lateral branches -->
+    <path class="vs d2" d="M130,468 C100,452 58,458 22,472 C8,478 2,488 4,498"/>
+    <path class="vs d3" d="M108,308 C78,292 38,298 10,312"/>
+    <path class="vs d4" d="M130,148 C100,133 62,138 32,150"/>
+
+    <!-- Leaves on main stem -->
+    <ellipse class="vl l1" cx="148" cy="590" rx="15" ry="8" fill="#3A6030" transform="rotate(-28 148 590)"/>
+    <ellipse class="vl l2" cx="138" cy="510" rx="13" ry="7" fill="#2C5226" transform="rotate(22 138 510)"/>
+    <ellipse class="vl l3" cx="118" cy="390" rx="15" ry="8" fill="#3A6030" transform="rotate(-18 118 390)"/>
+    <ellipse class="vl l4" cx="138" cy="228" rx="13" ry="7" fill="#2C5226" transform="rotate(26 138 228)"/>
+    <ellipse class="vl l5" cx="116" cy="78"  rx="15" ry="8" fill="#3A6030" transform="rotate(-22 116 78)"/>
+    <!-- Leaves on laterals -->
+    <ellipse class="vl l6" cx="36" cy="468" rx="12" ry="7" fill="#3A6030" transform="rotate(-12 36 468)"/>
+    <ellipse class="vl l6" cx="62" cy="478" rx="10" ry="6" fill="#2C5226" transform="rotate(18 62 478)"/>
+    <ellipse class="vl l6" cx="20" cy="308" rx="12" ry="7" fill="#3A6030" transform="rotate(-8 20 308)"/>
+    <ellipse class="vl l6" cx="48" cy="299" rx="10" ry="6" fill="#2C5226" transform="rotate(22 48 299)"/>
+    <ellipse class="vl l6" cx="42" cy="145" rx="12" ry="7" fill="#3A6030" transform="rotate(-14 42 145)"/>
+
+    <!-- Bract cluster 1 — lower lateral tip -->
+    <path class="vb b1" d="M4,498 C-3,487 4,472 16,480 C21,483 20,494 13,497 Z" fill="#C4186A"/>
+    <path class="vb b2" d="M4,498 C-7,495 -9,482 3,477 C10,475 17,482 13,493 Z" fill="#D42272"/>
+    <path class="vb b3" d="M4,498 C0,509 -7,508 -4,497 C-2,490 7,487 11,495 Z" fill="#AA0E5C"/>
+
+    <!-- Bract cluster 2 — middle lateral tip -->
+    <path class="vb b4" d="M10,312 C3,301 10,286 22,294 C27,297 26,308 19,311 Z" fill="#C4186A"/>
+    <path class="vb b5" d="M10,312 C-1,309 -3,296 9,291 C16,289 23,296 19,307 Z" fill="#E03080"/>
+    <path class="vb b6" d="M10,312 C6,323 -1,322 1,311 C3,304 12,301 16,309 Z" fill="#AA0E5C"/>
+
+    <!-- Bract cluster 3 — upper lateral tip -->
+    <path class="vb b7"  d="M32,150 C25,139 32,124 44,132 C49,135 48,146 41,149 Z" fill="#C4186A"/>
+    <path class="vb b8"  d="M32,150 C21,147 19,134 31,129 C38,127 45,134 41,145 Z" fill="#D42272"/>
+    <path class="vb b9"  d="M32,150 C28,161 21,160 23,149 C25,142 34,139 38,147 Z" fill="#AA0E5C"/>
+
+    <!-- Bract cluster 4 — top of main stem -->
+    <path class="vb b10" d="M105,12 C98,1 105,-14 117,-6 C122,-3 121,8 114,11 Z" fill="#C4186A"/>
+    <path class="vb b11" d="M105,12 C94,9 92,-4 104,-9 C111,-11 118,-4 114,7 Z" fill="#E03080"/>
+    <path class="vb b12" d="M105,12 C101,23 94,22 96,11 C98,4 107,1 111,9 Z" fill="#AA0E5C"/>
+  </svg>
+</div>
+
 </div><!-- /#site -->
 
 <script>
@@ -1534,21 +1757,26 @@
     upd();
   })();
 
-  // ─ FLOATING GOLD DUST PARTICLES ─
+  // ─ FALLING BOUGAINVILLEA PETALS ─
   (function(){
-    var n=30;
+    var colors=['#C4186A','#D42272','#AA0E5C','#E03080','#C8206E','#B81060'];
+    var n=38;
     for(var i=0;i<n;i++){
-      var d=document.createElement('div'); d.className='dust';
-      var sz=1.5+Math.random()*4.5;
-      var op=0.06+Math.random()*0.13;
-      var dur=18+Math.random()*28;
+      var p=document.createElement('div'); p.className='petal';
+      var w=7+Math.random()*9;
+      var h=w*1.4;
+      var op=0.55+Math.random()*0.35;
+      var dur=14+Math.random()*22;
       var delay=-(Math.random()*dur);
       var left=Math.random()*100;
-      var dx=(Math.random()-0.5)*140;
-      d.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+left+'vw;animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
-      d.style.setProperty('--op', op);
-      d.style.setProperty('--dx', dx+'px');
-      document.body.appendChild(d);
+      var dx=(Math.random()-0.5)*200;
+      var rot=180+Math.random()*360;
+      var col=colors[Math.floor(Math.random()*colors.length)];
+      p.style.cssText='width:'+w+'px;height:'+h+'px;left:'+left+'vw;background:'+col+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+      p.style.setProperty('--op',op);
+      p.style.setProperty('--dx',dx+'px');
+      p.style.setProperty('--rot',rot+'deg');
+      document.body.appendChild(p);
     }
   })();
 
