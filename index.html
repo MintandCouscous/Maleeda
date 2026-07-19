@@ -526,6 +526,175 @@
   @keyframes tree-sway{ from{ transform:rotate(0.3deg); } to{ transform:rotate(-0.35deg); } }
   @media (prefers-reduced-motion: reduce){ #tree svg{ animation:none; } }
   @media(max-width:640px){ #tree{ width:150px; height:420px; } }
+
+  /* ══════════════════════════════════════════════
+     MOTION UPGRADE — everything moves, always
+  ══════════════════════════════════════════════ */
+
+  /* ─ SCROLL PROGRESS BAR ─ */
+  #scroll-bar{
+    position:fixed; top:0; left:0; right:0; height:3px; z-index:9999;
+    background:linear-gradient(90deg, var(--manja-pop), var(--nikah-pop), var(--reception-pop));
+    transform-origin:0 50%; transform:scaleX(0); pointer-events:none;
+  }
+  @supports (animation-timeline:scroll()){
+    #scroll-bar{ animation:scroll-fill linear both; animation-timeline:scroll(); }
+    @keyframes scroll-fill{ from{transform:scaleX(0)} to{transform:scaleX(1)} }
+  }
+
+  /* ─ CUSTOM CURSOR ─ */
+  #cursor-dot{
+    position:fixed; pointer-events:none; z-index:9998;
+    width:7px; height:7px; border-radius:50%; background:var(--gold);
+    transform:translate(-50%,-50%); mix-blend-mode:multiply;
+    transition:transform 0.1s, background 0.2s; will-change:transform,left,top;
+  }
+  #cursor-ring{
+    position:fixed; pointer-events:none; z-index:9997;
+    width:30px; height:30px; border-radius:50%;
+    border:1.5px solid rgba(184,145,47,0.65);
+    transform:translate(-50%,-50%); opacity:0.55;
+    transition:width 0.4s cubic-bezier(0.22,1,0.36,1), height 0.4s cubic-bezier(0.22,1,0.36,1), border-color 0.25s, opacity 0.3s;
+  }
+  body.cursor-hover #cursor-dot{ transform:translate(-50%,-50%) scale(2.5); background:var(--gold-deep); }
+  body.cursor-hover #cursor-ring{ width:56px; height:56px; opacity:0.18; border-color:var(--gold); }
+  @media(pointer:coarse){ #cursor-dot, #cursor-ring{ display:none!important; } }
+
+  /* ─ FLOATING GOLD DUST ─ */
+  .dust{
+    position:fixed; bottom:-10px; border-radius:50%; pointer-events:none; z-index:0;
+    background:var(--gold-soft); opacity:0;
+    animation:dust-rise linear infinite;
+  }
+  @keyframes dust-rise{
+    0%  { opacity:0; transform:translateY(0)       translateX(0)         scale(0.6); }
+    8%  { opacity:var(--op,0.13); }
+    92% { opacity:var(--op,0.13); }
+    100%{ opacity:0; transform:translateY(-102vh)  translateX(var(--dx,40px)) scale(1.1); }
+  }
+  @media(prefers-reduced-motion:reduce){ .dust{ display:none; } }
+
+  /* ─ NAV ANIMATED UNDERLINES ─ */
+  nav a{ position:relative; }
+  nav a::after{
+    content:''; position:absolute; left:0; bottom:-3px; width:0; height:1.5px;
+    background:var(--gold); transition:width 0.35s cubic-bezier(0.22,1,0.36,1);
+  }
+  nav a:hover::after{ width:100%; }
+
+  /* ─ TAB CARD ACTIVE GLOW ─ */
+  .tab-btn.manja.active   { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(217,155,10,0.45); }
+  .tab-btn.mehendi.active { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(29,122,70,0.45); }
+  .tab-btn.nikah.active   { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(155,27,61,0.45); }
+  .tab-btn.reception.active{ box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(30,63,122,0.45); }
+
+  /* ─ PANEL HEAD — shimmer sweep on hover ─ */
+  .panel-head::before{
+    content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
+    background:linear-gradient(100deg, transparent 25%, rgba(255,255,255,0.18) 42%, transparent 58%);
+    background-size:200% 100%; background-position:130% 0; background-repeat:no-repeat;
+    transition:background-position 0.9s ease;
+  }
+  .tab-content.active .panel-head:hover::before{ background-position:-40% 0; }
+
+  /* ─ RSVP BLOB — pulse glow ─ */
+  .rsvp .wrap{
+    animation:blob-morph 14s ease-in-out infinite, blob-pulse-glow 8s ease-in-out infinite !important;
+  }
+  @keyframes blob-pulse-glow{
+    0%,100%{ box-shadow:0 26px 70px rgba(58,46,34,0.22), 0 0 40px rgba(155,27,61,0.15); }
+    50%{     box-shadow:0 26px 70px rgba(58,46,34,0.22), 0 0 90px rgba(155,27,61,0.40), 0 0 120px rgba(30,63,122,0.15); }
+  }
+  @media(prefers-reduced-motion:reduce){ .rsvp .wrap{ animation:none !important; } }
+
+  /* ─ ZEHAR GHOST — slow rotation ─ */
+  .zehar-ghost{ animation:zehar-turn 140s linear infinite; }
+  @keyframes zehar-turn{
+    from{ transform:translate(-50%,-52%) rotate(0deg); }
+    to  { transform:translate(-50%,-52%) rotate(360deg); }
+  }
+  @media(prefers-reduced-motion:reduce){ .zehar-ghost{ animation:none; } }
+
+  /* ─ SUBMIT BUTTON lift ─ */
+  .submit-btn{ transition:transform 0.28s cubic-bezier(0.22,1,0.36,1), background 0.2s; }
+  .submit-btn:hover{ transform:translateY(-5px); }
+  .submit-btn:active{ transform:translateY(-1px); }
+
+  /* ─ MAP LINK ─ */
+  .venue .map-link{ transition:background 0.22s, color 0.22s, transform 0.28s cubic-bezier(0.22,1,0.36,1), box-shadow 0.28s; }
+  .venue .map-link:hover{ background:var(--gold); color:#fff; transform:translateY(-4px); box-shadow:0 10px 24px rgba(184,145,47,0.3); }
+
+  /* ══════════════════════════════════════════════
+     MOMENTS / POLAROID GALLERY
+  ══════════════════════════════════════════════ */
+  .photos-section{
+    padding:80px 28px 72px; text-align:center; position:relative; overflow:hidden;
+  }
+  .photos-section .photos-eyebrow{
+    font-size:12px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--ink-soft); opacity:0.75; margin-bottom:14px;
+  }
+  .photos-heading{
+    font-family:'Beau Rivage',cursive; font-size:clamp(64px,11vw,128px);
+    color:var(--gold-deep); line-height:1; margin:0 0 56px;
+  }
+  .polaroid-strip{
+    display:flex; flex-wrap:wrap; justify-content:center;
+    gap:36px 28px; max-width:1060px; margin:0 auto;
+  }
+  .polaroid{
+    position:relative; background:#fff; padding:14px 14px 52px;
+    box-shadow:0 20px 55px rgba(40,20,10,0.17), 0 3px 8px rgba(40,20,10,0.07);
+    transform:rotate(var(--r,0deg)) translateY(30px); opacity:0;
+    transition:
+      opacity 0.7s cubic-bezier(0.22,1,0.36,1) var(--d,0s),
+      transform 0.7s cubic-bezier(0.22,1,0.36,1) var(--d,0s),
+      box-shadow 0.35s ease;
+    cursor:zoom-in; flex-shrink:0;
+  }
+  .polaroid.in{ opacity:1; transform:rotate(var(--r,0deg)) translateY(0); }
+  .polaroid:hover{
+    transform:rotate(0deg) translateY(-16px) scale(1.07) !important;
+    box-shadow:0 36px 80px rgba(40,20,10,0.28); z-index:20;
+  }
+  .polaroid-pin{
+    position:absolute; top:-9px; left:50%; transform:translateX(-50%);
+    width:13px; height:13px; border-radius:50%;
+    background:radial-gradient(circle at 36% 36%, var(--nikah-pop), #6B1020 80%);
+    box-shadow:0 2px 6px rgba(100,20,30,0.38);
+  }
+  .polaroid-frame{
+    width:200px; height:240px; overflow:hidden; position:relative;
+    background:linear-gradient(135deg, var(--gold-pale) 0%, var(--manja-b) 50%, var(--gold-pale) 100%);
+    background-size:200% 200%;
+    animation:frame-shine 8s ease-in-out infinite;
+    display:flex; align-items:center; justify-content:center;
+  }
+  @keyframes frame-shine{
+    0%,100%{ background-position:0% 50%; }
+    50%     { background-position:100% 50%; }
+  }
+  @media(prefers-reduced-motion:reduce){ .polaroid-frame{ animation:none; } }
+  .polaroid-frame img{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block; z-index:2;
+  }
+  .ph-sym{
+    font-family:'Beau Rivage',cursive; font-size:58px; color:var(--gold);
+    opacity:0.45; user-select:none; pointer-events:none; line-height:1;
+    position:relative; z-index:1;
+  }
+  .polaroid-label{
+    position:absolute; bottom:14px; left:0; right:0; text-align:center;
+    font-family:'EB Garamond',serif; font-style:italic;
+    font-size:14.5px; color:var(--ink-soft); padding:0 10px;
+  }
+  @media(max-width:640px){
+    .polaroid-frame{ width:148px; height:178px; }
+    .polaroid{ padding:10px 10px 42px; }
+    .polaroid-strip{ gap:24px 16px; }
+    .ph-sym{ font-size:44px; }
+  }
 </style>
 </head>
 <body>
@@ -652,6 +821,7 @@
 </svg>
 </div>
 
+<div id="scroll-bar"></div>
 <div id="site">
 
 <nav>
@@ -663,6 +833,7 @@
       <li><a href="#nikah">Nikah</a></li>
       <li><a href="#reception">Reception</a></li>
       <li><a href="#zehar">Our Story</a></li>
+      <li><a href="#moments">Moments</a></li>
       <li><a href="#rsvp">RSVP</a></li>
     </ul>
   </div>
@@ -831,6 +1002,69 @@
       <p>What followed was four years of: the same shows watched in different cities at the same time, calls that outlasted dinner, and enough Air India bookings between them to have opinions about which route has the better cabin crew. Several telecom companies quietly flourished. Neither of them noticed.</p>
       <p>Today they are in the same city, the same room, the same family. Azhar cannot say he wasn't warned. He can, and does, say it was entirely worth it.</p>
     </div>
+  </div>
+</section>
+
+<!-- MOMENTS / PHOTOS -->
+<section class="photos-section" id="moments" data-hud-key="moments">
+  <div class="photos-eyebrow">Four years in frames</div>
+  <h2 class="photos-heading">Moments</h2>
+  <div class="polaroid-strip">
+
+    <div class="polaroid" style="--r:-6deg; --d:0s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="How it started"> -->
+        <span class="ph-sym">A & Z</span>
+      </div>
+      <div class="polaroid-label">How it started · Oct 2021</div>
+    </div>
+
+    <div class="polaroid" style="--r:4deg; --d:0.1s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="Zehar"> -->
+        <span class="ph-sym">Zehar</span>
+      </div>
+      <div class="polaroid-label">When we named it · Jan 2022</div>
+    </div>
+
+    <div class="polaroid" style="--r:-2deg; --d:0.2s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="Different cities"> -->
+        <span class="ph-sym">✈</span>
+      </div>
+      <div class="polaroid-label">Different cities, same show</div>
+    </div>
+
+    <div class="polaroid" style="--r:7deg; --d:0.3s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="Air India regulars"> -->
+        <span class="ph-sym">☽</span>
+      </div>
+      <div class="polaroid-label">Air India regulars</div>
+    </div>
+
+    <div class="polaroid" style="--r:-4deg; --d:0.4s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="Hyderabad finally"> -->
+        <span class="ph-sym">✿</span>
+      </div>
+      <div class="polaroid-label">Hyderabad, finally</div>
+    </div>
+
+    <div class="polaroid" style="--r:2deg; --d:0.5s">
+      <div class="polaroid-pin"></div>
+      <div class="polaroid-frame">
+        <!-- replace with: <img src="YOUR_URL" alt="Wedding day"> -->
+        <span class="ph-sym">28.8</span>
+      </div>
+      <div class="polaroid-label">28 August 2026</div>
+    </div>
+
   </div>
 </section>
 
@@ -1047,6 +1281,13 @@
       "Three days of feeling builds to one enormous party. Wear shoes that forgive bad dancing.",
       "I sample one crumb of everything for quality control. It's exhausting. Someone has to suffer for the cause."
     ],
+    moments: [
+      "Six frames. Four years of evidence. The actual photos are coming — I'm just holding the wall warm.",
+      "I flew between those two cities more than Air India did. No one mentions the toll on my wings.",
+      "They said 'add a photo section.' I said 'of what, airport arrivals?' Apparently yes. Apparently that counts.",
+      "Drop the real photos in whenever you're ready. I have notes on all of them. No one asked. I'm sharing anyway.",
+      "I have personally witnessed more of this story than they'll ever admit. I may write a memoir. Working title: Zehar.",
+    ],
     zehar: [
       "They named themselves Zehar. In Urdu, that means poison. Azhar had months to look this up. He did not. I respect the commitment, I do.",
       "Zeenath plus Azhar equals Zehar. Also equals poison. Someone was being poetic. Someone else was not reading the dictionary. You know who you are.",
@@ -1253,6 +1494,110 @@
       status.textContent = res.ok ? 'Thank you — your RSVP is in.' : 'Something went wrong. Please try again.';
     } catch(err){ status.textContent = 'Something went wrong. Please try again.'; }
   });
+
+  // ════════════════════════════════════════════════
+  //  MOTION UPGRADE — the full enchilada
+  // ════════════════════════════════════════════════
+
+  // ─ CUSTOM CURSOR (desktop / fine pointer only) ─
+  (function(){
+    if(!window.matchMedia('(pointer:fine)').matches) return;
+    var dot = document.createElement('div'); dot.id='cursor-dot';
+    var ring = document.createElement('div'); ring.id='cursor-ring';
+    document.body.appendChild(dot); document.body.appendChild(ring);
+    var mx=window.innerWidth/2, my=window.innerHeight/2, rx=mx, ry=my;
+    document.addEventListener('mousemove', function(e){
+      mx=e.clientX; my=e.clientY;
+      dot.style.left=mx+'px'; dot.style.top=my+'px';
+    }, {passive:true});
+    (function track(){
+      rx+=(mx-rx)*0.13; ry+=(my-ry)*0.13;
+      ring.style.left=Math.round(rx)+'px'; ring.style.top=Math.round(ry)+'px';
+      requestAnimationFrame(track);
+    })();
+    document.querySelectorAll('a, button, .tab-btn, .submit-btn, .polaroid, .map-link, #hud-avatar').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ document.body.classList.add('cursor-hover'); });
+      el.addEventListener('mouseleave', function(){ document.body.classList.remove('cursor-hover'); });
+    });
+  })();
+
+  // ─ SCROLL PROGRESS BAR (JS fallback when CSS scroll-driven unsupported) ─
+  (function(){
+    var bar = document.getElementById('scroll-bar');
+    if(!bar) return;
+    if(CSS && CSS.supports && CSS.supports('animation-timeline','scroll()')) return;
+    function upd(){
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.transform = 'scaleX('+(max>0 ? Math.min(window.scrollY/max,1) : 0)+')';
+    }
+    window.addEventListener('scroll', upd, {passive:true});
+    upd();
+  })();
+
+  // ─ FLOATING GOLD DUST PARTICLES ─
+  (function(){
+    var n=30;
+    for(var i=0;i<n;i++){
+      var d=document.createElement('div'); d.className='dust';
+      var sz=1.5+Math.random()*4.5;
+      var op=0.06+Math.random()*0.13;
+      var dur=18+Math.random()*28;
+      var delay=-(Math.random()*dur);
+      var left=Math.random()*100;
+      var dx=(Math.random()-0.5)*140;
+      d.style.cssText='width:'+sz+'px;height:'+sz+'px;left:'+left+'vw;animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
+      d.style.setProperty('--op', op);
+      d.style.setProperty('--dx', dx+'px');
+      document.body.appendChild(d);
+    }
+  })();
+
+  // ─ 3D TILT on event panel ─
+  (function(){
+    var panel = document.querySelector('.event-panel .wrap');
+    if(!panel || !window.matchMedia('(pointer:fine)').matches) return;
+    var section = panel.closest('.event-panel');
+    section.addEventListener('mousemove', function(e){
+      var r=panel.getBoundingClientRect();
+      var dx=(e.clientX-(r.left+r.width/2))/(r.width/2);
+      var dy=(e.clientY-(r.top+r.height/2))/(r.height/2);
+      panel.style.transition='transform 0.12s ease';
+      panel.style.transform='perspective(1100px) rotateY('+(dx*5)+'deg) rotateX('+(-dy*4)+'deg) scale(1.012)';
+    }, {passive:true});
+    section.addEventListener('mouseleave', function(){
+      panel.style.transition='transform 0.55s cubic-bezier(0.22,1,0.36,1)';
+      panel.style.transform='';
+    });
+  })();
+
+  // ─ POLAROID STAGGER REVEAL ─
+  (function(){
+    var ps=document.querySelectorAll('.polaroid');
+    if(!ps.length) return;
+    if(typeof IntersectionObserver==='undefined'){
+      ps.forEach(function(p){ p.classList.add('in'); }); return;
+    }
+    var obs=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); obs.unobserve(e.target); }
+      });
+    }, {threshold:0.1});
+    ps.forEach(function(p){ obs.observe(p); });
+  })();
+
+  // ─ HERO PARALLAX ─
+  (function(){
+    if(!window.matchMedia('(prefers-reduced-motion:no-preference)').matches) return;
+    var names=document.querySelector('.hero-names');
+    var flourish=document.querySelector('.hero-flourish');
+    if(!names) return;
+    window.addEventListener('scroll', function(){
+      var y=window.scrollY;
+      if(y > 600) return;
+      names.style.transform='translateY('+(y*0.26)+'px)';
+      if(flourish) flourish.style.transform='translateY('+(y*0.15)+'px)';
+    }, {passive:true});
+  })();
 </script>
 
 </body>
