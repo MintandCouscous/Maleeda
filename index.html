@@ -329,6 +329,38 @@
   .tab-content.reception{ color:var(--reception-ink); }
   .tab-content.reception .tl-row{ border-color:var(--reception-pop); }
 
+  /* ── Who is Zehar? ── */
+  .zehar-section{ padding:80px 28px 72px; position:relative; overflow:hidden; text-align:center; }
+  .zehar-ghost{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-52%);
+    font-family:'Beau Rivage',cursive; font-size:clamp(180px,32vw,380px);
+    color:var(--gold-pale); opacity:0.28; pointer-events:none; white-space:nowrap;
+    line-height:1; z-index:0; user-select:none; letter-spacing:-0.02em;
+  }
+  .zehar-inner{ position:relative; z-index:1; }
+  .zehar-eyebrow{ font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-soft); opacity:0.75; margin-bottom:14px; }
+  .zehar-heading{
+    font-family:'Beau Rivage',cursive; font-size:clamp(80px,14vw,160px);
+    line-height:1; color:var(--gold-deep); margin:0 0 4px;
+  }
+  .zehar-ety{
+    display:inline-block; margin:20px auto 0; max-width:520px;
+    font-family:'Cormorant Garamond',serif; font-style:italic; font-size:19.5px; line-height:1.65;
+    color:var(--ink); background:var(--gold-pale); border-radius:14px;
+    padding:20px 28px; border-left:4px solid var(--gold);
+    text-align:left;
+  }
+  .zehar-ety strong{ font-style:normal; font-family:'EB Garamond',serif; letter-spacing:0.04em; }
+  .zehar-rule{ width:52px; height:1px; background:var(--gold-soft); margin:36px auto 32px; }
+  .zehar-body{ max-width:600px; margin:0 auto; text-align:left; }
+  .zehar-body p{ font-size:18.5px; line-height:1.78; color:var(--ink); opacity:0.92; }
+  .zehar-body p + p{ margin-top:20px; }
+  @media(max-width:640px){
+    .zehar-section{ padding:56px 20px 52px; }
+    .zehar-ety{ font-size:17px; padding:16px 20px; }
+    .zehar-body p{ font-size:17px; }
+  }
+
   .rsvp{ padding:60px 20px; text-align:center; display:flex; align-items:center; }
   .rsvp .wrap{
     max-width:600px; margin:0 auto; position:relative; overflow:hidden;
@@ -630,6 +662,7 @@
       <li><a href="#mehendi">Mehendi</a></li>
       <li><a href="#nikah">Nikah</a></li>
       <li><a href="#reception">Reception</a></li>
+      <li><a href="#zehar">Our Story</a></li>
       <li><a href="#rsvp">RSVP</a></li>
     </ul>
   </div>
@@ -777,6 +810,26 @@
         </div>
         <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO IS ZEHAR -->
+<section class="zehar-section" id="zehar" data-hud-key="zehar">
+  <div aria-hidden="true" class="zehar-ghost">Zehar</div>
+  <div class="zehar-inner">
+    <div class="zehar-eyebrow">A note on the name</div>
+    <h2 class="zehar-heading">Zehar</h2>
+    <div class="zehar-ety">
+      <strong>Ze·har</strong> — portmanteau of <em>Ze</em>enath and Az<em>har</em>, coined three months after they met.
+      Also: the Urdu word for poison. Three months was precisely how long Azhar had to google this.
+      He did not. He is now legally, spiritually, and logistically bound by it.
+    </div>
+    <div class="zehar-rule"></div>
+    <div class="zehar-body">
+      <p>October 2021 — they met. By January, someone had already decided this needed a name. The word that arrived was Zehar. Whether this was foresight, a very good joke, or a soft warning dressed as romance, the record does not show.</p>
+      <p>What followed was four years of: the same shows watched in different cities at the same time, calls that outlasted dinner, and enough Air India bookings between them to have opinions about which route has the better cabin crew. Several telecom companies quietly flourished. Neither of them noticed.</p>
+      <p>Today they are in the same city, the same room, the same family. Azhar cannot say he wasn't warned. He can, and does, say it was entirely worth it.</p>
     </div>
   </div>
 </section>
@@ -993,6 +1046,13 @@
       "Everyone's dressed like royalty, so I finally blend in. Find me near the lights. I'll be posing.",
       "Three days of feeling builds to one enormous party. Wear shoes that forgive bad dancing.",
       "I sample one crumb of everything for quality control. It's exhausting. Someone has to suffer for the cause."
+    ],
+    zehar: [
+      "They named themselves Zehar. In Urdu, that means poison. Azhar had months to look this up. He did not. I respect the commitment, I do.",
+      "Zeenath plus Azhar equals Zehar. Also equals poison. Someone was being poetic. Someone else was not reading the dictionary. You know who you are.",
+      "Four years. Two cities. Uncountable Air India legs. Telecom shareholders sent cards. The couple called it long distance. I'd call it a prolonged warm-up act.",
+      "He could have googled it in January 2022. He chose love instead. These are not mutually exclusive, Azhar. They're really not.",
+      "In my professional opinion as official messenger bird: this was inevitable. The name said so. The cities couldn't hold them apart. Neither could common sense, apparently."
     ],
     registry: [
       "I did try to talk them out of this section. 'Just come,' I said. They said 'yes, AND.' I lost that argument badly.",
