@@ -184,55 +184,55 @@
     background:radial-gradient(ellipse 60% 100% at 50% 0%, color-mix(in srgb, var(--accent) 14%, transparent) 0%, transparent 70%);
     transition:background 0.4s ease;
   }
-  .tab-bar{ position:relative; max-width:900px; height:172px; margin:0 auto 26px; }
+  /* ── Event card fan — pared-back invitation cards, white with accent stripe ── */
+  .tab-bar{ position:relative; max-width:880px; height:190px; margin:0 auto 32px; }
   .tab-btn{
-    position:absolute; top:6px; width:190px; padding:20px 12px 18px; left:50%;
-    font-family:'EB Garamond',serif; text-align:center; border:3px solid rgba(255,255,255,0.55);
-    border-radius:16px; cursor:pointer; color:#fff;
-    box-shadow:0 16px 30px rgba(40,20,10,0.22);
-    transition:transform 0.45s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+    position:absolute; top:0; width:164px; left:50%;
+    font-family:'Cormorant Garamond',serif; text-align:center;
+    background:var(--page-bg); border:none; border-radius:3px;
+    cursor:pointer; color:var(--ink);
+    box-shadow:0 14px 44px rgba(12,9,6,0.13), 0 2px 8px rgba(12,9,6,0.07);
+    transition:transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.38s ease;
+    padding:28px 14px 22px; overflow:hidden;
   }
-  /* ticket-stub notches punched into the long edges */
-  .tab-btn::before, .tab-btn::after{
-    content:''; position:absolute; top:50%; width:15px; height:15px; border-radius:50%;
-    background:var(--page-bg); transform:translateY(-50%); z-index:2; box-shadow:inset 0 0 0 2px rgba(40,20,10,0.06);
+  /* top accent stripe — the only color on the card */
+  .tab-btn::before{
+    content:''; position:absolute; top:0; left:0; right:0; height:3px;
+    background:var(--c-accent, var(--ink));
+    transition:height 0.35s cubic-bezier(0.22,1,0.36,1);
   }
-  .tab-btn::before{ left:-7.5px; }
-  .tab-btn::after{ right:-7.5px; }
-  @media (max-width:640px){
-    .tab-btn::before, .tab-btn::after{ top:auto; bottom:-7.5px; transform:none; }
-    .tab-btn::before{ left:12px; }
-    .tab-btn::after{ right:12px; left:auto; }
-  }
-  .tab-btn .tag{ display:block; font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(255,255,255,0.78); }
-  .tab-btn .ev{ display:block; font-family:'Beau Rivage',cursive; font-size:30px; margin:2px 0; color:#fff; }
-  .tab-btn .tm{ display:block; font-size:12px; color:rgba(255,255,255,0.78); }
+  .tab-btn::after{ display:none; } /* no ticket notches */
 
-  /* Each card keeps its own horizontal lane always — only lift/derotate/scale in
-     place on hover/active, so a card can never swing over and block its neighbour. */
-  .tab-btn.manja{ background:linear-gradient(160deg, var(--manja-pop), color-mix(in srgb, var(--manja-pop) 62%, black)); transform:translateX(-306px) rotate(-10deg); z-index:1; }
-  .tab-btn.mehendi{ background:linear-gradient(160deg, var(--mehendi-pop), color-mix(in srgb, var(--mehendi-pop) 62%, black)); transform:translateX(-102px) rotate(-4deg) translateY(-6px); z-index:2; }
-  .tab-btn.nikah{ background:linear-gradient(160deg, var(--nikah-pop), color-mix(in srgb, var(--nikah-pop) 62%, black)); transform:translateX(102px) rotate(4deg) translateY(-6px); z-index:3; }
-  .tab-btn.reception{ background:linear-gradient(160deg, var(--reception-pop), color-mix(in srgb, var(--reception-pop) 62%, black)); transform:translateX(306px) rotate(10deg); z-index:4; }
-  .tab-btn.manja .tag, .tab-btn.manja .tm{ color:color-mix(in srgb, var(--manja-pop-text) 70%, transparent); }
-  .tab-btn.manja .ev{ color:var(--manja-pop-text); }
+  .tab-btn .tag{ display:block; font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--ink-soft); opacity:0.6; margin-bottom:10px; }
+  .tab-btn .ev{ display:block; font-family:'Beau Rivage',cursive; font-size:34px; line-height:1.05; color:var(--ink); }
+  .tab-btn .tm{ display:block; font-size:11px; letter-spacing:0.07em; color:var(--ink-soft); margin-top:6px; opacity:0.7; }
 
-  .tab-btn:hover{ box-shadow:0 22px 40px rgba(40,20,10,0.3); }
-  .tab-btn.manja:hover{ transform:translateX(-306px) rotate(-10deg) translateY(-14px); }
-  .tab-btn.mehendi:hover{ transform:translateX(-102px) rotate(-4deg) translateY(-20px); }
-  .tab-btn.nikah:hover{ transform:translateX(102px) rotate(4deg) translateY(-20px); }
-  .tab-btn.reception:hover{ transform:translateX(306px) rotate(10deg) translateY(-14px); }
+  /* Per-card accent colour (custom property, not a full gradient fill) */
+  .tab-btn.manja   { --c-accent:var(--manja-pop);   transform:translateX(-300px) rotate(-9deg); z-index:1; }
+  .tab-btn.mehendi { --c-accent:var(--mehendi-pop); transform:translateX(-100px) rotate(-3.5deg) translateY(-5px); z-index:2; }
+  .tab-btn.nikah   { --c-accent:var(--boug);         transform:translateX(100px) rotate(3.5deg) translateY(-5px); z-index:3; }
+  .tab-btn.reception{ --c-accent:var(--ink);         transform:translateX(300px) rotate(9deg); z-index:4; }
 
-  .tab-btn.active{ z-index:10; box-shadow:0 28px 54px rgba(40,20,10,0.32); }
-  .tab-btn.manja.active{ transform:translateX(-306px) rotate(0deg) translateY(-30px) scale(1.06); }
-  .tab-btn.mehendi.active{ transform:translateX(-102px) rotate(0deg) translateY(-30px) scale(1.06); }
-  .tab-btn.nikah.active{ transform:translateX(102px) rotate(0deg) translateY(-30px) scale(1.06); }
-  .tab-btn.reception.active{ transform:translateX(306px) rotate(0deg) translateY(-30px) scale(1.06); }
+  .tab-btn:hover{ box-shadow:0 24px 56px rgba(12,9,6,0.20); }
+  .tab-btn::before{ /* stripe widens on hover */ }
+  .tab-btn:hover::before{ height:5px; }
+  .tab-btn.manja:hover   { transform:translateX(-300px) rotate(-9deg) translateY(-16px); }
+  .tab-btn.mehendi:hover { transform:translateX(-100px) rotate(-3.5deg) translateY(-21px); }
+  .tab-btn.nikah:hover   { transform:translateX(100px) rotate(3.5deg) translateY(-21px); }
+  .tab-btn.reception:hover{ transform:translateX(300px) rotate(9deg) translateY(-16px); }
+
+  .tab-btn.active{ z-index:10; }
+  .tab-btn.active::before{ height:100%; opacity:0.07; } /* full-bleed tint when active */
+  .tab-btn.manja.active   { transform:translateX(-300px) rotate(0deg) translateY(-34px) scale(1.07); box-shadow:0 28px 60px rgba(168,120,32,0.25), 0 0 0 1.5px var(--manja-pop); }
+  .tab-btn.mehendi.active { transform:translateX(-100px) rotate(0deg) translateY(-34px) scale(1.07); box-shadow:0 28px 60px rgba(30,84,48,0.25), 0 0 0 1.5px var(--mehendi-pop); }
+  .tab-btn.nikah.active   { transform:translateX(100px) rotate(0deg) translateY(-34px) scale(1.07);  box-shadow:0 28px 60px rgba(196,24,106,0.25), 0 0 0 1.5px var(--boug); }
+  .tab-btn.reception.active{ transform:translateX(300px) rotate(0deg) translateY(-34px) scale(1.07); box-shadow:0 28px 60px rgba(12,9,6,0.30), 0 0 0 1.5px var(--ink); }
 
   @media (max-width:640px){
-    .tab-bar{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; height:auto; max-width:400px; }
-    .tab-btn{ position:static; width:auto; transform:none !important; }
+    .tab-bar{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; height:auto; max-width:380px; }
+    .tab-btn{ position:static; width:auto; transform:none !important; padding:18px 10px 16px; }
     .tab-btn:hover{ transform:none !important; }
+    .tab-btn.active{ box-shadow:0 10px 30px rgba(12,9,6,0.15), 0 0 0 1.5px var(--c-accent) !important; transform:none !important; }
   }
 
   /* ── editorial split-screen panel: colour block + content, not a centred card ── */
@@ -451,15 +451,25 @@
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
 
-  /* small close button, top-right of the bird */
+  /* close button — always visible, prominent */
   #hud-close{
-    position:absolute; top:-4px; right:-4px; width:20px; height:20px; border-radius:50%;
-    background:rgba(255,252,247,0.95); border:1px solid var(--gold-soft); color:var(--ink-soft);
-    font-size:12px; line-height:1; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; pointer-events:all; opacity:0; transition:opacity 0.25s ease;
+    position:absolute; top:-8px; right:-8px; width:26px; height:26px; border-radius:50%;
+    background:var(--page-bg); border:1.5px solid var(--ink); color:var(--ink);
+    font-size:13px; line-height:1; display:flex; align-items:center; justify-content:center;
+    cursor:pointer; pointer-events:all;
+    opacity:0.55; transition:opacity 0.2s, transform 0.2s;
+    font-family:serif;
   }
-  #hud-avatar:hover #hud-close, #hud-close:focus{ opacity:1; }
-  @media(max-width:640px){ #hud-close{ opacity:0.85; } }
+  #hud-close:hover{ opacity:1; transform:scale(1.15); }
+  /* tiny label under the bird — first visit hint */
+  #hud-hint{
+    position:absolute; top:calc(100% + 6px); left:50%; transform:translateX(-50%);
+    white-space:nowrap; font-family:'EB Garamond',serif; font-size:10.5px;
+    color:var(--ink-soft); letter-spacing:0.06em; opacity:0;
+    transition:opacity 0.5s ease 1.2s; pointer-events:none;
+  }
+  #hud.perched #hud-hint{ opacity:0.5; }
+  @media(max-width:640px){ #hud-close{ opacity:0.9; width:22px; height:22px; font-size:11px; } #hud-hint{ display:none; } }
 
   /* small tab to bring him back once dismissed */
   #hud-revive{
@@ -593,6 +603,15 @@
     background:var(--gold); transition:width 0.35s cubic-bezier(0.22,1,0.36,1);
   }
   nav a:hover::after{ width:100%; }
+
+  /* ─ HUD-HUD FLYING — smooth top transition + swoop arc ─ */
+  #hud{ transition:opacity 0.4s ease, left 0.3s ease, top 1s cubic-bezier(0.22,1,0.36,1); }
+  @keyframes hud-swoop{
+    0%  { transform:translateX(-24px) translateY(-28px) rotate(-12deg); }
+    55% { transform:translateX(8px)   translateY(-10px) rotate(4deg); }
+    100%{ transform:translateX(0)     translateY(0)     rotate(0deg); }
+  }
+  #hud.swooping .bird{ animation:hud-swoop 0.75s cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ─ TAB CARD ACTIVE GLOW ─ */
   .tab-btn.manja.active   { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(217,155,10,0.45); }
@@ -1334,6 +1353,7 @@
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
     </svg>
     <button id="hud-close" aria-label="Hide Hud-hud" title="Hide Hud-hud">&times;</button>
+    <span id="hud-hint">tap × to hush me</span>
   </div>
   <div id="hud-bubble">
     <span class="who">Hud-hud</span>
@@ -1465,82 +1485,44 @@
 
   const hudLines = {
     greeting: [
-      "Salaam! I'm Hud-hud — think of me as customer support, but with a crown and significantly better hair.",
-      "Oh, you're here! I was starting to think I'd dressed up for nothing. Crown's on. Let's go.",
-      "I'm Hud-hud, official messenger bird. King Suleiman once sent me on royal errands. Now I mostly explain seating charts. Growth.",
-      "Welcome! I'd shake your hand but I don't have one, so you're getting unreasonable enthusiasm instead.",
-      "Hello! I've been perched here so long I've named the branch. We're close now. Anyway — hi.",
-      "*tiny dramatic bow, nearly falls off branch, recovers with total confidence* Hud-hud. At your service, mostly."
+      "Hud-hud. Royal messenger. The × up there will silence me, should you wish.",
+      "I know things. I share them briefly. Tap × whenever.",
     ],
     manja: [
-      "The Manja! Turmeric goes on, dignity goes out the window, everyone glows anyway. Rude, but effective.",
-      "Someone will get turmeric on their nose and call it a blessing. It is. It's also just turmeric on a nose.",
-      "There's a paste and there's a pillow and by tonight one of them has clearly lost. Dress accordingly.",
-      "The house smells like turmeric and chaos, my favourite combination after 'biryani' and 'gossip.'",
-      "Everyone leaves this one a little bit yellow and a lot more in love. Solid trade.",
-      "I once tried to join in. I do not recommend turmeric on feathers. Lesson learned, no regrets."
+      "Turmeric. The original filter.",
+      "Everyone leaves yellow and in love. Rude. Effective.",
     ],
     mehendi: [
-      "Mehendi & Choodi! Sit still, get decorated, drink chai until someone takes the cup away. Perfect afternoon.",
-      "Darker mehendi means deeper love, they say — a theory invented, suspiciously, by mehendi artists.",
-      "If I had wrists I'd wear every bangle at once and regret nothing. Alas. Wings.",
-      "I asked for a tiny hoopoe hidden in someone's mehendi design. Go look. No pressure. I'm just very invested.",
-      "The bangles clink like wind chimes having the best day of their lives. I tried to sing along. Banned immediately.",
-      "Get your hands done. Genuinely. I will hold a grudge otherwise, and I have a long memory for a small bird."
+      "Art you cannot peel off. Lucky you.",
+      "Darker means deeper love — so says every mehendi artist, ever.",
     ],
     nikah: [
-      "The Nikah! Three qubool hais and two people become a legal team. Efficient. Devastating. Beautiful.",
-      "Twelve noon. I'll be up here being very quiet, which for me is basically a miracle.",
-      "This is the calm centre of three very loud days. Hold a hand. Don't check your phone. Trust me on this one.",
-      "I've seen a lot of these. This one's already climbing my personal rankings, and I do not rank things easily.",
-      "Short ceremony, enormous feeling. Blink slowly — you'll want the whole thing, not just the highlights.",
-      "One big yes, said three times, witnessed by two people and one extremely emotional bird."
+      "Three words. Said thrice. Done.",
+      "Qubool hai. The whole story, in six syllables.",
     ],
     reception: [
-      "The Reception! Fairy lights, best outfits, biryani with its own fan club. I founded the fan club.",
-      "Grand finale — the couple finally eats at their own wedding, assuming the guests left anything.",
-      "This biryani will ruin all future biryani for you. Small price. Extremely worth it.",
-      "Everyone's dressed like royalty, so I finally blend in. Find me near the lights. I'll be posing.",
-      "Three days of feeling builds to one enormous party. Wear shoes that forgive bad dancing.",
-      "I sample one crumb of everything for quality control. It's exhausting. Someone has to suffer for the cause."
+      "The biryani. That is the announcement.",
+      "Fairy lights. Best outfits. Maximum feeling.",
     ],
     moments: [
-      "Six frames. Four years of evidence. The actual photos are coming — I'm just holding the wall warm.",
-      "I flew between those two cities more than Air India did. No one mentions the toll on my wings.",
-      "They said 'add a photo section.' I said 'of what, airport arrivals?' Apparently yes. Apparently that counts.",
-      "Drop the real photos in whenever you're ready. I have notes on all of them. No one asked. I'm sharing anyway.",
-      "I have personally witnessed more of this story than they'll ever admit. I may write a memoir. Working title: Zehar.",
+      "Four years. Many flights. One word.",
+      "Air India sends their regards.",
     ],
     zehar: [
-      "They named themselves Zehar. In Urdu, that means poison. Azhar had months to look this up. He did not. I respect the commitment, I do.",
-      "Zeenath plus Azhar equals Zehar. Also equals poison. Someone was being poetic. Someone else was not reading the dictionary. You know who you are.",
-      "Four years. Two cities. Uncountable Air India legs. Telecom shareholders sent cards. The couple called it long distance. I'd call it a prolonged warm-up act.",
-      "He could have googled it in January 2022. He chose love instead. These are not mutually exclusive, Azhar. They're really not.",
-      "In my professional opinion as official messenger bird: this was inevitable. The name said so. The cities couldn't hold them apart. Neither could common sense, apparently."
+      "Zehar means poison. He googled it after.",
+      "She named it. He agreed. Here we are.",
     ],
     registry: [
-      "I did try to talk them out of this section. 'Just come,' I said. They said 'yes, AND.' I lost that argument badly.",
-      "For the record: I voted for 'presence over presents.' Democracy failed. Here's the registry.",
-      "Truly optional. But you're here, you're curious, and I respect a person who reads the fine print.",
-      "I personally collect shiny buttons and interesting twigs. The couple wanted something you can actually wrap.",
-      "Kept it short on purpose, bless them. Have a look, pick something, feel smug about it later.",
-      "I have a favourite on this list. Not telling. Go find your own — that's half the fun, apparently."
+      "They said 'just come.' Then made this page.",
+      "Optional. Very.",
     ],
     rsvp: [
-      "RSVP, please. The caterer needs numbers and I need to stop worrying about it — I worry a lot, for a small bird.",
-      "Thirty seconds of your life. In exchange: biryani, ambiance, and my eternal gratitude.",
-      "Fill it in. I keep a mental list right next to my favourite twigs — very exclusive real estate.",
-      "This is your invitation, hand-delivered by wing. The least you can do is answer it.",
-      "Somewhere a seating chart waits anxiously for your response. Be kind. End its suffering.",
-      "Say yes. I'll personally guard you a seat near the food, which is the only currency that matters here."
+      "The caterer needs to know. So, frankly, do I.",
+      "Say yes. The biryani is counted by heads.",
     ],
     venue: [
-      "Heritage Palace, Attapur! Arches, marble, and enough gold trim to make me feel slightly underdressed.",
-      "I've scouted rooftops all over Hyderabad. This one wins. Wait till the evening lights hit it.",
-      "Arrive early, leave late, dance badly with real conviction. That's the entire assignment.",
-      "There's a courtyard where the light turns gold at sunset. I go there to have feelings about it.",
-      "Tall arches, cool marble, just enough sparkle to make everyone feel like main character energy.",
-      "I've already scouted the best photo spot. Ask nicely. I'm charming but not free."
+      "Heritage Palace. Scouted. Approved. Magnificent.",
+      "Marble, arches, gold. My kind of venue.",
     ]
   };
 
@@ -1570,8 +1552,26 @@
     obs.observe(deck);
   })();
 
+  // ── Hud-hud flying between perch positions ──
+  const hudPerches = { home:280, events:310, zehar:370, moments:430, registry:390, rsvp:360, venue:320 };
+  function flyTo(key){
+    const el = document.getElementById('hud');
+    if(!el) return;
+    const target = hudPerches[key] || 280;
+    el.classList.remove('perched');
+    el.classList.add('flying','swooping');
+    setTimeout(function(){
+      el.style.top = target+'px';
+      el.classList.remove('swooping');
+      setTimeout(function(){
+        el.classList.remove('flying');
+        el.classList.add('perched');
+      }, 900);
+    }, 120);
+  }
+
   function say(lines){
-    if(deckObscuresHud) return;   // don't speak over the cards on mobile
+    if(deckObscuresHud) return;
     const bubble = document.getElementById('hud-bubble');
     const textEl = document.getElementById('hud-text');
     if(!bubble || !textEl) return;
@@ -1583,26 +1583,25 @@
     textEl.textContent = line;
     bubble.classList.add('visible');
     clearTimeout(say._timer);
-    // linger long enough to read — scale with length
-    const readTime = Math.max(4500, line.length * 55);
+    // shorter linger now that lines are brief
+    const readTime = Math.max(3800, line.length * 62);
     say._timer = setTimeout(function(){ bubble.classList.remove('visible'); }, readTime);
   }
 
-  // Chatty while you linger — a fresh line every so often, gently, never nagging
+  // Say something every section visit, but don't nag — one line then a long pause
   let cycleKey = null;
   function cycle(key){
     if(cycleTimer) clearTimeout(cycleTimer);
     const lines = hudLines[key];
     if(!lines) return;
     cycleKey = key;
-    say(lines);
-    (function scheduleNext(){
-      cycleTimer = setTimeout(function(){
-        if(cycleKey !== key) return;   // guest has moved on to another section
-        say(lines);
-        scheduleNext();
-      }, 8000 + Math.random()*2500);
-    })();
+    flyTo(key);
+    setTimeout(function(){ say(lines); }, 350);
+    // one follow-up after a comfortable gap
+    cycleTimer = setTimeout(function(){
+      if(cycleKey !== key) return;
+      say(lines);
+    }, 12000 + Math.random()*4000);
   }
 
   function initHud(){
