@@ -64,7 +64,7 @@
      CINEMATIC GATE — generative bokeh canvas intro
      ═══════════════════════════════════════════════ */
   #gate{
-    position:fixed; inset:0; z-index:200; background:#09070A;
+    position:fixed; inset:0; z-index:200; background:#090610;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
     overflow:hidden; transition:opacity 1.8s ease;
@@ -76,7 +76,7 @@
   #gate::before{
     content:''; position:absolute; inset:-60%; pointer-events:none; z-index:1;
     background:conic-gradient(from 0deg at 55% 42%,
-      transparent 0deg, rgba(197,151,58,0.03) 22deg, transparent 44deg,
+      transparent 0deg, rgba(180,80,140,0.025) 22deg, transparent 44deg,
       transparent 155deg, rgba(197,151,58,0.02) 178deg, transparent 200deg);
     animation:corona-spin 32s linear infinite;
   }
@@ -144,8 +144,8 @@
     position:relative; min-height:100vh;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    /* Warm cocoa-dark — not cold black */
-    background:radial-gradient(ellipse 110% 80% at 50% 60%, #1E1408 0%, #140E08 40%, #0F0B06 100%);
+    /* Deep rose-velvet — dark garden at night */
+    background:radial-gradient(ellipse 110% 80% at 50% 55%, #1E0B14 0%, #160810 45%, #0B0608 100%);
     overflow:hidden; padding:60px 32px 120px;
     scroll-snap-align:start;
   }
@@ -154,7 +154,7 @@
   #rumi-screen::before{
     content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
     width:100%; height:55%; pointer-events:none; z-index:1;
-    background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(197,140,40,0.08) 0%, transparent 70%);
+    background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(180,80,130,0.07) 0%, transparent 70%);
   }
   /* Fade-to-page so dark does not smash into white */
   #rumi-screen::after{
@@ -628,12 +628,13 @@
   /* layout vars now in main :root */
   #hud{
     position:fixed; z-index:80; width:118px; height:118px;
-    left:max(130px, calc(50vw - var(--contentHalf) - var(--treeGap) - var(--treeW) + 70px));
-    top:280px; pointer-events:none;
-    transition:opacity 0.4s ease, transform 0.4s ease, left 0.3s ease;
+    left:0; bottom:18px; top:auto; pointer-events:none;
+    transform:translateX(-130px); /* start off-screen left */
+    transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
   }
-  #hud.hidden{ display:none; }
-  #hud.dismissed{ opacity:0; transform:translateX(-16px) scale(0.9) !important; pointer-events:none; }
+  #hud.peek-in{ transform:translateX(12px); } /* adorable peek */
+  #hud.hidden{ opacity:0; pointer-events:none; transform:translateX(-130px) !important; }
+  #hud.dismissed{ opacity:0; transform:translateX(-130px) !important; pointer-events:none; }
   #hud-avatar{
     width:100%; height:100%;
     display:flex; align-items:center; justify-content:center;
@@ -823,7 +824,7 @@
   nav a:hover::after{ width:100%; }
 
   /* ─ HUD-HUD FLYING — smooth top transition + swoop arc ─ */
-  #hud{ transition:opacity 0.4s ease, left 0.3s ease, top 1s cubic-bezier(0.22,1,0.36,1); }
+  #hud{ transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease; }
   @keyframes hud-swoop{
     0%  { transform:translateX(-24px) translateY(-28px) rotate(-12deg); }
     55% { transform:translateX(8px)   translateY(-10px) rotate(4deg); }
@@ -1207,6 +1208,7 @@
   </div>
 
   <!-- ═══ CENTER CONTENT ═══ -->
+  <canvas id="vine-canvas" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:3;display:block;"></canvas>
   <div class="hero-inner">
     <p class="hero-eyebrow">28 – 30 August 2026</p>
 
@@ -1573,7 +1575,7 @@
       this.ph = Math.random() * Math.PI * 2;
       this.ps = 0.006 + Math.random() * 0.013;
       var t = Math.random();
-      this.rgb = t < 0.6 ? '197,151,58' : t < 0.82 ? '248,240,220' : '218,190,138';
+      this.rgb = t < 0.5 ? '197,151,58' : t < 0.7 ? '248,240,220' : t < 0.88 ? '210,140,175' : '218,190,138';
     }
     Pt.prototype.tick = function() {
       this.y += this.vy; this.x += this.vx; this.ph += this.ps;
@@ -1701,8 +1703,8 @@
 
   const hudLines = {
     greeting: [
-      "Bismillah. I am Hud-hud — guide, witness, and one who was perhaps not on the original guest list.",
-      "Three days. Four ceremonies. One love that made all of it inevitable. I shall lead you through every moment.",
+      "Hello! I am Hud-hud.",
+      "Your guide for three days of joy — tap me any time.",
     ],
     manja: [
       "Turmeric. The original filter.",
@@ -1831,7 +1833,7 @@
       hud.classList.add('dismissed');
       reviveBtn.classList.add('show');
     } else {
-      hud.classList.remove('hidden');
+      hud.classList.remove('hidden'); /* CSS now handles via transform */
     }
     hud.classList.add('perched');   // he lives on the tree now — no flying
 
@@ -1861,21 +1863,17 @@
       cycle(key);
     }
 
-    // Cinematic entrance — arrive, bow, then introduce himself
-    hud.classList.add('arriving');
+    // Peek in from the bottom-left corner — cute!
     setTimeout(function(){
-      if(!dismissed){
-        hud.classList.add('bowing');
-        setTimeout(function(){
-          hud.classList.remove('bowing');
-          say([hudLines.greeting[0]]);
-        }, 2000);
+      hud.classList.add('peek-in');
+      setTimeout(function(){
+        if(!dismissed) say([hudLines.greeting[0]]);
         setTimeout(function(){
           if(!dismissed) say([hudLines.greeting[1]]);
-        }, 7500);
-      }
-    }, 400);
-    setTimeout(function(){ if(!dismissed) cycle(activeTabKey); }, 14000);
+        }, 5000);
+      }, 1000);
+    }, 600);
+    setTimeout(function(){ if(!dismissed) cycle(activeTabKey); }, 10000);
 
     // Registry / RSVP / venue still get his commentary as you scroll to them
     const secObs = new IntersectionObserver(function(entries){
@@ -2022,6 +2020,129 @@
       if(flourish) flourish.style.transform='translateY('+(y*0.15)+'px)';
     }, {passive:true});
   })();
+
+  /* ── Canvas vine — grows from hero bottom-left corner ── */
+  (function(){
+    var cv = document.getElementById('vine-canvas');
+    if(!cv) return;
+
+    function startVine(){
+      var ctx = cv.getContext('2d');
+      cv.width  = cv.offsetWidth  || cv.parentElement.offsetWidth;
+      cv.height = cv.offsetHeight || cv.parentElement.offsetHeight;
+      var W = cv.width, H = cv.height;
+
+      /* Pre-build the entire vine as a list of timed segments */
+      var segs = [];
+      var clock = 0;
+
+      function branch(x, y, dx, dy, len, depth){
+        if(len < 12 || depth > 5) return;
+        var cx = x, cy = y, nx, ny;
+        var steps = Math.max(4, Math.floor(len / 5));
+        var stepLen = len / steps;
+        /* gentle random curve */
+        var ax = dx + (Math.random()-0.5)*0.2;
+        var ay = dy + (Math.random()-0.5)*0.2;
+        var m  = Math.sqrt(ax*ax+ay*ay); ax/=m; ay/=m;
+
+        for(var i=0; i<steps; i++){
+          nx = cx + ax*stepLen; ny = cy + ay*stepLen;
+          var thick = Math.max(0.35, (1.6 - depth*0.28) * (1-i/steps*0.25));
+          segs.push({type:'line', x0:cx,y0:cy, x1:nx,y1:ny, t:clock, thick:thick});
+          clock += stepLen * 0.9;
+
+          /* leaf */
+          if(Math.random()<0.28){
+            var la = Math.atan2(ay,ax) + (Math.random()>0.5?1:-1)*(0.7+Math.random()*0.5);
+            segs.push({type:'leaf', x:nx,y:ny, angle:la, size:3+Math.random()*4, t:clock});
+          }
+          /* branch off */
+          if(i===Math.floor(steps*0.45) && depth<4 && Math.random()<0.65){
+            var ba = Math.atan2(ay,ax) + (Math.random()>0.5?0.55:-0.55) + (Math.random()-0.5)*0.25;
+            branch(nx,ny, Math.cos(ba),Math.sin(ba), len*0.52, depth+1);
+          }
+          /* gentle wobble */
+          ax += (Math.random()-0.5)*0.09; ay += (Math.random()-0.5)*0.09;
+          m = Math.sqrt(ax*ax+ay*ay); ax/=m; ay/=m;
+          cx=nx; cy=ny;
+        }
+        /* tiny flower at tip */
+        segs.push({type:'flower', x:cx,y:cy, t:clock, size:2.5+Math.random()*2});
+      }
+
+      /* Two stems from bottom-left, angled up-right */
+      branch(8, H,     0.38,-0.92, W*0.42, 0);
+      branch(4, H*0.82, 0.5,-0.85, W*0.32, 1);
+
+      /* Sort so they draw in time order */
+      segs.sort(function(a,b){return a.t-b.t;});
+      var totalT = segs[segs.length-1].t + 40;
+
+      var DURATION = 7000; /* ms to fully grow */
+      var start = null;
+
+      function frame(ts){
+        if(!start) start = ts;
+        var pct = Math.min(1,(ts-start)/DURATION);
+        var cur = pct * totalT;
+
+        ctx.clearRect(0,0,W,H);
+
+        for(var i=0;i<segs.length;i++){
+          var s = segs[i];
+          if(s.t > cur + 40) break;
+
+          var alpha = Math.min(1,(cur-s.t)/35);
+          if(alpha<=0) continue;
+
+          if(s.type==='line'){
+            var px = s.x0+(s.x1-s.x0)*alpha;
+            var py = s.y0+(s.y1-s.y0)*alpha;
+            ctx.beginPath();
+            ctx.moveTo(s.x0,s.y0);
+            ctx.lineTo(alpha<1?px:s.x1, alpha<1?py:s.y1);
+            ctx.strokeStyle='rgba(110,68,90,'+(0.45*Math.min(1,alpha*2))+')';
+            ctx.lineWidth=s.thick;
+            ctx.lineCap='round';
+            ctx.stroke();
+          } else if(s.type==='leaf'){
+            var lo = Math.min(0.32, alpha*0.32);
+            ctx.save();
+            ctx.translate(s.x,s.y);
+            ctx.rotate(s.angle);
+            ctx.beginPath();
+            ctx.ellipse(0,-s.size*0.55, s.size*0.38, s.size*0.6, 0,0,Math.PI*2);
+            ctx.fillStyle='rgba(62,90,56,'+lo+')';
+            ctx.fill();
+            ctx.restore();
+          } else if(s.type==='flower'){
+            var fo = Math.min(0.55, alpha*0.55);
+            ctx.beginPath();
+            ctx.arc(s.x,s.y, s.size,0,Math.PI*2);
+            ctx.fillStyle='rgba(220,150,175,'+fo+')';
+            ctx.fill();
+          }
+        }
+
+        if(pct<1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    }
+
+    /* Start when hero enters view */
+    if(typeof IntersectionObserver!=='undefined'){
+      var obs = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ obs.disconnect(); startVine(); }
+        });
+      },{threshold:0.15});
+      obs.observe(cv.parentElement);
+    } else {
+      startVine();
+    }
+  })();
+
 </script>
 
 </body>
