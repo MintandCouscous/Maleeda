@@ -317,131 +317,118 @@
      ══════════════════════════════════════════════════════════ */
 
   /* Section background — very light radial warmth, no color bleed */
-  .event-panel{
-    padding:8px 28px 48px; position:relative; text-align:center;
-    background:radial-gradient(ellipse 70% 80% at 50% 0%, rgba(197,151,58,0.06) 0%, transparent 65%);
-    transition:background 0.4s ease;
+  /* ═══════════════════════════════════════════════
+     EVENT SECTIONS — scroll through the three days
+     ═══════════════════════════════════════════════ */
+
+  /* ── Section layout: editorial two-column ── */
+  .event-section{
+    scroll-snap-align:start;
+    display:grid;
+    grid-template-columns:38% 1fr;
+    min-height:100vh;
+    position:relative;
+    border-bottom:0.5px solid rgba(197,151,58,0.1);
   }
 
-  /* ── Fan of thick ivory invitation cards ── */
-  .tab-bar{ position:relative; max-width:940px; height:210px; margin:0 auto 36px; }
-  .tab-btn{
-    position:absolute; top:0; width:172px; left:50%;
-    font-family:'Cormorant Garamond',serif; text-align:center;
-    /* Thick cream card with embossed paper feel */
-    background:linear-gradient(168deg, #FFFFFF 0%, #F9F5EE 60%, #F4EFE5 100%);
-    border:none; border-radius:1px;
-    cursor:pointer; color:var(--ink);
-    box-shadow:
-      0 0 0 0.75px rgba(197,151,58,0.35),         /* gold foil edge */
-      inset 0 1px 0 rgba(255,255,255,0.95),        /* top highlight */
-      inset 0 -1px 0 rgba(197,151,58,0.12),        /* subtle bottom depth */
-      0 18px 50px rgba(26,20,16,0.15),             /* deep drop shadow */
-      0 4px 10px rgba(26,20,16,0.07);              /* near shadow */
-    transition:transform 0.55s cubic-bezier(0.22,1,0.36,1), box-shadow 0.4s ease;
-    padding:32px 16px 24px; overflow:hidden;
+  /* ── Left: title panel — sticky so it holds position as body scrolls ── */
+  .ev-head{
+    position:sticky; top:0; align-self:start; max-height:100vh;
+    background:linear-gradient(160deg, #FEFCF8 0%, #F6F0E6 100%);
+    padding:80px 52px 60px 48px;
+    overflow:hidden;
+    border-right:0.5px solid rgba(197,151,58,0.22);
+    display:flex; flex-direction:column; justify-content:flex-end;
   }
-  /* Thin double-border — simulates engraved invitation stationery */
-  .tab-btn::before{
-    content:''; position:absolute; inset:8px;
-    border:0.75px solid rgba(197,151,58,0.45);
-    pointer-events:none; transition:border-color 0.3s ease;
+  /* Thin gold rule at top of head panel */
+  .ev-head::before{
+    content:''; position:absolute;
+    top:44px; left:48px; right:52px; height:0.5px;
+    background:linear-gradient(90deg, rgba(197,151,58,0.55) 0%, rgba(197,151,58,0.08) 100%);
+    z-index:1;
   }
-  .tab-btn::after{
-    content:''; position:absolute; inset:13px;
-    border:0.3px solid rgba(197,151,58,0.22);
-    pointer-events:none;
+  /* Ghost watermark letter */
+  .ev-head::after{
+    content:attr(data-watermark);
+    position:absolute; right:-0.04em; top:-0.04em;
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(140px,20vw,250px);
+    color:rgba(197,151,58,0.07);
+    line-height:1; pointer-events:none; z-index:0;
   }
-
-  .tab-btn .tag{
-    display:block; font-size:8.5px; letter-spacing:0.26em; text-transform:uppercase;
-    color:var(--champagne); opacity:0.75; margin-bottom:12px; font-family:'EB Garamond',serif;
+  .ev-eyebrow{
+    position:relative; z-index:1;
+    font-family:'EB Garamond',serif;
+    font-size:11px; letter-spacing:0.26em; text-transform:uppercase;
+    color:rgba(197,151,58,0.85); margin-bottom:18px;
   }
-  .tab-btn .ev{
-    display:block; font-family:'Beau Rivage',cursive; font-size:38px; line-height:1.05;
-    color:var(--ink);
+  .ev-title{
+    position:relative; z-index:1;
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(68px,8vw,118px);
+    line-height:0.9; color:var(--ink); margin-bottom:10px;
   }
-  .tab-btn .tm{
-    display:block; font-size:10px; letter-spacing:0.1em; color:var(--ink-soft);
-    margin-top:8px; opacity:0.6; font-family:'EB Garamond',serif;
-  }
-
-  /* Card placement in fan — deeper drop on inactive cards */
-  .tab-btn.manja    { transform:translateX(-316px) rotate(-9deg);           z-index:1; }
-  .tab-btn.mehendi  { transform:translateX(-106px) rotate(-3.5deg) translateY(-6px); z-index:2; }
-  .tab-btn.nikah    { transform:translateX(106px)  rotate(3.5deg)  translateY(-6px); z-index:3; }
-  .tab-btn.reception{ transform:translateX(316px)  rotate(9deg);            z-index:4; }
-
-  /* Hover — lift smoothly */
-  .tab-btn:hover{
-    box-shadow:
-      0 0 0 0.75px rgba(197,151,58,0.5),
-      inset 0 1px 0 rgba(255,255,255,0.95),
-      0 30px 70px rgba(26,20,16,0.18), 0 6px 16px rgba(26,20,16,0.08);
-  }
-  .tab-btn:hover::before{ border-color:rgba(197,151,58,0.65); }
-  .tab-btn.manja:hover    { transform:translateX(-316px) rotate(-9deg) translateY(-18px); }
-  .tab-btn.mehendi:hover  { transform:translateX(-106px) rotate(-3.5deg) translateY(-24px); }
-  .tab-btn.nikah:hover    { transform:translateX(106px)  rotate(3.5deg)  translateY(-24px); }
-  .tab-btn.reception:hover{ transform:translateX(316px)  rotate(9deg)  translateY(-18px); }
-
-  /* Active — stands fully upright, gold ring glow */
-  .tab-btn.active{ z-index:10; }
-  .tab-btn.active::before{ border-color:rgba(197,151,58,0.7); }
-  .tab-btn.manja.active{
-    transform:translateX(-316px) rotate(0deg) translateY(-38px) scale(1.06);
-    box-shadow:0 0 0 1px rgba(197,151,58,0.55), 0 36px 80px rgba(184,136,12,0.2), 0 6px 18px rgba(26,20,16,0.1);
-  }
-  .tab-btn.mehendi.active{
-    transform:translateX(-106px) rotate(0deg) translateY(-38px) scale(1.06);
-    box-shadow:0 0 0 1px rgba(197,151,58,0.55), 0 36px 80px rgba(46,96,64,0.15), 0 6px 18px rgba(26,20,16,0.1);
-  }
-  .tab-btn.nikah.active{
-    transform:translateX(106px) rotate(0deg) translateY(-38px) scale(1.06);
-    box-shadow:0 0 0 1px rgba(197,151,58,0.55), 0 36px 80px rgba(138,32,64,0.15), 0 6px 18px rgba(26,20,16,0.1);
-  }
-  .tab-btn.reception.active{
-    transform:translateX(316px) rotate(0deg) translateY(-38px) scale(1.06);
-    box-shadow:0 0 0 1px rgba(197,151,58,0.55), 0 36px 80px rgba(26,20,16,0.2), 0 6px 18px rgba(26,20,16,0.1);
+  .ev-sub{
+    position:relative; z-index:1;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size:19px;
+    color:var(--ink-soft); opacity:0.8;
   }
 
-  @media (max-width:640px){
-    .tab-bar{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; height:auto; max-width:400px; }
-    .tab-btn{ position:static; width:auto; transform:none !important; padding:20px 12px 18px; }
-    .tab-btn:hover{ transform:none !important; }
-    .tab-btn.active{
-      box-shadow:0 0 0 1px rgba(197,151,58,0.55), 0 10px 32px rgba(26,20,16,0.14) !important;
-      transform:none !important;
+  /* ── Right: content body ── */
+  .ev-body{
+    padding:72px 64px 80px 60px;
+    text-align:left;
+  }
+
+  /* Mobile: single column, head stacks above body */
+  @media(max-width:760px){
+    .event-section{ grid-template-columns:1fr; min-height:auto; }
+    .ev-head{
+      position:relative; top:auto; max-height:none;
+      padding:52px 28px 36px;
+      border-right:none; border-bottom:0.5px solid rgba(197,151,58,0.22);
     }
+    .ev-head::before{ left:28px; right:28px; top:28px; }
+    .ev-body{ padding:40px 28px 52px; }
   }
 
-  /* ══ EXPANDED CONTENT CARD — full-width, creamy, editorial ══ */
-  .event-panel .wrap{
-    max-width:1060px; margin:0 auto; position:relative;
-    background:linear-gradient(160deg, #FFFFFF 0%, #FAF7F2 100%);
-    border-radius:2px;
-    box-shadow:
-      0 0 0 0.75px rgba(197,151,58,0.3),
-      inset 0 1px 0 rgba(255,255,255,0.9),
-      0 32px 80px rgba(26,20,16,0.12), 0 4px 12px rgba(26,20,16,0.06);
-  }
-  /* Engraved double-border on the content card */
-  .event-panel .wrap::before{
-    content:''; position:absolute; inset:10px;
-    border:0.75px solid rgba(197,151,58,0.35);
-    pointer-events:none; z-index:0; border-radius:1px;
-  }
-  .event-panel .wrap::after{
-    content:''; position:absolute; inset:16px;
-    border:0.3px solid rgba(197,151,58,0.2);
-    pointer-events:none; z-index:0;
-  }
+  /* ── Body typography ── */
+  .ev-body .story{ font-size:18.5px; line-height:1.78; max-width:560px; margin:0; opacity:0.9; color:var(--ink); }
+  .ev-body .story + .story{ margin-top:14px; }
 
+  .ev-body .couplet{
+    margin:36px 0 0; max-width:520px; font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:22px; line-height:1.55; padding-left:22px;
+    border-left:1.5px solid rgba(197,151,58,0.5); color:var(--ink);
+  }
+  .couplet .attr{ margin-top:10px; font-family:'EB Garamond',serif; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.55; }
+
+  .ev-body .timeline{ margin:34px 0 0; max-width:520px; }
+  .tl-row{ display:grid; grid-template-columns:115px 1fr; gap:18px; padding:15px 0; border-top:0.5px solid rgba(197,151,58,0.3); }
+  .tl-row:first-child{ border-top:none; }
+  .tl-time{ font-size:13.5px; padding-top:2px; opacity:0.6; color:var(--champagne); font-family:'EB Garamond',serif; }
+  .tl-event{ font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:3px; }
+  .tl-note{ font-size:15px; opacity:0.82; }
+
+  .ev-body .guest-note{ margin:28px 0 0; max-width:520px; font-size:17px; font-style:italic; opacity:0.8; }
+
+  .ev-body .qa{ margin-top:28px; max-width:560px; }
+  .qa details{ border-top:0.5px solid rgba(197,151,58,0.3); padding:15px 2px; }
+  .qa details:last-of-type{ border-bottom:0.5px solid rgba(197,151,58,0.3); }
+  .qa summary{ cursor:pointer; font-family:'Cormorant Garamond',serif; font-size:18.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
+  .qa summary::-webkit-details-marker{ display:none; }
+  .qa summary .icon{ font-family:'EB Garamond',serif; font-size:20px; opacity:0.5; flex-shrink:0; transition:transform 0.25s ease; }
+  .qa details[open] summary .icon{ transform:rotate(45deg); }
+  .qa .qa-body{ margin-top:10px; font-size:15.5px; line-height:1.65; opacity:0.88; }
+  .qa .qa-body p + p{ margin-top:10px; }
+  .qa .qa-body em{ font-style:italic; }
+
+  /* Registry section — same card treatment */
   .event .wrap{
     max-width:820px; margin:26px auto 0; position:relative; padding:44px 52px 46px;
     background:linear-gradient(160deg, #FFFFFF 0%, #FAF7F2 100%); border-radius:2px;
     box-shadow:0 0 0 0.75px rgba(197,151,58,0.3), 0 20px 60px rgba(26,20,16,0.1);
-    border:none;
   }
   .event .wrap::before{
     content:''; position:absolute; inset:10px; border:0.75px solid rgba(197,151,58,0.35);
@@ -449,100 +436,18 @@
   }
   .event{ padding:16px 28px; position:relative; text-align:center; }
 
-  /* ── Two-column layout with thin vertical gold rule ── */
-  .tab-content{ display:none; }
-  .tab-content.active{
-    display:grid; grid-template-columns:36% 1fr; align-items:stretch;
-    min-height:480px; animation:tab-in 0.45s ease; text-align:left;
-  }
-  @keyframes tab-in{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:translateY(0); } }
-  @media (prefers-reduced-motion: reduce){ .tab-content.active{ animation:none; } }
-
-  /* Left panel — ivory with champagne ruled heading, no solid color */
-  .panel-head{
-    background:linear-gradient(160deg, #FEFCF8 0%, #F6F0E6 100%);
-    color:var(--ink);
-    padding:52px 44px 52px 36px;
-    margin-right:0;
-    position:relative; overflow:hidden;
-    clip-path:none;
-    border-right:1px solid rgba(197,151,58,0.28);
-    z-index:2;
-  }
-  /* Ghost watermark */
-  .panel-head::after{
-    content:attr(data-watermark); position:absolute; left:-0.08em; bottom:-0.12em; white-space:nowrap;
-    font-family:'Beau Rivage',cursive; font-size:clamp(70px,14vw,160px); line-height:1;
-    color:rgba(197,151,58,0.08); pointer-events:none; z-index:0;
-  }
-  .panel-head .event-eyebrow, .panel-head .event-title, .panel-head .event-sub{ position:relative; z-index:1; }
-  .panel-head .event-eyebrow{ color:var(--champagne); }
-  .panel-head .event-title{ color:var(--ink); font-size:clamp(46px,5.5vw,76px); }
-  .panel-head .event-sub{ color:var(--ink-soft); }
-
-  /* Thin champagne rule above the event title */
-  .panel-head::before{
-    content:''; position:absolute; top:36px; left:36px; right:44px; height:0.75px;
-    background:linear-gradient(90deg, rgba(197,151,58,0.6) 0%, rgba(197,151,58,0.15) 100%);
-    z-index:1;
-  }
-
-  .panel-body{ padding:52px 50px 52px 54px; position:relative; z-index:1; }
-  @media (max-width:760px){
-    .tab-content.active{ grid-template-columns:1fr; min-height:0; }
-    .panel-head{
-      padding:44px 28px 36px; margin-right:0; clip-path:none;
-      border-right:none; border-bottom:1px solid rgba(197,151,58,0.28);
-    }
-    .panel-head::before{ left:28px; right:28px; top:28px; }
-    .panel-body{ padding:36px 28px 44px; }
-  }
-
-  .frame-corner{ display:none; } /* not needed with CSS border approach */
   .event-eyebrow{ font-size:12px; letter-spacing:0.24em; text-transform:uppercase; opacity:0.7; margin-bottom:14px; color:var(--champagne); }
-  .event-title{ font-family:'Beau Rivage', cursive; font-size:76px; line-height:1; margin-bottom:4px; }
-  .event-sub{ font-style:italic; font-size:17px; margin-bottom:8px; opacity:0.8; }
+  .frame-corner{ display:none; }
 
-  .panel-body .story{ font-size:18px; max-width:560px; margin:0; opacity:0.9; text-align:left; color:var(--ink); }
-  .panel-body .story + .story{ margin-top:14px; }
-
-  .panel-body .couplet{
-    margin:32px 0 0; max-width:520px; font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:22px; line-height:1.55; padding-left:22px;
-    border-left:1.5px solid rgba(197,151,58,0.5); color:var(--ink);
-  }
-  .couplet .attr{ margin-top:10px; font-family:'EB Garamond',serif; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.55; }
-
-  .panel-body .timeline{ margin:30px 0 0; max-width:520px; text-align:left; }
-  .tl-row{ display:grid; grid-template-columns:110px 1fr; gap:18px; padding:14px 0; border-top:0.75px solid rgba(197,151,58,0.3); }
-  .tl-row:first-child{ border-top:none; }
-  .tl-time{ font-size:14px; padding-top:2px; opacity:0.6; color:var(--champagne); }
-  .tl-event{ font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:3px; }
-  .tl-note{ font-size:15.5px; opacity:0.82; }
-
-  .panel-body .guest-note{ margin:26px 0 0; max-width:520px; font-size:16.5px; font-style:italic; opacity:0.8; text-align:left; }
-
-  .panel-body .qa{ margin-top:26px; text-align:left; max-width:560px; }
-  .qa summary{ font-size:21px; }
-  .qa .qa-body{ font-size:17px; }
-  .qa details{ border-top:0.75px solid rgba(197,151,58,0.3); padding:14px 2px; }
-  .qa details:last-of-type{ border-bottom:0.75px solid rgba(197,151,58,0.3); }
-  .qa summary{ cursor:pointer; font-family:'Cormorant Garamond',serif; font-size:18.5px; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:12px; }
-  .qa summary::-webkit-details-marker{ display:none; }
-  .qa summary .icon{ font-family:'EB Garamond',serif; font-size:20px; opacity:0.6; flex-shrink:0; transition:transform 0.25s ease; }
-  .qa details[open] summary .icon{ transform:rotate(45deg); }
-  .qa .qa-body{ margin-top:10px; font-size:15px; line-height:1.6; opacity:0.88; }
-  .qa .qa-body p + p{ margin-top:10px; }
-
-  /* Event-specific ink tones — all warm, no harsh colors */
-  .tab-content.manja   { color:var(--manja-ink); }
-  .tab-content.manja    .tl-row{ border-color:rgba(184,136,12,0.3); }
-  .tab-content.mehendi { color:var(--mehendi-ink); }
-  .tab-content.mehendi  .tl-row{ border-color:rgba(46,96,64,0.3); }
-  .tab-content.nikah   { color:var(--nikah-ink); }
-  .tab-content.nikah    .tl-row{ border-color:rgba(138,32,64,0.3); }
-  .tab-content.reception{ color:var(--reception-ink); }
-  .tab-content.reception .tl-row{ border-color:rgba(26,20,16,0.25); }
+  /* ── Event-specific ink tones ── */
+  .event-section.manja    { color:var(--manja-ink); }
+  .event-section.manja     .tl-row{ border-color:rgba(184,136,12,0.3); }
+  .event-section.mehendi  { color:var(--mehendi-ink); }
+  .event-section.mehendi   .tl-row{ border-color:rgba(46,96,64,0.3); }
+  .event-section.nikah    { color:var(--nikah-ink); }
+  .event-section.nikah     .tl-row{ border-color:rgba(138,32,64,0.3); }
+  .event-section.reception { color:var(--reception-ink); }
+  .event-section.reception  .tl-row{ border-color:rgba(26,20,16,0.25); }
 
   /* ── Who is Zehar? ── */
   .zehar-section{ padding:80px 28px 72px; position:relative; overflow:hidden; text-align:center; }
@@ -620,31 +525,37 @@
   footer{ text-align:center; padding:36px 28px 60px; color:var(--ink-soft); font-size:14px; border-top:1px solid var(--gold-soft); }
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
-  /* ================= HUD-HUD, THE GUIDE — perched high on his tree, always visible, never blocking anything =================
-     Anchored at a fixed distance from the TOP of the viewport (not bottom, not scroll-height-relative),
-     so he sits proudly against the vivid hero ribbon and can never wander down into the card/tab
-     region no matter how tall the page grows. Horizontal position still tracks the content column
-     so he doesn't strand in empty margin on wide desktop screens. */
-  /* layout vars now in main :root */
+  /* ═══ HUD-HUD HOUSE — top-right panel, self-contained, never blocks content ═══ */
   #hud{
-    position:fixed; z-index:80; width:118px; height:118px;
-    right:20px; top:14px; left:auto; bottom:auto; pointer-events:none;
-    transform:translateY(-140px); /* start above screen */
+    position:fixed; z-index:80;
+    right:0; top:0; left:auto; bottom:auto;
+    width:188px;
+    background:rgba(255,252,247,0.97);
+    border-left:1px solid rgba(197,151,58,0.16);
+    border-bottom:1px solid rgba(197,151,58,0.18);
+    border-bottom-left-radius:24px;
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    box-shadow:-2px 6px 30px rgba(58,46,34,0.1);
+    display:flex; flex-direction:column; align-items:center;
+    padding:12px 14px 0; gap:0;
+    pointer-events:none;
+    transform:translateY(-110%);
     transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
   }
-  #hud.peek-in{ transform:translateY(0); } /* drops from above */
-  #hud.hidden{ opacity:0; pointer-events:none; transform:translateY(-140px) !important; }
-  #hud.dismissed{ opacity:0; transform:translateY(-140px) !important; pointer-events:none; }
+  #hud.peek-in{ transform:translateY(0); }
+  #hud.hidden{ opacity:0; pointer-events:none; transform:translateY(-110%) !important; }
+  #hud.dismissed{ opacity:0; transform:translateY(-110%) !important; pointer-events:none; }
   #hud-avatar{
-    width:100%; height:100%;
+    width:100%; height:auto;
     display:flex; align-items:center; justify-content:center;
     cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative;
     pointer-events:all;
   }
-  #hud-avatar svg.bird{ width:108px; height:108px; filter:drop-shadow(0 5px 14px rgba(35,15,15,0.32)); }
+  #hud-avatar svg.bird{ width:84px; height:84px; filter:drop-shadow(0 3px 10px rgba(35,15,15,0.22)); }
   #hud-branch{
-    position:absolute; bottom:-16px; left:50%; transform:translateX(-50%);
-    width:130px; opacity:0; transition:opacity 0.5s ease; pointer-events:none;
+    width:110px; margin-bottom:4px; opacity:0;
+    transition:opacity 0.5s ease; pointer-events:none;
   }
   #hud.perched #hud-branch{ opacity:1; }
   #wing-l, #wing-r{ transform-origin:24px 24px; animation:hud-flap 0.9s ease-in-out infinite; }
@@ -682,12 +593,13 @@
   #hud-close:hover{ opacity:1; transform:scale(1.15); }
   /* tiny label under the bird — first visit hint */
   #hud-hint{
-    position:absolute; top:calc(100% + 6px); left:50%; transform:translateX(-50%);
-    white-space:nowrap; font-family:'EB Garamond',serif; font-size:10.5px;
+    display:block; text-align:center;
+    font-family:'EB Garamond',serif; font-size:10px;
     color:var(--ink-soft); letter-spacing:0.06em; opacity:0;
+    padding-bottom:10px;
     transition:opacity 0.5s ease 1.2s; pointer-events:none;
   }
-  #hud.perched #hud-hint{ opacity:0.5; }
+  #hud.perched #hud-hint{ opacity:0.45; }
   @media(max-width:640px){ #hud-close{ opacity:0.9; width:22px; height:22px; font-size:11px; } #hud-hint{ display:none; } }
 
   /* small tab to bring him back once dismissed */
@@ -707,39 +619,35 @@
     /* Mobile has no safe zone up in the ribbon (title, date and guide text
        fill it edge to edge), so he perches in the fixed bottom-left corner
        instead — still bigger than before, still visible, never on top of text. */
-    #hud{ width:74px; height:74px; right:14px; top:12px; left:auto; bottom:auto; }
-    #hud-avatar svg.bird{ width:66px; height:66px; }
-    #hud-branch{ width:82px; bottom:-10px; }
+    #hud-branch{ width:88px; }
     #hud-revive{ right:10px; bottom:16px; left:auto; width:36px; height:36px; }
   }
 
-  /* ── speech bubble — drops BELOW the bird, right-aligned, own airspace ── */
+  /* ── speech bubble — contained inside the house ── */
   #hud-bubble{
-    position:absolute; top:calc(100% + 10px); bottom:auto; right:0; left:auto;
-    width:max-content; max-width:220px;
-    background:rgba(255,252,247,0.98);
-    border:1.2px solid var(--gold-soft); border-radius:14px;
-    padding:10px 14px; box-shadow:0 4px 18px rgba(58,46,34,0.15);
-    font-family:'Cormorant Garamond',serif; font-size:15px; line-height:1.5;
+    position:relative; top:auto; bottom:auto; right:auto; left:auto;
+    width:100%; max-width:100%;
+    background:transparent; border:none; box-shadow:none;
+    border-top:0.75px solid rgba(197,151,58,0.2);
+    padding:0 2px 0;
+    max-height:0; overflow:hidden;
+    font-family:'Cormorant Garamond',serif; font-size:14px; line-height:1.58;
     color:var(--ink); pointer-events:none;
-    opacity:0; transform:translate(0,-8px) scale(0.96); transform-origin:top right;
-    transition:opacity 0.45s ease, transform 0.45s cubic-bezier(0.34,1.4,0.64,1);
+    opacity:0;
+    transition:opacity 0.4s ease, max-height 0.4s ease, padding 0.4s ease;
   }
-  #hud-bubble.visible{ opacity:1; transform:translate(0,0) scale(1); }
-  #hud-bubble::after{
-    content:''; position:absolute; bottom:100%; top:auto; right:22px; left:auto;
-    transform:none;
-    width:0; height:0; border:7px solid transparent; border-bottom-color:var(--gold-soft);
+  #hud-bubble.visible{
+    opacity:1; max-height:220px;
+    padding:10px 2px 16px;
   }
-  .who{ display:block; font-family:'Beau Rivage',cursive; font-size:19px; color:var(--gold); line-height:1.2; margin-bottom:2px; }
+  #hud-bubble::after{ display:none; }
+  .who{ display:block; font-family:'Beau Rivage',cursive; font-size:18px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
   @media(max-width:640px){
-    /* Bird is top-right on mobile too — bubble drops down, right-aligned */
-    #hud-bubble{
-      font-size:13.5px; padding:9px 13px; max-width:min(260px, calc(100vw - 28px));
-    }
-    #hud-bubble.visible{ transform:translate(0,0) scale(1); }
-    #hud-bubble::after{ right:16px; }
-    .who{ font-size:16px; }
+    #hud{ width:150px; padding:10px 12px 0; border-bottom-left-radius:18px; }
+    #hud-avatar svg.bird{ width:70px; height:70px; }
+    #hud-bubble{ font-size:13px; }
+    #hud-bubble.visible{ padding:9px 2px 14px; }
+    .who{ font-size:15px; }
   }
 
   /* ── gentle rise-in on scroll ── */
@@ -830,20 +738,11 @@
   }
   #hud.swooping .bird{ animation:hud-swoop 0.75s cubic-bezier(0.22,1,0.36,1) both; }
 
-  /* ─ TAB CARD ACTIVE GLOW ─ */
-  .tab-btn.manja.active   { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(217,155,10,0.45); }
-  .tab-btn.mehendi.active { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(29,122,70,0.45); }
-  .tab-btn.nikah.active   { box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(155,27,61,0.45); }
-  .tab-btn.reception.active{ box-shadow:0 28px 54px rgba(40,20,10,0.32), 0 0 44px rgba(30,63,122,0.45); }
-
-  /* ─ PANEL HEAD — shimmer sweep on hover ─ */
-  .panel-head::before{
-    content:''; position:absolute; inset:0; pointer-events:none; z-index:3;
-    background:linear-gradient(100deg, transparent 25%, rgba(255,255,255,0.18) 42%, transparent 58%);
-    background-size:200% 100%; background-position:130% 0; background-repeat:no-repeat;
+  /* ─ EVENT HEAD — shimmer sweep on hover ─ */
+  .ev-head::before{
     transition:background-position 0.9s ease;
   }
-  .tab-content.active .panel-head:hover::before{ background-position:-40% 0; }
+  .event-section:hover .ev-head::before{ background-position:-40% 0; }
 
   /* ─ RSVP BLOB — pulse glow (bougainvillea) ─ */
   .rsvp .wrap{
@@ -880,13 +779,8 @@
   .vine{ color:var(--boug); }
   .vine svg{ color:var(--boug); }
 
-  /* Event card tab buttons — Victorian dark */
-  .tab-btn{ border-color:rgba(255,255,255,0.35); }
-
-  /* Event panel light wash → white with ink */
-  .event-panel{ background:radial-gradient(ellipse 60% 100% at 50% 0%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 70%); }
-  .event-panel .wrap{ background:rgba(248,245,240,0.98); }
-  .panel-body .couplet{ border-left-color:var(--accent); }
+  /* Event sections — accent tint update */
+  .ev-body .couplet{ border-left-color:var(--accent); }
 
   /* Registry + zehar section borders */
   .event .wrap::before{ border-color:var(--ink); opacity:0.12; }
@@ -1241,133 +1135,118 @@
   </svg>
 </div>
 
-<section class="event-panel" id="events">
-  <div class="tab-bar">
-    <button class="tab-btn manja active" data-tab="manja"><span class="tag">28 Aug</span><span class="ev">Manja</span><span class="tm">8 pm onwards</span></button>
-    <button class="tab-btn mehendi" data-tab="mehendi"><span class="tag">29 Aug</span><span class="ev">Mehendi</span><span class="tm">9 am onwards</span></button>
-    <button class="tab-btn nikah" data-tab="nikah"><span class="tag">30 Aug</span><span class="ev">Nikah</span><span class="tm">12 noon</span></button>
-    <button class="tab-btn reception" data-tab="reception"><span class="tag">30 Aug</span><span class="ev">Reception</span><span class="tm">8 pm</span></button>
+<section class="event-section manja" id="manja" data-hud-key="manja">
+  <div class="ev-head" data-watermark="M">
+    <div class="ev-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
+    <h2 class="ev-title">Manja</h2>
+    <div class="ev-sub">Hyderabad's answer to Haldi</div>
   </div>
+  <div class="ev-body">
+    <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
+    <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. The turmeric is meant to make her glow, and it will — also everything she owns for roughly three days after. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
+    <p class="story">Come expecting organised chaos. There will be dinner, then turmeric, then the kind of dancing that happens when someone's aunt picks up a dhol and refuses to put it down.</p>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early. It goes fast.</div></div></div>
+      <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. Then everyone joins in. You will get yellow on you — that's the point.</div></div></div>
+      <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
+    </div>
+    <p class="guest-note">Yellow is the colour of the evening — wear it if you have it. If not, wear something you're OK getting golden. The turmeric has no respect for nice clothes.</p>
+  </div>
+</section>
 
-  <div class="wrap">
-    <div class="tab-content manja active" data-tab-content="manja" data-hud-key="manja">
-      <div class="panel-head" data-watermark="M">
-        <div class="event-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
-        <h2 class="event-title">Manja</h2>
-        <div class="event-sub">Hyderabad's answer to Haldi</div>
-      </div>
-      <div class="panel-body">
-        <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
-        <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. The turmeric is meant to make her glow, and it will — also everything she owns for roughly three days after. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
-        <p class="story">Come expecting organised chaos. There will be dinner, then turmeric, then the kind of dancing that happens when someone's aunt picks up a dhol and refuses to put it down.</p>
-        <div class="timeline">
-          <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early. It goes fast.</div></div></div>
-          <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. Then everyone joins in. You will get yellow on you — that's the point.</div></div></div>
-          <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
+<section class="event-section mehendi" id="mehendi" data-hud-key="mehendi">
+  <div class="ev-head" data-watermark="M">
+    <div class="ev-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
+    <h2 class="ev-title">Mehendi</h2>
+    <div class="ev-sub">&amp; Choodi</div>
+  </div>
+  <div class="ev-body">
+    <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
+    <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+    </div>
+    <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
+  </div>
+</section>
+
+<section class="event-section nikah" id="nikah" data-hud-key="nikah">
+  <div class="ev-head" data-watermark="N">
+    <div class="ev-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
+    <h2 class="ev-title">Nikah</h2>
+    <div class="ev-sub">&amp; the Jalwa</div>
+  </div>
+  <div class="ev-body">
+    <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything. Tap through for what actually happens:</p>
+    <div class="qa">
+      <details>
+        <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence — this is the ceremony's only sermon, and it sets the entire tone of what follows.</p>
+          <p>One verse on two souls being of the same root, returning to each other. One on speaking plainly and truthfully — a marriage runs on exactly that, every day, for decades. One on holding steady through the ordinary stretch of a life together. Three minutes, and somehow all of it covered.</p>
         </div>
-        <p class="guest-note">Yellow is the colour of the evening — wear it if you have it. If not, wear something you're OK getting golden. The turmeric has no respect for nice clothes.</p>
-      </div>
-    </div>
-
-    <div class="tab-content mehendi" data-tab-content="mehendi" data-hud-key="mehendi">
-      <div class="panel-head" data-watermark="M">
-        <div class="event-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
-        <h2 class="event-title">Mehendi</h2>
-        <div class="event-sub">&amp; Choodi</div>
-      </div>
-      <div class="panel-body">
-        <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
-        <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
-        <div class="timeline">
-          <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+      </details>
+      <details>
+        <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries rather than face to face: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali (her father, speaking for her and with her full consent), witnessed by two men present in the room with her.</p>
+          <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Qubool from the Arabic root meaning to receive, to welcome, to turn toward. Zeenath says it three times; Azhar will have already said his. That's it. Done. Married on paper. Everything after is ceremony, tradition, and celebration.</p>
         </div>
-        <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
-      </div>
-    </div>
-
-    <div class="tab-content nikah" data-tab-content="nikah" data-hud-key="nikah">
-      <div class="panel-head" data-watermark="N">
-        <div class="event-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
-        <h2 class="event-title">Nikah</h2>
-        <div class="event-sub">&amp; the Jalwa</div>
-      </div>
-      <div class="panel-body">
-      <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything. Tap through for what actually happens:</p>
-
-      <div class="qa">
-        <details>
-          <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
-          <div class="qa-body">
-            <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence — this is the ceremony's only sermon, and it sets the entire tone of what follows.</p>
-            <p>One verse on two souls being of the same root, returning to each other. One on speaking plainly and truthfully — a marriage runs on exactly that, every day, for decades. One on holding steady through the ordinary stretch of a life together. Three minutes, and somehow all of it covered.</p>
-          </div>
-        </details>
-        <details>
-          <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
-          <div class="qa-body">
-            <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries rather than face to face: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali (her father, speaking for her and with her full consent), witnessed by two men present in the room with her.</p>
-            <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Qubool from the Arabic root meaning to receive, to welcome, to turn toward. Zeenath says it three times; Azhar will have already said his. That's it. Done. Married on paper. Everything after is ceremony, tradition, and celebration — but the legal and religious fact is already settled.</p>
-          </div>
-        </details>
-        <details>
-          <summary><span>What's in the Nikahnama?</span><span class="icon">+</span></summary>
-          <div class="qa-body">
-            <p>The Nikahnama is the marriage contract — a physical document, signed by both, witnessed, and kept. At its centre is the Mehr: a gift Azhar owes Zeenath outright, decided and written down before either of them says a word. It is hers alone. Not symbolic, not a formality, not the family's to touch. She can claim it any time, no reason required.</p>
-            <p>The amount is announced aloud during the ceremony. This is deliberate — the witnesses are there precisely so it cannot be quietly changed later.</p>
-          </div>
-        </details>
-        <details>
-          <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
-          <div class="qa-body">
-            <p>Two customs, back to back, both Hyderabadi through and through. First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. The room watches. He sees her.</p>
-            <p>Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up with a Quran resting just above it. Their first look at each other as husband and wife — through that mirror, same second. Under the shawl, they read a few verses to one another quietly. First words as a married couple: scripture.</p>
-            <p>Guests then do Salaami — elders first, then everyone else, offering blessings in person. The room moves slowly. Take your time.</p>
-            <p>On your way out: small packets of Maleeda — crushed fried roti, ghee, sugar, cardamom. A Hyderabadi tradition at weddings. Sweet thanks for showing up.</p>
-          </div>
-        </details>
-        <details>
-          <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
-          <div class="qa-body">
-            <p>During the khutbah: listen. Stay seated and quiet — the ceremony is short and deserves attention.</p>
-            <p>When the dua is read at the close of the khutbah: say Ameen out loud, together. The room does it in unison. It sounds like one voice.</p>
-            <p>When Qubool Hai is said and confirmed: the room breaks — clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
-            <p>At the Jalwa: watch, then come forward for Salaami when it begins. Elders go first. Follow the room.</p>
-          </div>
-        </details>
-      </div>
-
-      <div class="couplet">
-        "So race toward all that is good."
-        <div class="attr">Surah Al-Baqarah, 2:148</div>
-      </div>
-
-      <div class="timeline">
-        <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Two sides seated apart. Please stay seated and quiet through the ceremony.</div></div></div>
-        <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
-        <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, then Arsi Mushaf, then Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
-      </div>
-      </div>
-    </div>
-
-    <div class="tab-content reception" data-tab-content="reception" data-hud-key="reception">
-      <div class="panel-head" data-watermark="R">
-        <div class="event-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
-        <h2 class="event-title">Reception</h2>
-        <div class="event-sub">The evening they've been waiting to throw</div>
-      </div>
-      <div class="panel-body">
-        <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
-        <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
-        <div class="couplet">
-          "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
-          <div class="attr">Mawlana Jalal al-Din Rumi</div>
+      </details>
+      <details>
+        <summary><span>What's in the Nikahnama?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>The Nikahnama is the marriage contract — a physical document, signed by both, witnessed, and kept. At its centre is the Mehr: a gift Azhar owes Zeenath outright, decided and written down before either of them says a word. It is hers alone. Not symbolic, not a formality, not the family's to touch. She can claim it any time, no reason required.</p>
+          <p>The amount is announced aloud during the ceremony. This is deliberate — the witnesses are there precisely so it cannot be quietly changed later.</p>
         </div>
-        <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
-      </div>
+      </details>
+      <details>
+        <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>Two customs, back to back, both Hyderabadi through and through. First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. The room watches. He sees her.</p>
+          <p>Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up with a Quran resting just above it. Their first look at each other as husband and wife — through that mirror, same second. Under the shawl, they read a few verses to one another quietly. First words as a married couple: scripture.</p>
+          <p>Guests then do Salaami — elders first, then everyone else. On your way out: small packets of Maleeda — crushed fried roti, ghee, sugar, cardamom. A Hyderabadi tradition at weddings.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>During the khutbah: listen. Stay seated and quiet — the ceremony is short and deserves attention.</p>
+          <p>When the dua is read at the close of the khutbah: say Ameen out loud, together. The room does it in unison. It sounds like one voice.</p>
+          <p>When Qubool Hai is confirmed: clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
+          <p>At the Jalwa: watch, then come forward for Salaami when it begins. Elders go first.</p>
+        </div>
+      </details>
     </div>
+    <div class="couplet">
+      "So race toward all that is good."
+      <div class="attr">Surah Al-Baqarah, 2:148</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Two sides seated apart. Please stay seated and quiet through the ceremony.</div></div></div>
+      <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, then Arsi Mushaf, then Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="event-section reception" id="reception" data-hud-key="reception">
+  <div class="ev-head" data-watermark="R">
+    <div class="ev-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
+    <h2 class="ev-title">Reception</h2>
+    <div class="ev-sub">The evening they've been waiting to throw</div>
+  </div>
+  <div class="ev-body">
+    <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
+    <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
+    <div class="couplet">
+      "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
+      <div class="attr">Mawlana Jalal al-Din Rumi</div>
+    </div>
+    <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
   </div>
 </section>
 
@@ -1513,15 +1392,6 @@
 
 <div id="hud" class="hidden">
   <div id="hud-avatar">
-    <svg id="hud-branch" viewBox="0 0 90 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M4 18 C 28 14, 56 14, 86 18" stroke="#7A5A12" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M24 15 C 25 9, 29 4, 27 1" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M54 14 C 56 8, 60 3, 58 0" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
-      <ellipse cx="26" cy="2" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-22 26 2)"/>
-      <ellipse cx="30" cy="4" rx="3.5" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(18 30 4)"/>
-      <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
-      <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
-    </svg>
     <svg class="bird" viewBox="0 0 48 48" fill="none">
       <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
       <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
@@ -1542,8 +1412,17 @@
       <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
     </svg>
     <button id="hud-close" aria-label="Hide Hud-hud" title="Hide Hud-hud">&times;</button>
-    <span id="hud-hint">tap × to hush me</span>
   </div>
+    <svg id="hud-branch" viewBox="0 0 90 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:88%;display:block;margin:0 auto -2px;">
+      <path d="M4 18 C 28 14, 56 14, 86 18" stroke="#7A5A12" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M24 15 C 25 9, 29 4, 27 1" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M54 14 C 56 8, 60 3, 58 0" stroke="#7A5A12" stroke-width="1.5" stroke-linecap="round"/>
+      <ellipse cx="26" cy="2" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-22 26 2)"/>
+      <ellipse cx="30" cy="4" rx="3.5" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(18 30 4)"/>
+      <ellipse cx="57" cy="1" rx="4.5" ry="2.5" fill="#5A8A4A" opacity="0.85" transform="rotate(-18 57 1)"/>
+      <ellipse cx="61" cy="3.5" rx="3" ry="2" fill="#4A7A3A" opacity="0.7" transform="rotate(22 61 3.5)"/>
+    </svg>
+  <span id="hud-hint">tap × to dismiss</span>
   <div id="hud-bubble">
     <span class="who">Hud-hud</span>
     <span id="hud-text"></span>
@@ -1684,32 +1563,7 @@
     }, 2500);
   })();
 
-  // ── Event tabs: one card, four faces, no extra scrolling ──
-  let activeTabKey = 'manja';
-  const tabAccent = { manja:'--manja-pop', mehendi:'--mehendi-pop', nikah:'--nikah-pop', reception:'--reception-pop' };
-  function switchTab(key){
-    if(key === activeTabKey) return;
-    activeTabKey = key;
-    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.toggle('active', b.getAttribute('data-tab') === key); });
-    document.querySelectorAll('.tab-content').forEach(function(c){ c.classList.toggle('active', c.getAttribute('data-tab-content') === key); });
-    if(tabAccent[key]){
-      document.documentElement.style.setProperty('--accent', 'var(' + tabAccent[key] + ')');
-    }
-    if(typeof cycle === 'function') cycle(key);
-  }
-  document.querySelectorAll('.tab-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){ switchTab(btn.getAttribute('data-tab')); });
-  });
-  // Nav links jump straight to the panel and switch to that tab
-  document.querySelectorAll('nav a[href^="#"]').forEach(function(a){
-    const key = a.getAttribute('href').slice(1);
-    if(!['manja','mehendi','nikah','reception'].includes(key)) return;
-    a.addEventListener('click', function(e){
-      e.preventDefault();
-      switchTab(key);
-      document.getElementById('events').scrollIntoView({behavior:'smooth', block:'start'});
-    });
-  });
+  // Events are now scroll sections — no tab switching needed.
 
   let cycleTimer = null;
 
@@ -1858,7 +1712,7 @@
       reviveBtn.classList.remove('show');
       sessionStorage.removeItem('hudDismissed');
       cycleKey = null;
-      say(hudLines[activeTabKey] || hudLines.greeting);
+      say(hudLines.greeting);
     });
 
     let lastSectionKey = null;
@@ -1879,7 +1733,7 @@
         }, 5000);
       }, 1000);
     }, 600);
-    setTimeout(function(){ if(!dismissed) cycle(activeTabKey); }, 10000);
+    // IntersectionObserver handles section commentary on scroll
 
     // Registry / RSVP / venue still get his commentary as you scroll to them
     const secObs = new IntersectionObserver(function(entries){
