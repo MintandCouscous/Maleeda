@@ -144,11 +144,24 @@
     position:relative; min-height:100vh;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    background:linear-gradient(165deg,#0C0907 0%,#100C08 55%,#0D0A06 100%);
-    overflow:hidden; padding:60px 32px 100px;
+    /* Warm cocoa-dark — not cold black */
+    background:radial-gradient(ellipse 110% 80% at 50% 60%, #1E1408 0%, #140E08 40%, #0F0B06 100%);
+    overflow:hidden; padding:60px 32px 120px;
     scroll-snap-align:start;
   }
   #rumi-screen canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; display:block; }
+  /* Warm amber uplighting from below — like candles on the orchard floor */
+  #rumi-screen::before{
+    content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+    width:100%; height:55%; pointer-events:none; z-index:1;
+    background:radial-gradient(ellipse 80% 100% at 50% 100%, rgba(197,140,40,0.08) 0%, transparent 70%);
+  }
+  /* Fade-to-page so dark does not smash into white */
+  #rumi-screen::after{
+    content:''; position:absolute; bottom:0; left:0; right:0; height:180px;
+    background:linear-gradient(to bottom, transparent 0%, rgba(248,245,240,0.22) 55%, rgba(248,245,240,0.82) 100%);
+    pointer-events:none; z-index:2;
+  }
 
   .rumi-lines{ position:relative; z-index:2; text-align:center; max-width:640px; width:100%; }
 
@@ -181,23 +194,25 @@
   }
 
   .rumi-scroll{
-    position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
-    z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px;
-    color:rgba(197,151,58,0.28); font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.3em; text-transform:uppercase;
-    opacity:0; transition:opacity 1.6s ease; white-space:nowrap;
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    z-index:4; display:flex; flex-direction:column; align-items:center; gap:12px;
+    color:rgba(197,151,58,0.55); font-family:'EB Garamond',serif;
+    font-size:11.5px; letter-spacing:0.26em; text-transform:uppercase;
+    opacity:0; transition:opacity 2s ease; white-space:nowrap;
   }
   .rumi-scroll.lit{ opacity:1; }
   .rumi-scroll-line{
-    display:block; width:1px; height:34px;
-    background:linear-gradient(to bottom,rgba(197,151,58,0.35),transparent);
-    animation:rumi-drip 2.4s ease-in-out infinite;
+    display:block; width:1px; height:48px;
+    background:linear-gradient(to bottom,rgba(197,151,58,0.5),rgba(197,151,58,0.05));
+    animation:rumi-drip 2.6s ease-in-out infinite;
+    transform-origin:top;
   }
   @keyframes rumi-drip{
-    0%{ transform:scaleY(0); transform-origin:top; opacity:0; }
-    35%{ transform:scaleY(1); transform-origin:top; opacity:1; }
-    65%{ transform:scaleY(1); transform-origin:bottom; opacity:1; }
-    100%{ transform:scaleY(0); transform-origin:bottom; opacity:0; }
+    0%{ transform:scaleY(0); opacity:0; }
+    30%{ opacity:1; }
+    55%{ transform:scaleY(1); opacity:1; }
+    80%{ transform:scaleY(1); opacity:0.4; }
+    100%{ transform:scaleY(0); opacity:0; }
   }
 
   /* ================= SITE ================= */
@@ -638,6 +653,21 @@
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
+  @keyframes hud-bow{
+    0%  { transform:translateY(0)    rotate(-1.5deg); }
+    18% { transform:translateY(14px) rotate(30deg);  }
+    36% { transform:translateY(9px)  rotate(16deg);  }
+    52% { transform:translateY(16px) rotate(28deg);  }
+    70% { transform:translateY(5px)  rotate(6deg);   }
+    85% { transform:translateY(2px)  rotate(-3deg);  }
+    100%{ transform:translateY(0)    rotate(-1.5deg); }
+  }
+  #hud.bowing #hud-avatar{ animation:hud-bow 2.2s cubic-bezier(0.22,1,0.36,1) forwards; }
+  @keyframes hud-arrive{
+    from{ opacity:0; transform:translateX(-24px) scale(0.85); }
+    to  { opacity:1; transform:translateX(0) scale(1); }
+  }
+  #hud.arriving{ animation:hud-arrive 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
 
   /* close button — always visible, prominent */
   #hud-close{
@@ -1101,7 +1131,7 @@
     <span class="r-line r-paradox r-paradox-2 r-l5">If you do come, these do not matter.</span>
   </div>
   <div class="rumi-attr r-attr">&#8212; Rumi</div>
-  <div class="rumi-scroll r-scroll"><span class="rumi-scroll-line"></span></div>
+  <div class="rumi-scroll r-scroll">scroll<span class="rumi-scroll-line"></span></div>
 </section>
 
 
@@ -1671,8 +1701,8 @@
 
   const hudLines = {
     greeting: [
-      "Hud-hud. Royal messenger. The × up there will silence me, should you wish.",
-      "I know things. I share them briefly. Tap × whenever.",
+      "Bismillah. I am Hud-hud — guide, witness, and one who was perhaps not on the original guest list.",
+      "Three days. Four ceremonies. One love that made all of it inevitable. I shall lead you through every moment.",
     ],
     manja: [
       "Turmeric. The original filter.",
@@ -1831,9 +1861,21 @@
       cycle(key);
     }
 
-    // Greet once from his perch, then a beat later, quip about the first tab
-    setTimeout(function(){ if(!dismissed) say(hudLines.greeting); }, 700);
-    setTimeout(function(){ if(!dismissed) cycle(activeTabKey); }, 4200);
+    // Cinematic entrance — arrive, bow, then introduce himself
+    hud.classList.add('arriving');
+    setTimeout(function(){
+      if(!dismissed){
+        hud.classList.add('bowing');
+        setTimeout(function(){
+          hud.classList.remove('bowing');
+          say([hudLines.greeting[0]]);
+        }, 2000);
+        setTimeout(function(){
+          if(!dismissed) say([hudLines.greeting[1]]);
+        }, 7500);
+      }
+    }, 400);
+    setTimeout(function(){ if(!dismissed) cycle(activeTabKey); }, 14000);
 
     // Registry / RSVP / venue still get his commentary as you scroll to them
     const secObs = new IntersectionObserver(function(entries){
