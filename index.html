@@ -1180,16 +1180,6 @@
     </svg>
   </div>
 
-  <!-- ═══ SPARKLES ═══ -->
-  <span class="sparkle" style="left:32%; top:55%; width:4px; height:4px; animation-duration:3.2s; animation-delay:0s;"></span>
-  <span class="sparkle" style="left:40%; top:70%; width:3px; height:3px; animation-duration:4s; animation-delay:0.8s;"></span>
-  <span class="sparkle" style="right:32%; top:60%; width:4px; height:4px; animation-duration:3.6s; animation-delay:1.6s;"></span>
-  <span class="sparkle" style="right:40%; top:48%; width:3px; height:3px; animation-duration:3.4s; animation-delay:0.4s;"></span>
-  <span class="sparkle" style="left:45%; top:80%; width:4px; height:4px; animation-duration:4.4s; animation-delay:2s;"></span>
-  <span class="sparkle" style="right:45%; top:42%; width:3px; height:3px; animation-duration:3s; animation-delay:1.2s;"></span>
-  <span class="sparkle" style="left:48%; top:38%; width:3px; height:3px; animation-duration:3.8s; animation-delay:2.4s;"></span>
-  <span class="sparkle" style="right:48%; top:72%; width:3px; height:3px; animation-duration:4.2s; animation-delay:0.2s;"></span>
-
   <!-- ═══ CENTER CONTENT ═══ -->
   <div class="hero-inner">
     <p class="hero-eyebrow">28 – 30 August 2026</p>
@@ -2204,28 +2194,6 @@
     upd();
   })();
 
-  // ─ FALLING BOUGAINVILLEA PETALS ─
-  (function(){
-    var colors=['#C4186A','#D42272','#AA0E5C','#E03080','#C8206E','#B81060'];
-    var n=38;
-    for(var i=0;i<n;i++){
-      var p=document.createElement('div'); p.className='petal';
-      var w=7+Math.random()*9;
-      var h=w*1.4;
-      var op=0.55+Math.random()*0.35;
-      var dur=14+Math.random()*22;
-      var delay=-(Math.random()*dur);
-      var left=Math.random()*100;
-      var dx=(Math.random()-0.5)*200;
-      var rot=180+Math.random()*360;
-      var col=colors[Math.floor(Math.random()*colors.length)];
-      p.style.cssText='width:'+w+'px;height:'+h+'px;left:'+left+'vw;background:'+col+';animation-duration:'+dur+'s;animation-delay:'+delay+'s;';
-      p.style.setProperty('--op',op);
-      p.style.setProperty('--dx',dx+'px');
-      p.style.setProperty('--rot',rot+'deg');
-      document.body.appendChild(p);
-    }
-  })();
 
   // ─ 3D TILT on event panel ─
   (function(){
