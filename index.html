@@ -8,39 +8,36 @@
   @import url('https://fonts.googleapis.com/css2?family=Beau+Rivage&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 
   :root{
-    /* Victorian white + black + bougainvillea */
-    --cream:#F8F5F0;
+    /* Parisian Luxe — white, ivory, champagne gold */
+    --ivory:#FDFAF5;
     --page-bg:#F8F5F0;
-    --ink:#0C0906;
-    --ink-soft:#3A3A30;
-    --gold:#B8880C; --gold-deep:#906A08; --gold-soft:#D4A420; --gold-pale:#F0E0A0;
-    --rose:#8A0828;
+    --hero-bg:#FFFFFF;
+    --parchment:#F2EAE0;
+    --ink:#1A1410;
+    --ink-soft:#4A3E38;
+    --champagne:#C5973A;
+    --champagne-light:#D4AE5A;
+    --champagne-pale:#EDD898;
+    --champagne-dim:rgba(197,151,58,0.15);
+    --blush:#F0E4DC;
 
-    /* Jasmine night theme */
-    --hero-bg:#0B1C0F; --hero-bg2:#102016;
-    --jasmine:#FFFDF4; --jasmine-dim:#F0EBD8;
-    --jasmine-center:#E8C040;
-    --gstroke:#162E1A; --gleaf:#1E4422;
-    --lamp-gold:#D4A020; --lamp-glow:#FFD050; --lamp-amber:#FF8820;
+    /* Event light washes */
+    --manja-a:#F7F2E8; --manja-b:#EDE0C0; --manja-ink:#4A3A08;
+    --mehendi-a:#E8EDE4; --mehendi-b:#D0DCCB; --mehendi-ink:#1E3E24;
+    --nikah-a:#F5EAED;  --nikah-b:#E8D0D8;  --nikah-ink:#4A1828;
+    --reception-a:#EEEAE6; --reception-b:#DDD9D4; --reception-ink:#1A1410;
 
-    /* Bougainvillea palette */
-    --boug:#C4186A;
-    --boug-deep:#820840;
-    --boug-light:#E84880;
-    --boug-pale:#F5CCDC;
-
-    /* Event light washes — muted for Victorian */
-    --manja-a:#F5EDD8; --manja-b:#EDE0C0; --manja-ink:#4A3A08;
-    --mehendi-a:#E4EDE0; --mehendi-b:#C8DCC0; --mehendi-ink:#1E3E24;
-    --nikah-a:#F5E0EC;  --nikah-b:#EAC0D4;  --nikah-ink:#5A0830;
-    --reception-a:#E8E8E8; --reception-b:#D0D0D0; --reception-ink:#181818;
-
-    /* Event card accents — Victorian palette */
-    --manja-pop:#A87820;      --manja-pop-text:#F8F5F0;
-    --mehendi-pop:#1E5430;    --mehendi-pop-text:#F8F5F0;
-    --nikah-pop:#C4186A;      --nikah-pop-text:#F8F5F0;
-    --reception-pop:#0C0906;  --reception-pop-text:#F8F5F0;
+    /* Event card accents */
+    --manja-pop:#B8880C;      --manja-pop-text:#FDFAF5;
+    --mehendi-pop:#2E6040;    --mehendi-pop-text:#FDFAF5;
+    --nikah-pop:#8A2040;      --nikah-pop-text:#FDFAF5;
+    --reception-pop:#1A1410;  --reception-pop-text:#FDFAF5;
     --accent: var(--manja-pop);
+
+    /* Legacy aliases still referenced in tab buttons */
+    --gold:var(--champagne); --gold-deep:#906A08; --gold-soft:var(--champagne-light); --gold-pale:var(--champagne-pale);
+    --boug:var(--nikah-pop);
+    --rose:#8A2040;
 
     /* Layout */
     --contentHalf:410px; --treeGap:34px; --treeW:220px;
@@ -119,62 +116,42 @@
   nav a:hover{ color:var(--ink); }
   @media (max-width:640px){ nav ul{ display:none; } }
 
-  /* ── JASMINE NIGHT HERO: deep green, spiral garlands, ground diyas ── */
+  /* ── PARISIAN HERO — white, champagne gold ornamental frame ── */
   .hero{
     text-align:center; position:relative; margin-top:-1px;
     min-height:100vh; display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    padding:0 28px 100px; overflow:hidden;
-    background:linear-gradient(180deg, var(--hero-bg) 0%, var(--hero-bg2) 100%);
+    padding:60px 28px 110px; overflow:hidden;
+    background:var(--hero-bg);
   }
   .hero-ribbon{ display:none; }
   .hero-arch{ display:none; }
+  .garland-canopy{ display:none; }
+  .lamps-row{ display:none; }
 
-  /* ─ Garland canopy ─ */
-  .garland-canopy{
-    position:absolute; top:0; left:0; right:0; pointer-events:none; z-index:2;
-    height:260px;
+  /* Thin gold border frame */
+  .hero-frame{
+    position:absolute; inset:28px;
+    pointer-events:none; z-index:1;
   }
-  .garland-canopy svg{ position:absolute; top:0; left:0; width:100%; }
-  @keyframes garland-sway{
-    0%,100%{ transform:translateX(0); }
-    50%{ transform:translateX(5px); }
+  .hero-frame svg{ width:100%; height:100%; }
+  @keyframes border-fade{
+    0%,100%{ opacity:0.55; }
+    50%{ opacity:0.75; }
   }
-  .g1{ animation:garland-sway 6s ease-in-out infinite; }
-  .g2{ animation:garland-sway 7.5s ease-in-out infinite reverse; }
-  .g3{ animation:garland-sway 9s ease-in-out infinite; animation-delay:-3s; }
-  @media(prefers-reduced-motion:reduce){ .g1,.g2,.g3{ animation:none; } }
+  .hero-frame{ animation:border-fade 6s ease-in-out infinite; }
+  @media(prefers-reduced-motion:reduce){ .hero-frame{ animation:none; } }
 
-  /* ─ Diya lamps row ─ */
-  .lamps-row{
-    position:absolute; bottom:88px; left:0; right:0;
-    pointer-events:none; z-index:2; height:110px;
-  }
-  .lamps-row svg{ width:100%; height:100%; overflow:visible; }
-  @keyframes flame-dance{
-    0%,100%{ transform:scaleY(1) rotate(-2deg); }
-    25%{ transform:scaleY(0.82) rotate(3deg); }
-    50%{ transform:scaleY(1.14) rotate(-1.5deg); }
-    75%{ transform:scaleY(0.88) rotate(4deg); }
-  }
-  @keyframes glow-pulse{
-    0%,100%{ opacity:0.22; }
-    50%{ opacity:0.58; }
-  }
-  .diya-flame{ animation:flame-dance 0.72s ease-in-out infinite; transform-origin:50% 100%; }
-  .diya-flame-i{ animation:flame-dance 0.55s ease-in-out infinite 0.12s; transform-origin:50% 100%; }
-  .diya-glow{ animation:glow-pulse 1.6s ease-in-out infinite; }
-  @media(prefers-reduced-motion:reduce){ .diya-flame,.diya-flame-i,.diya-glow{ animation:none; } }
-
-  /* Hero center content */
   .hero-inner{
-    position:relative; z-index:3;
+    position:relative; z-index:2;
     display:flex; flex-direction:column; align-items:center;
-    margin-top:20px;
   }
   .hero-eyebrow{
-    font-size:11px; letter-spacing:0.32em; text-transform:uppercase;
-    color:rgba(255,253,244,0.62); margin:0 0 30px;
+    font-size:11px; letter-spacing:0.36em; text-transform:uppercase;
+    color:var(--champagne); margin:0 0 26px; font-family:'EB Garamond',serif;
+  }
+  .hero-monogram{
+    width:72px; height:auto; margin:0 auto 18px; color:var(--champagne); opacity:0.75;
   }
 
   .wave-divider{ position:absolute; left:0; right:0; bottom:-1px; width:100%; height:90px; display:block; z-index:4; }
@@ -185,42 +162,38 @@
   @keyframes wave-drift-2{ 0%,100%{ transform:translateX(0) translateY(0); } 50%{ transform:translateX(2%) translateY(-3px); } }
   @media (prefers-reduced-motion: reduce){ .wave-divider .w1, .wave-divider .w2{ animation:none; } }
 
-  /* sparkle — tiny gold lights on dark */
-  .sparkle{ position:absolute; border-radius:50%; background:var(--lamp-glow); pointer-events:none; opacity:0; animation:twinkle ease-in-out infinite; }
-  @keyframes twinkle{ 0%,100%{ opacity:0; transform:scale(0.4); } 50%{ opacity:0.75; transform:scale(1); } }
-  @media (prefers-reduced-motion: reduce){ .sparkle{ display:none; } }
+  .hero-flourish{ display:none; }
+  .sparkle{ display:none; }
+  .diya-flame,.diya-flame-i,.diya-glow{ display:none; }
 
-  .hero-flourish{ width:38px; height:auto; margin:0 auto 16px; color:var(--lamp-gold); }
   .hero-names{
     position:relative; display:inline-block;
     font-family:'Beau Rivage', cursive; font-weight:400;
     font-size:clamp(62px, 11vw, 138px); line-height:1; letter-spacing:0.01em;
-    color:var(--jasmine); text-shadow:0 8px 40px rgba(212,160,32,0.28), 0 2px 0 rgba(0,0,0,0.2);
+    color:var(--ink);
   }
   .hero-names::after{
     content:'Azhar & Zeenath'; position:absolute; inset:0; pointer-events:none;
     white-space:nowrap; overflow:hidden;
-    background:linear-gradient(100deg, transparent 30%, rgba(255,210,80,0.7) 45%, transparent 60%);
+    background:linear-gradient(100deg, transparent 30%, rgba(197,151,58,0.45) 45%, transparent 60%);
     background-size:260% 100%; background-position:130% 0; background-repeat:no-repeat;
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    animation:shimmer-sweep 7s ease-in-out infinite; animation-delay:1.5s;
+    animation:shimmer-sweep 8s ease-in-out infinite; animation-delay:2s;
   }
   @keyframes shimmer-sweep{ 0%,45%{ background-position:130% 0; } 65%,100%{ background-position:-60% 0; } }
   @media (prefers-reduced-motion: reduce){ .hero-names::after{ animation:none; display:none; } }
   .hero-names .amp{
-    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:500;
-    font-size:0.48em; color:var(--lamp-gold); padding:0 0.14em; opacity:0.9;
+    font-family:'Cormorant Garamond', serif; font-style:italic; font-weight:400;
+    font-size:0.48em; color:var(--champagne); padding:0 0.14em;
   }
-  .hero-rule{ display:flex; align-items:center; justify-content:center; gap:14px; margin:20px auto 0; color:rgba(255,253,244,0.35); max-width:280px; }
-  .hero-rule::before, .hero-rule::after{ content:''; flex:1; height:1px; background:linear-gradient(90deg, transparent, currentColor); }
-  .hero-rule::after{ background:linear-gradient(90deg, currentColor, transparent); }
-  .hero-rule svg{ width:13px; height:13px; flex-shrink:0; }
+  .hero-rule{ display:flex; align-items:center; justify-content:center; gap:14px; margin:22px auto 0; color:rgba(197,151,58,0.5); max-width:300px; }
+  .hero-rule::before, .hero-rule::after{ content:''; flex:1; height:1px; background:currentColor; }
+  .hero-rule svg{ width:11px; height:11px; flex-shrink:0; }
   .hero .date{ display:none; }
-  .hero .place{ margin-top:16px; font-size:17px; font-style:italic; color:rgba(255,253,244,0.75); }
-  .hero .guide-line{ margin-top:14px; font-size:13.5px; font-style:italic; color:rgba(255,253,244,0.5); max-width:420px; margin-left:auto; margin-right:auto; padding:0 20px; }
+  .hero .place{ margin-top:18px; font-size:17px; font-style:italic; color:var(--ink-soft); letter-spacing:0.02em; }
+  .hero .guide-line{ margin-top:12px; font-size:13.5px; font-style:italic; color:var(--ink-soft); opacity:0.55; max-width:420px; margin-left:auto; margin-right:auto; padding:0 20px; }
   @media (max-width:640px){
-    .hero-inner{ margin-top:10px; }
-    .hero-flourish{ width:32px; margin-bottom:12px; }
+    .hero-frame{ inset:14px; }
     .hero .place{ font-size:15px; }
     .hero .guide-line{ font-size:13px; margin-top:10px; }
   }
@@ -423,7 +396,7 @@
   .rsvp{ padding:60px 20px; text-align:center; display:flex; align-items:center; }
   .rsvp .wrap{
     max-width:600px; margin:0 auto; position:relative; overflow:hidden;
-    background:linear-gradient(150deg, #0C0906 0%, var(--boug-deep) 55%, #0C0906 100%);
+    background:linear-gradient(150deg, #0C0906 0%, #8A2040 55%, #0C0906 100%);
     box-shadow:0 26px 70px rgba(58,46,34,0.22); padding:56px 48px;
     border-radius:44px 36px 48px 32px / 54px 42px 50px 38px;
     animation:blob-morph 14s ease-in-out infinite;
@@ -603,7 +576,7 @@
   /* ─ SCROLL PROGRESS BAR ─ */
   #scroll-bar{
     position:fixed; top:0; left:0; right:0; height:3px; z-index:9999;
-    background:linear-gradient(90deg, var(--boug-deep), var(--boug), var(--boug-light));
+    background:linear-gradient(90deg, #8A2040, var(--boug), #B04060);
     transform-origin:0 50%; transform:scaleX(0); pointer-events:none;
   }
   @supports (animation-timeline:scroll()){
@@ -732,7 +705,7 @@
   /* Cursor — bougainvillea */
   #cursor-dot{ background:var(--boug); }
   #cursor-ring{ border-color:rgba(196,24,106,0.6); }
-  body.cursor-hover #cursor-dot{ background:var(--boug-deep); }
+  body.cursor-hover #cursor-dot{ background:#8A2040; }
   body.cursor-hover #cursor-ring{ border-color:var(--boug); }
 
   /* ─ FALLING BOUGAINVILLEA PETALS ─ */
@@ -750,28 +723,6 @@
   @media(prefers-reduced-motion:reduce){ .petal{ display:none; } }
 
   /* ─ BOUGAINVILLEA VINES (both sides — wall-draping cascades) ─ */
-  #boug-vine{
-    display:none;
-    position:fixed;
-    right:max(0px, calc(50vw - var(--contentHalf) - var(--vineGap) - var(--vineW)));
-    top:0; width:var(--vineW); height:min(98vh,880px);
-    pointer-events:none; z-index:1; overflow:visible;
-    -webkit-mask-image:linear-gradient(to bottom, #000 68%, transparent 98%);
-    mask-image:linear-gradient(to bottom, #000 68%, transparent 98%);
-    transition:right 0.3s ease;
-  }
-  #boug-vine svg{ width:100%; height:100%; overflow:visible; }
-  #boug-vine-l{
-    position:fixed;
-    left:max(0px, calc(50vw - var(--contentHalf) - var(--vineGap) - var(--vineW)));
-    top:0; width:var(--vineW); height:min(98vh,880px);
-    pointer-events:none; z-index:0; overflow:visible;
-    -webkit-mask-image:linear-gradient(to bottom, #000 68%, transparent 98%);
-    mask-image:linear-gradient(to bottom, #000 68%, transparent 98%);
-    transition:left 0.3s ease;
-  }
-  #boug-vine-l svg{ width:100%; height:100%; overflow:visible; transform:scaleX(-1); transform-origin:center; }
-  @media(max-width:1000px){ #boug-vine, #boug-vine-l{ display:none; } }
 
   /* Vine stem draw animation */
   .vs{
@@ -838,7 +789,7 @@
 
   /* Polaroids — ink border */
   .polaroid{ background:#fff; }
-  .polaroid-pin{ background:radial-gradient(circle at 36% 36%, var(--boug), var(--boug-deep) 80%); }
+  .polaroid-pin{ background:radial-gradient(circle at 36% 36%, var(--boug), #8A2040 80%); }
   .polaroid-frame{
     background:linear-gradient(135deg, var(--boug-pale) 0%, color-mix(in srgb, var(--boug) 20%, white) 50%, var(--boug-pale) 100%);
   }
@@ -1092,225 +1043,90 @@
 </nav>
 
 <div class="hero">
-  <!-- ═══ GARLAND CANOPY — three spiral jasmine garlands hanging from the top ═══ -->
-  <div class="garland-canopy" aria-hidden="true">
+  <!-- ═══ ORNAMENTAL BORDER FRAME ═══ -->
+  <div class="hero-frame" aria-hidden="true">
+    <svg viewBox="0 0 1000 700" fill="none" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer border -->
+      <rect x="1" y="1" width="998" height="698" stroke="#C5973A" stroke-width="1.2" opacity="0.4"/>
+      <!-- Inner border -->
+      <rect x="12" y="12" width="976" height="676" stroke="#C5973A" stroke-width="0.5" opacity="0.22"/>
 
-    <!-- Garland 1: deepest droop, full width (viewBox 1600×245) -->
-    <svg class="g1" viewBox="0 0 1600 245" preserveAspectRatio="none" fill="none">
-      <!-- Rope 1 — dark green spiral twist -->
-      <path d="M0,30 C300,175 700,232 800,238 C900,232 1300,175 1600,30" stroke="#162E1A" stroke-width="15" stroke-linecap="round"/>
-      <path d="M0,36 C300,180 700,236 800,242 C900,236 1300,180 1600,36" stroke="#1E4422" stroke-width="9" stroke-linecap="round" opacity="0.6"/>
-      <!-- Jasmine clusters: (x,y) at 100px intervals -->
-      <!-- cluster helper: main circle r13, two side r10, centers -->
-      <g transform="translate(0,30)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="50" cy="31" rx="12" ry="5" fill="#1E4422" transform="rotate(5,50,31)"/>
-      <g transform="translate(100,38)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="150" cy="49" rx="12" ry="5" fill="#1E4422" transform="rotate(12,150,49)"/>
-      <g transform="translate(200,60)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="250" cy="77" rx="12" ry="5" fill="#1E4422" transform="rotate(18,250,77)"/>
-      <g transform="translate(300,95)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="350" cy="115" rx="12" ry="5" fill="#1E4422" transform="rotate(22,350,115)"/>
-      <g transform="translate(400,135)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="450" cy="155" rx="12" ry="5" fill="#1E4422" transform="rotate(21,450,155)"/>
-      <g transform="translate(500,175)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="550" cy="190" rx="12" ry="5" fill="#1E4422" transform="rotate(17,550,190)"/>
-      <g transform="translate(600,205)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="650" cy="217" rx="12" ry="5" fill="#1E4422" transform="rotate(12,650,217)"/>
-      <g transform="translate(700,228)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="750" cy="234" rx="12" ry="5" fill="#1E4422" transform="rotate(4,750,234)"/>
-      <g transform="translate(800,238)"><circle r="14" fill="#FFFDF4"/><circle cx="-12" cy="-8" r="11" fill="#F8F4E8"/><circle cx="12" cy="-8" r="11" fill="#FFFDF4"/><circle cx="0" cy="7" r="9" fill="#F0EDE0"/><circle r="3.2" fill="#E8C040"/><circle cx="-12" cy="-8" r="2.4" fill="#D8B030"/><circle cx="12" cy="-8" r="2.4" fill="#E8C040"/></g>
-      <ellipse cx="850" cy="234" rx="12" ry="5" fill="#1E4422" transform="rotate(-4,850,234)"/>
-      <g transform="translate(900,228)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="950" cy="217" rx="12" ry="5" fill="#1E4422" transform="rotate(-12,950,217)"/>
-      <g transform="translate(1000,205)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1050" cy="190" rx="12" ry="5" fill="#1E4422" transform="rotate(-17,1050,190)"/>
-      <g transform="translate(1100,175)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1150" cy="155" rx="12" ry="5" fill="#1E4422" transform="rotate(-21,1150,155)"/>
-      <g transform="translate(1200,135)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1250" cy="115" rx="12" ry="5" fill="#1E4422" transform="rotate(-22,1250,115)"/>
-      <g transform="translate(1300,95)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1350" cy="77" rx="12" ry="5" fill="#1E4422" transform="rotate(-18,1350,77)"/>
-      <g transform="translate(1400,60)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1450" cy="49" rx="12" ry="5" fill="#1E4422" transform="rotate(-12,1450,49)"/>
-      <g transform="translate(1500,38)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="1550" cy="31" rx="12" ry="5" fill="#1E4422" transform="rotate(-5,1550,31)"/>
-      <g transform="translate(1600,30)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-7" r="10" fill="#F8F4E8"/><circle cx="11" cy="-7" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-7" r="2.2" fill="#D8B030"/><circle cx="11" cy="-7" r="2.2" fill="#E8C040"/></g>
-    </svg>
+      <!-- Corner ornaments — top-left -->
+      <path d="M1,60 L1,1 L60,1" stroke="#C5973A" stroke-width="2.2" opacity="0.7" stroke-linecap="square"/>
+      <path d="M14,48 L14,14 L48,14" stroke="#C5973A" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="1" cy="1" r="3.5" fill="#C5973A" opacity="0.5"/>
+      <circle cx="14" cy="14" r="1.8" fill="#C5973A" opacity="0.35"/>
+      <!-- corner diamond tl -->
+      <path d="M30,1 L36,-6 L42,1 L36,8 Z" fill="#C5973A" opacity="0.45" transform="translate(0,0)"/>
 
-    <!-- Garland 2: medium droop, 9 clusters, shorter arc (viewBox 1600×195) -->
-    <svg class="g2" viewBox="0 0 1600 195" preserveAspectRatio="none" fill="none">
-      <path d="M0,10 C400,150 800,188 800,188 C800,188 1200,150 1600,10" stroke="#162E1A" stroke-width="13" stroke-linecap="round"/>
-      <path d="M0,16 C400,154 800,192 800,192 C800,192 1200,154 1600,16" stroke="#1E4422" stroke-width="8" stroke-linecap="round" opacity="0.55"/>
-      <g transform="translate(0,10)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="100" cy="25" rx="11" ry="5" fill="#1E4422" transform="rotate(14,100,25)"/>
-      <g transform="translate(200,36)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="300" cy="72" rx="11" ry="5" fill="#1E4422" transform="rotate(22,300,72)"/>
-      <g transform="translate(400,100)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="500" cy="145" rx="11" ry="5" fill="#1E4422" transform="rotate(18,500,145)"/>
-      <g transform="translate(600,162)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="700" cy="178" rx="11" ry="5" fill="#1E4422" transform="rotate(8,700,178)"/>
-      <g transform="translate(800,188)"><circle r="13" fill="#FFFDF4"/><circle cx="-11" cy="-8" r="10" fill="#F8F4E8"/><circle cx="11" cy="-8" r="10" fill="#FFFDF4"/><circle r="3" fill="#E8C040"/><circle cx="-11" cy="-8" r="2.2" fill="#D8B030"/><circle cx="11" cy="-8" r="2.2" fill="#E8C040"/></g>
-      <ellipse cx="900" cy="178" rx="11" ry="5" fill="#1E4422" transform="rotate(-8,900,178)"/>
-      <g transform="translate(1000,162)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="1100" cy="145" rx="11" ry="5" fill="#1E4422" transform="rotate(-18,1100,145)"/>
-      <g transform="translate(1200,100)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="1300" cy="72" rx="11" ry="5" fill="#1E4422" transform="rotate(-22,1300,72)"/>
-      <g transform="translate(1400,36)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-      <ellipse cx="1500" cy="25" rx="11" ry="5" fill="#1E4422" transform="rotate(-14,1500,25)"/>
-      <g transform="translate(1600,10)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/><circle cx="-10" cy="-7" r="2" fill="#D8B030"/><circle cx="10" cy="-7" r="2" fill="#E8C040"/></g>
-    </svg>
+      <!-- Corner — top-right -->
+      <path d="M940,1 L999,1 L999,60" stroke="#C5973A" stroke-width="2.2" opacity="0.7" stroke-linecap="square"/>
+      <path d="M952,14 L986,14 L986,48" stroke="#C5973A" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="999" cy="1" r="3.5" fill="#C5973A" opacity="0.5"/>
+      <circle cx="986" cy="14" r="1.8" fill="#C5973A" opacity="0.35"/>
+      <path d="M964,1 L970,8 L976,1 L970,-6 Z" fill="#C5973A" opacity="0.45"/>
 
-    <!-- Garland 3: innermost, short arc, x=250–1350 (viewBox 1600×140) -->
-    <svg class="g3" viewBox="0 0 1600 140" preserveAspectRatio="none" fill="none">
-      <path d="M250,2 C500,100 800,132 800,132 C800,132 1100,100 1350,2" stroke="#162E1A" stroke-width="11" stroke-linecap="round"/>
-      <path d="M250,8 C500,104 800,136 800,136 C800,136 1100,104 1350,8" stroke="#1E4422" stroke-width="7" stroke-linecap="round" opacity="0.5"/>
-      <g transform="translate(250,2)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
-      <ellipse cx="370" cy="32" rx="10" ry="4.5" fill="#1E4422" transform="rotate(20,370,32)"/>
-      <g transform="translate(475,65)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
-      <ellipse cx="575" cy="100" rx="10" ry="4.5" fill="#1E4422" transform="rotate(14,575,100)"/>
-      <g transform="translate(660,118)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
-      <ellipse cx="730" cy="128" rx="10" ry="4.5" fill="#1E4422" transform="rotate(5,730,128)"/>
-      <g transform="translate(800,132)"><circle r="12" fill="#FFFDF4"/><circle cx="-10" cy="-7" r="9" fill="#F8F4E8"/><circle cx="10" cy="-7" r="9" fill="#FFFDF4"/><circle r="2.8" fill="#E8C040"/></g>
-      <ellipse cx="870" cy="128" rx="10" ry="4.5" fill="#1E4422" transform="rotate(-5,870,128)"/>
-      <g transform="translate(940,118)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
-      <ellipse cx="1025" cy="100" rx="10" ry="4.5" fill="#1E4422" transform="rotate(-14,1025,100)"/>
-      <g transform="translate(1125,65)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
-      <ellipse cx="1230" cy="32" rx="10" ry="4.5" fill="#1E4422" transform="rotate(-20,1230,32)"/>
-      <g transform="translate(1350,2)"><circle r="11" fill="#FFFDF4"/><circle cx="-9" cy="-6" r="8" fill="#F8F4E8"/><circle cx="9" cy="-6" r="8" fill="#FFFDF4"/><circle r="2.5" fill="#E8C040"/></g>
+      <!-- Corner — bottom-left -->
+      <path d="M1,640 L1,699 L60,699" stroke="#C5973A" stroke-width="2.2" opacity="0.7" stroke-linecap="square"/>
+      <path d="M14,652 L14,686 L48,686" stroke="#C5973A" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="1" cy="699" r="3.5" fill="#C5973A" opacity="0.5"/>
+      <circle cx="14" cy="686" r="1.8" fill="#C5973A" opacity="0.35"/>
+
+      <!-- Corner — bottom-right -->
+      <path d="M940,699 L999,699 L999,640" stroke="#C5973A" stroke-width="2.2" opacity="0.7" stroke-linecap="square"/>
+      <path d="M952,686 L986,686 L986,652" stroke="#C5973A" stroke-width="0.8" opacity="0.4"/>
+      <circle cx="999" cy="699" r="3.5" fill="#C5973A" opacity="0.5"/>
+      <circle cx="986" cy="686" r="1.8" fill="#C5973A" opacity="0.35"/>
+
+      <!-- Top-center ornament (above the names) -->
+      <line x1="400" y1="1" x2="460" y2="1" stroke="#C5973A" stroke-width="0.8" opacity="0.5"/>
+      <line x1="540" y1="1" x2="600" y2="1" stroke="#C5973A" stroke-width="0.8" opacity="0.5"/>
+      <path d="M460,1 L500,18 L540,1" stroke="#C5973A" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <circle cx="500" cy="1" r="2.5" fill="#C5973A" opacity="0.55"/>
+
+      <!-- Horizontal rule across the middle (flanking the eyebrow area, y≈190) -->
+      <line x1="60" y1="192" x2="420" y2="192" stroke="#C5973A" stroke-width="0.5" opacity="0.28"/>
+      <line x1="580" y1="192" x2="940" y2="192" stroke="#C5973A" stroke-width="0.5" opacity="0.28"/>
+      <!-- small diamond at center of rule -->
+      <path d="M500,185 L508,192 L500,199 L492,192 Z" fill="none" stroke="#C5973A" stroke-width="0.7" opacity="0.4"/>
+
+      <!-- Side mid ornaments -->
+      <line x1="1" y1="320" x2="1" y2="380" stroke="#C5973A" stroke-width="1.5" opacity="0.35"/>
+      <line x1="999" y1="320" x2="999" y2="380" stroke="#C5973A" stroke-width="1.5" opacity="0.35"/>
+      <circle cx="1" cy="350" r="3" fill="#C5973A" opacity="0.35"/>
+      <circle cx="999" cy="350" r="3" fill="#C5973A" opacity="0.35"/>
     </svg>
   </div>
 
   <!-- ═══ CENTER CONTENT ═══ -->
   <div class="hero-inner">
     <p class="hero-eyebrow">28 – 30 August 2026</p>
-    <svg class="hero-flourish" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M30 4 C34 16 44 26 56 30 C44 34 34 44 30 56 C26 44 16 34 4 30 C16 26 26 16 30 4 Z" stroke="currentColor" stroke-width="1.3"/>
-      <circle cx="30" cy="30" r="3.4" fill="currentColor"/>
+
+    <!-- Monogram medallion -->
+    <svg class="hero-monogram" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="36" cy="36" r="28" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
+      <circle cx="36" cy="36" r="22" stroke="currentColor" stroke-width="0.4" opacity="0.35"/>
+      <path d="M36,10 L38.8,27.6 L36,34 L33.2,27.6 Z" fill="currentColor" opacity="0.45"/>
+      <path d="M36,62 L38.8,44.4 L36,38 L33.2,44.4 Z" fill="currentColor" opacity="0.45"/>
+      <path d="M10,36 L27.6,33.2 L34,36 L27.6,38.8 Z" fill="currentColor" opacity="0.45"/>
+      <path d="M62,36 L44.4,33.2 L38,36 L44.4,38.8 Z" fill="currentColor" opacity="0.45"/>
+      <circle cx="36" cy="36" r="3.5" fill="currentColor" opacity="0.6"/>
+      <circle cx="36" cy="36" r="1.4" fill="white" opacity="0.9"/>
     </svg>
+
     <h1 class="hero-names">Azhar<span class="amp">&amp;</span>Zeenath</h1>
+
     <div class="hero-rule">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.1">
+        <path d="M12 2 L14.2 9.8 L22 12 L14.2 14.2 L12 22 L9.8 14.2 L2 12 L9.8 9.8 Z"/>
+      </svg>
     </div>
+
     <div class="place">Heritage Palace, Attapur, Hyderabad</div>
     <div class="guide-line">Your guide today is Hud-hud — perched in his orange tree, ready to quip about whichever day you tap.</div>
   </div>
 
-  <!-- ═══ DIYA LAMPS ROW ═══ -->
-  <div class="lamps-row" aria-hidden="true">
-    <svg viewBox="0 0 1600 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <radialGradient id="glow1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFD050" stop-opacity="0.6"/><stop offset="100%" stop-color="#FFD050" stop-opacity="0"/></radialGradient>
-      </defs>
-      <!-- Diya A (leftmost) -->
-      <g transform="translate(80,88)">
-        <circle class="diya-glow" r="30" fill="url(#glow1)" style="animation-delay:0s"/>
-        <line x1="0" y1="-8" x2="0" y2="-20" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-20 C-7,-25 -6,-35 0,-42 C6,-35 7,-25 0,-20" fill="#FF8820" style="animation-delay:0s"/>
-        <path class="diya-flame-i" d="M0,-22 C-4,-27 -3,-34 0,-40 C3,-34 4,-27 0,-22" fill="#FFE060" style="animation-delay:0.1s"/>
-        <ellipse rx="22" ry="8" fill="#C87030"/>
-        <path d="M-22,0 C-22,11 -13,20 0,22 C13,20 22,11 22,0" fill="#A85C20"/>
-        <ellipse rx="16" ry="5" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="7" cy="-2" rx="5" ry="2" fill="rgba(255,255,255,0.2)" transform="rotate(-20,7,-2)"/>
-      </g>
-      <!-- Diya B -->
-      <g transform="translate(230,86)">
-        <circle class="diya-glow" r="28" fill="url(#glow1)" style="animation-delay:0.3s"/>
-        <line x1="0" y1="-8" x2="0" y2="-19" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-19 C-6,-24 -5,-33 0,-40 C5,-33 6,-24 0,-19" fill="#FF8820" style="animation-delay:0.3s"/>
-        <path class="diya-flame-i" d="M0,-21 C-3,-26 -3,-32 0,-38 C3,-32 3,-26 0,-21" fill="#FFE060" style="animation-delay:0.42s"/>
-        <ellipse rx="20" ry="7" fill="#C87030"/>
-        <path d="M-20,0 C-20,10 -12,18 0,20 C12,18 20,10 20,0" fill="#A85C20"/>
-        <ellipse rx="14" ry="4.5" fill="#C09040" opacity="0.85"/>
-      </g>
-      <!-- Diya C (taller) -->
-      <g transform="translate(400,82)">
-        <circle class="diya-glow" r="34" fill="url(#glow1)" style="animation-delay:0.6s"/>
-        <line x1="0" y1="-9" x2="0" y2="-23" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-23 C-8,-28 -7,-40 0,-48 C7,-40 8,-28 0,-23" fill="#FF8820" style="animation-delay:0.6s"/>
-        <path class="diya-flame-i" d="M0,-25 C-4,-30 -4,-39 0,-46 C4,-39 4,-30 0,-25" fill="#FFE060" style="animation-delay:0.72s"/>
-        <ellipse rx="24" ry="9" fill="#C87030"/>
-        <path d="M-24,0 C-24,13 -14,22 0,25 C14,22 24,13 24,0" fill="#A85C20"/>
-        <ellipse rx="18" ry="5.5" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="8" cy="-3" rx="6" ry="2.5" fill="rgba(255,255,255,0.2)" transform="rotate(-20,8,-3)"/>
-      </g>
-      <!-- Diya D -->
-      <g transform="translate(560,88)">
-        <circle class="diya-glow" r="26" fill="url(#glow1)" style="animation-delay:0.9s"/>
-        <line x1="0" y1="-7" x2="0" y2="-18" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-18 C-6,-23 -5,-31 0,-38 C5,-31 6,-23 0,-18" fill="#FF8820" style="animation-delay:0.9s"/>
-        <path class="diya-flame-i" d="M0,-20 C-3,-25 -3,-30 0,-36 C3,-30 3,-25 0,-20" fill="#FFE060" style="animation-delay:1.02s"/>
-        <ellipse rx="19" ry="7" fill="#C87030"/>
-        <path d="M-19,0 C-19,10 -11,18 0,20 C11,18 19,10 19,0" fill="#A85C20"/>
-        <ellipse rx="13" ry="4" fill="#C09040" opacity="0.85"/>
-      </g>
-      <!-- Diya E (large, centre-left) -->
-      <g transform="translate(720,78)">
-        <circle class="diya-glow" r="38" fill="url(#glow1)" style="animation-delay:1.2s"/>
-        <line x1="0" y1="-10" x2="0" y2="-26" stroke="#3A2008" stroke-width="1.8"/>
-        <path class="diya-flame" d="M0,-26 C-9,-32 -8,-45 0,-54 C8,-45 9,-32 0,-26" fill="#FF8820" style="animation-delay:1.2s"/>
-        <path class="diya-flame-i" d="M0,-28 C-5,-34 -5,-44 0,-52 C5,-44 5,-34 0,-28" fill="#FFE060" style="animation-delay:1.32s"/>
-        <ellipse rx="26" ry="10" fill="#C87030"/>
-        <path d="M-26,0 C-26,14 -15,25 0,27 C15,25 26,14 26,0" fill="#A85C20"/>
-        <ellipse rx="20" ry="6" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="9" cy="-3" rx="7" ry="3" fill="rgba(255,255,255,0.22)" transform="rotate(-20,9,-3)"/>
-      </g>
-      <!-- Diya F (large, centre-right) — mirror of E -->
-      <g transform="translate(880,78)">
-        <circle class="diya-glow" r="38" fill="url(#glow1)" style="animation-delay:0.5s"/>
-        <line x1="0" y1="-10" x2="0" y2="-26" stroke="#3A2008" stroke-width="1.8"/>
-        <path class="diya-flame" d="M0,-26 C-9,-32 -8,-45 0,-54 C8,-45 9,-32 0,-26" fill="#FF8820" style="animation-delay:0.5s"/>
-        <path class="diya-flame-i" d="M0,-28 C-5,-34 -5,-44 0,-52 C5,-44 5,-34 0,-28" fill="#FFE060" style="animation-delay:0.62s"/>
-        <ellipse rx="26" ry="10" fill="#C87030"/>
-        <path d="M-26,0 C-26,14 -15,25 0,27 C15,25 26,14 26,0" fill="#A85C20"/>
-        <ellipse rx="20" ry="6" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="9" cy="-3" rx="7" ry="3" fill="rgba(255,255,255,0.22)" transform="rotate(-20,9,-3)"/>
-      </g>
-      <!-- Diya G -->
-      <g transform="translate(1040,88)">
-        <circle class="diya-glow" r="26" fill="url(#glow1)" style="animation-delay:0.2s"/>
-        <line x1="0" y1="-7" x2="0" y2="-18" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-18 C-6,-23 -5,-31 0,-38 C5,-31 6,-23 0,-18" fill="#FF8820" style="animation-delay:0.2s"/>
-        <path class="diya-flame-i" d="M0,-20 C-3,-25 -3,-30 0,-36 C3,-30 3,-25 0,-20" fill="#FFE060" style="animation-delay:0.32s"/>
-        <ellipse rx="19" ry="7" fill="#C87030"/>
-        <path d="M-19,0 C-19,10 -11,18 0,20 C11,18 19,10 19,0" fill="#A85C20"/>
-        <ellipse rx="13" ry="4" fill="#C09040" opacity="0.85"/>
-      </g>
-      <!-- Diya H (taller) -->
-      <g transform="translate(1200,82)">
-        <circle class="diya-glow" r="34" fill="url(#glow1)" style="animation-delay:0.75s"/>
-        <line x1="0" y1="-9" x2="0" y2="-23" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-23 C-8,-28 -7,-40 0,-48 C7,-40 8,-28 0,-23" fill="#FF8820" style="animation-delay:0.75s"/>
-        <path class="diya-flame-i" d="M0,-25 C-4,-30 -4,-39 0,-46 C4,-39 4,-30 0,-25" fill="#FFE060" style="animation-delay:0.87s"/>
-        <ellipse rx="24" ry="9" fill="#C87030"/>
-        <path d="M-24,0 C-24,13 -14,22 0,25 C14,22 24,13 24,0" fill="#A85C20"/>
-        <ellipse rx="18" ry="5.5" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="8" cy="-3" rx="6" ry="2.5" fill="rgba(255,255,255,0.2)" transform="rotate(-20,8,-3)"/>
-      </g>
-      <!-- Diya I -->
-      <g transform="translate(1370,86)">
-        <circle class="diya-glow" r="28" fill="url(#glow1)" style="animation-delay:1.05s"/>
-        <line x1="0" y1="-8" x2="0" y2="-19" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-19 C-6,-24 -5,-33 0,-40 C5,-33 6,-24 0,-19" fill="#FF8820" style="animation-delay:1.05s"/>
-        <path class="diya-flame-i" d="M0,-21 C-3,-26 -3,-32 0,-38 C3,-32 3,-26 0,-21" fill="#FFE060" style="animation-delay:1.17s"/>
-        <ellipse rx="20" ry="7" fill="#C87030"/>
-        <path d="M-20,0 C-20,10 -12,18 0,20 C12,18 20,10 20,0" fill="#A85C20"/>
-        <ellipse rx="14" ry="4.5" fill="#C09040" opacity="0.85"/>
-      </g>
-      <!-- Diya J (rightmost) -->
-      <g transform="translate(1520,88)">
-        <circle class="diya-glow" r="30" fill="url(#glow1)" style="animation-delay:0.4s"/>
-        <line x1="0" y1="-8" x2="0" y2="-20" stroke="#3A2008" stroke-width="1.5"/>
-        <path class="diya-flame" d="M0,-20 C-7,-25 -6,-35 0,-42 C6,-35 7,-25 0,-20" fill="#FF8820" style="animation-delay:0.4s"/>
-        <path class="diya-flame-i" d="M0,-22 C-4,-27 -3,-34 0,-40 C3,-34 4,-27 0,-22" fill="#FFE060" style="animation-delay:0.52s"/>
-        <ellipse rx="22" ry="8" fill="#C87030"/>
-        <path d="M-22,0 C-22,11 -13,20 0,22 C13,20 22,11 22,0" fill="#A85C20"/>
-        <ellipse rx="16" ry="5" fill="#C09040" opacity="0.85"/>
-        <ellipse cx="7" cy="-2" rx="5" ry="2" fill="rgba(255,255,255,0.2)" transform="rotate(-20,7,-2)"/>
-      </g>
-    </svg>
-  </div>
-
-  <!-- ═══ WAVE AT FOOT ═══ -->
+  <!-- ═══ WAVE TRANSITION TO CREAM ═══ -->
   <svg class="wave-divider" viewBox="0 0 1600 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
     <path class="w2" d="M0,40 C240,90 420,0 700,45 C980,90 1180,10 1600,50 L1600,90 L0,90 Z"/>
     <path class="w1" d="M0,55 C260,10 460,95 760,50 C1040,8 1240,80 1600,35 L1600,90 L0,90 Z"/>
@@ -1620,238 +1436,6 @@
     <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
   </svg>
 </button>
-
-<!-- BOUGAINVILLEA VINES — both sides, cascading from top like a burgeoning wall -->
-<div id="boug-vine" aria-hidden="true">
-  <svg viewBox="0 0 260 880" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- STEMS — cascade from top downward -->
-    <path class="vs d1" d="M195,0 C188,82 208,168 194,262 C180,356 158,430 166,525 C174,620 192,692 180,785 C168,878 154,900 158,920" stroke-width="2.8"/>
-    <path class="vs d2" d="M155,0 C162,70 148,148 158,228 C168,308 190,380 178,462 C166,544 142,612 150,698 C158,784 168,848 162,880" stroke-width="2.2"/>
-    <path class="vs d3" d="M220,0 C215,65 235,140 222,218 C209,296 185,362 194,448 C203,534 218,605 210,692" stroke-width="1.8"/>
-    <!-- Lateral branches going left -->
-    <path class="vs d2" d="M188,82 C158,68 122,72 88,90 C64,102 50,118 54,132"/>
-    <path class="vs d3" d="M208,168 C178,153 144,158 114,178 C88,193 74,212 78,226"/>
-    <path class="vs d4" d="M194,262 C164,247 130,252 100,272 C74,288 60,308 64,322"/>
-    <path class="vs d2" d="M166,430 C136,416 102,420 74,440 C50,454 38,474 42,488"/>
-    <path class="vs d3" d="M174,525 C144,510 110,515 82,535 C56,550 44,570 48,584"/>
-    <path class="vs d4" d="M180,692 C150,678 114,682 88,702 C62,718 50,738 54,752"/>
-    <!-- Secondary laterals -->
-    <path class="vs d3" d="M148,128 C118,115 85,120 58,140 C38,154 28,172 32,186"/>
-    <path class="vs d4" d="M186,332 C156,318 122,322 96,342"/>
-    <path class="vs d2" d="M162,612 C132,598 98,602 72,622"/>
-    <!-- LEAVES — scattered along stems and laterals -->
-    <!-- Top cluster -->
-    <ellipse class="vl l1" cx="188" cy="32" rx="16" ry="9" fill="#3A6030" transform="rotate(-18 188 32)"/>
-    <ellipse class="vl l1" cx="208" cy="18" rx="14" ry="8" fill="#2C5226" transform="rotate(25 208 18)"/>
-    <ellipse class="vl l1" cx="160" cy="22" rx="18" ry="10" fill="#3A6030" transform="rotate(-30 160 22)"/>
-    <ellipse class="vl l1" cx="225" cy="35" rx="12" ry="7" fill="#2C5226" transform="rotate(12 225 35)"/>
-    <ellipse class="vl l2" cx="172" cy="55" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 172 55)"/>
-    <ellipse class="vl l2" cx="200" cy="48" rx="14" ry="8" fill="#2C5226" transform="rotate(18 200 48)"/>
-    <!-- Lateral 1 leaves (around y=82-132) -->
-    <ellipse class="vl l2" cx="96" cy="88" rx="14" ry="8" fill="#3A6030" transform="rotate(-12 96 88)"/>
-    <ellipse class="vl l2" cx="68" cy="100" rx="12" ry="7" fill="#2C5226" transform="rotate(22 68 100)"/>
-    <ellipse class="vl l2" cx="118" cy="75" rx="16" ry="9" fill="#3A6030" transform="rotate(-28 118 75)"/>
-    <ellipse class="vl l2" cx="50" cy="118" rx="14" ry="8" fill="#2C5226" transform="rotate(8 50 118)"/>
-    <!-- Along main stem 100-200 -->
-    <ellipse class="vl l3" cx="192" cy="125" rx="16" ry="9" fill="#3A6030" transform="rotate(-20 192 125)"/>
-    <ellipse class="vl l3" cx="172" cy="148" rx="14" ry="8" fill="#2C5226" transform="rotate(15 172 148)"/>
-    <ellipse class="vl l3" cx="210" cy="142" rx="12" ry="7" fill="#3A6030" transform="rotate(-10 210 142)"/>
-    <!-- Lateral 2 leaves (around y=168-226) -->
-    <ellipse class="vl l3" cx="122" cy="175" rx="14" ry="8" fill="#2C5226" transform="rotate(-18 122 175)"/>
-    <ellipse class="vl l3" cx="94" cy="192" rx="16" ry="9" fill="#3A6030" transform="rotate(22 94 192)"/>
-    <ellipse class="vl l3" cx="68" cy="210" rx="12" ry="7" fill="#2C5226" transform="rotate(-8 68 210)"/>
-    <ellipse class="vl l4" cx="52" cy="228" rx="14" ry="8" fill="#3A6030" transform="rotate(15 52 228)"/>
-    <!-- Along main stem 200-300 -->
-    <ellipse class="vl l4" cx="190" cy="220" rx="16" ry="9" fill="#2C5226" transform="rotate(-25 190 220)"/>
-    <ellipse class="vl l4" cx="175" cy="245" rx="14" ry="8" fill="#3A6030" transform="rotate(18 175 245)"/>
-    <ellipse class="vl l4" cx="200" cy="265" rx="12" ry="7" fill="#2C5226" transform="rotate(-12 200 265)"/>
-    <!-- Secondary lateral at 148,128 -->
-    <ellipse class="vl l4" cx="95" cy="128" rx="14" ry="8" fill="#3A6030" transform="rotate(8 95 128)"/>
-    <ellipse class="vl l4" cx="68" cy="145" rx="12" ry="7" fill="#2C5226" transform="rotate(-20 68 145)"/>
-    <ellipse class="vl l4" cx="42" cy="165" rx="14" ry="8" fill="#3A6030" transform="rotate(14 42 165)"/>
-    <!-- Lateral 3 leaves (around y=262-322) -->
-    <ellipse class="vl l5" cx="108" cy="268" rx="14" ry="8" fill="#2C5226" transform="rotate(-15 108 268)"/>
-    <ellipse class="vl l5" cx="82" cy="285" rx="16" ry="9" fill="#3A6030" transform="rotate(20 82 285)"/>
-    <ellipse class="vl l5" cx="58" cy="305" rx="12" ry="7" fill="#2C5226" transform="rotate(-8 58 305)"/>
-    <!-- Around 300-430 -->
-    <ellipse class="vl l5" cx="185" cy="318" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 185 318)"/>
-    <ellipse class="vl l5" cx="168" cy="342" rx="14" ry="8" fill="#2C5226" transform="rotate(16 168 342)"/>
-    <ellipse class="vl l5" cx="195" cy="362" rx="12" ry="7" fill="#3A6030" transform="rotate(-10 195 362)"/>
-    <ellipse class="vl l5" cx="178" cy="390" rx="16" ry="9" fill="#2C5226" transform="rotate(24 178 390)"/>
-    <ellipse class="vl l6" cx="192" cy="412" rx="14" ry="8" fill="#3A6030" transform="rotate(-18 192 412)"/>
-    <!-- Lateral 4 leaves (around y=430-488) -->
-    <ellipse class="vl l6" cx="112" cy="438" rx="14" ry="8" fill="#2C5226" transform="rotate(-12 112 438)"/>
-    <ellipse class="vl l6" cx="86" cy="455" rx="16" ry="9" fill="#3A6030" transform="rotate(18 86 455)"/>
-    <ellipse class="vl l6" cx="58" cy="472" rx="12" ry="7" fill="#2C5226" transform="rotate(-6 58 472)"/>
-    <!-- 450-570 -->
-    <ellipse class="vl l6" cx="182" cy="478" rx="16" ry="9" fill="#3A6030" transform="rotate(-20 182 478)"/>
-    <ellipse class="vl l6" cx="165" cy="502" rx="14" ry="8" fill="#2C5226" transform="rotate(14 165 502)"/>
-    <ellipse class="vl l6" cx="190" cy="522" rx="12" ry="7" fill="#3A6030" transform="rotate(-8 190 522)"/>
-    <!-- Lateral 5 leaves -->
-    <ellipse class="vl l6" cx="105" cy="532" rx="14" ry="8" fill="#2C5226" transform="rotate(-15 105 532)"/>
-    <ellipse class="vl l6" cx="80" cy="548" rx="16" ry="9" fill="#3A6030" transform="rotate(20 80 548)"/>
-    <ellipse class="vl l6" cx="55" cy="568" rx="12" ry="7" fill="#2C5226" transform="rotate(-10 55 568)"/>
-    <!-- 580-710 -->
-    <ellipse class="vl l6" cx="185" cy="590" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 185 590)"/>
-    <ellipse class="vl l6" cx="168" cy="615" rx="14" ry="8" fill="#2C5226" transform="rotate(16 168 615)"/>
-    <ellipse class="vl l6" cx="182" cy="645" rx="12" ry="7" fill="#3A6030" transform="rotate(-12 182 645)"/>
-    <!-- Lateral 6 leaves (around y=692-752) -->
-    <ellipse class="vl l6" cx="115" cy="700" rx="14" ry="8" fill="#2C5226" transform="rotate(-8 115 700)"/>
-    <ellipse class="vl l6" cx="88" cy="718" rx="16" ry="9" fill="#3A6030" transform="rotate(18 88 718)"/>
-    <ellipse class="vl l6" cx="62" cy="738" rx="12" ry="7" fill="#2C5226" transform="rotate(-14 62 738)"/>
-    <!-- BRACT CLUSTERS — burst at each lateral tip -->
-    <!-- Cluster 1 — lateral 1 tip (around 54,132) -->
-    <ellipse class="vb b1" cx="48" cy="126" rx="14" ry="8" fill="#C4186A" transform="rotate(-20 48 126)"/>
-    <ellipse class="vb b1" cx="36" cy="136" rx="16" ry="9" fill="#D42272" transform="rotate(15 36 136)"/>
-    <ellipse class="vb b2" cx="56" cy="140" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-30 56 140)"/>
-    <ellipse class="vb b2" cx="42" cy="150" rx="15" ry="8" fill="#E03080" transform="rotate(10 42 150)"/>
-    <ellipse class="vb b3" cx="28" cy="148" rx="14" ry="8" fill="#C4186A" transform="rotate(-15 28 148)"/>
-    <!-- Cluster 2 — lateral 2 tip (around 78,226) -->
-    <ellipse class="vb b4" cx="72" cy="220" rx="14" ry="8" fill="#D42272" transform="rotate(-25 72 220)"/>
-    <ellipse class="vb b4" cx="58" cy="230" rx="16" ry="9" fill="#C4186A" transform="rotate(18 58 230)"/>
-    <ellipse class="vb b5" cx="78" cy="238" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-12 78 238)"/>
-    <ellipse class="vb b5" cx="62" cy="244" rx="15" ry="8" fill="#E03080" transform="rotate(22 62 244)"/>
-    <ellipse class="vb b6" cx="46" cy="240" rx="14" ry="8" fill="#D42272" transform="rotate(-8 46 240)"/>
-    <!-- Cluster 3 — lateral 3 tip (around 64,322) -->
-    <ellipse class="vb b7" cx="58" cy="316" rx="14" ry="8" fill="#C4186A" transform="rotate(-18 58 316)"/>
-    <ellipse class="vb b7" cx="44" cy="326" rx="16" ry="9" fill="#D42272" transform="rotate(12 44 326)"/>
-    <ellipse class="vb b8" cx="62" cy="334" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-28 62 334)"/>
-    <ellipse class="vb b8" cx="48" cy="342" rx="15" ry="8" fill="#E03080" transform="rotate(16 48 342)"/>
-    <ellipse class="vb b9" cx="32" cy="336" rx="14" ry="8" fill="#C4186A" transform="rotate(-10 32 336)"/>
-    <!-- Cluster 4 — secondary lateral tip (around 32,186) -->
-    <ellipse class="vb b4" cx="26" cy="180" rx="13" ry="7" fill="#E03080" transform="rotate(-22 26 180)"/>
-    <ellipse class="vb b5" cx="18" cy="192" rx="15" ry="8" fill="#D42272" transform="rotate(14 18 192)"/>
-    <ellipse class="vb b6" cx="32" cy="198" rx="12" ry="7" fill="#C4186A" transform="rotate(-8 32 198)"/>
-    <!-- Cluster 5 — lateral 4 tip (around 42,488) -->
-    <ellipse class="vb b10" cx="36" cy="482" rx="14" ry="8" fill="#C4186A" transform="rotate(-20 36 482)"/>
-    <ellipse class="vb b10" cx="24" cy="492" rx="16" ry="9" fill="#D42272" transform="rotate(15 24 492)"/>
-    <ellipse class="vb b11" cx="42" cy="500" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-30 42 500)"/>
-    <ellipse class="vb b11" cx="28" cy="508" rx="15" ry="8" fill="#E03080" transform="rotate(10 28 508)"/>
-    <ellipse class="vb b12" cx="14" cy="502" rx="14" ry="8" fill="#D42272" transform="rotate(-15 14 502)"/>
-    <!-- Cluster 6 — lateral 5 tip (around 48,584) -->
-    <ellipse class="vb b7" cx="42" cy="578" rx="14" ry="8" fill="#C4186A" transform="rotate(-18 42 578)"/>
-    <ellipse class="vb b8" cx="30" cy="588" rx="16" ry="9" fill="#E03080" transform="rotate(12 30 588)"/>
-    <ellipse class="vb b9" cx="46" cy="596" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-25 46 596)"/>
-    <ellipse class="vb b9" cx="32" cy="604" rx="15" ry="8" fill="#D42272" transform="rotate(18 32 604)"/>
-    <!-- Cluster 7 — lateral 6 tip (around 54,752) -->
-    <ellipse class="vb b10" cx="48" cy="746" rx="14" ry="8" fill="#C4186A" transform="rotate(-22 48 746)"/>
-    <ellipse class="vb b11" cx="36" cy="756" rx="16" ry="9" fill="#D42272" transform="rotate(15 36 756)"/>
-    <ellipse class="vb b12" cx="52" cy="764" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-12 52 764)"/>
-    <ellipse class="vb b12" cx="38" cy="772" rx="15" ry="8" fill="#E03080" transform="rotate(20 38 772)"/>
-    <!-- Extra scattered bracts along main stem for density -->
-    <ellipse class="vb b3" cx="172" cy="60" rx="12" ry="7" fill="#C4186A" transform="rotate(-15 172 60)"/>
-    <ellipse class="vb b4" cx="185" cy="72" rx="14" ry="8" fill="#D42272" transform="rotate(20 185 72)"/>
-    <ellipse class="vb b6" cx="178" cy="198" rx="13" ry="7" fill="#E03080" transform="rotate(-18 178 198)"/>
-    <ellipse class="vb b7" cx="192" cy="208" rx="12" ry="7" fill="#C4186A" transform="rotate(12 192 208)"/>
-    <ellipse class="vb b9" cx="180" cy="445" rx="13" ry="7" fill="#D42272" transform="rotate(-20 180 445)"/>
-    <ellipse class="vb b10" cx="195" cy="455" rx="12" ry="7" fill="#AA0E5C" transform="rotate(14 195 455)"/>
-    <ellipse class="vb b12" cx="178" cy="658" rx="13" ry="7" fill="#C4186A" transform="rotate(-16 178 658)"/>
-    <ellipse class="vb b12" cx="192" cy="668" rx="12" ry="7" fill="#D42272" transform="rotate(10 192 668)"/>
-  </svg>
-</div>
-
-<div id="boug-vine-l" aria-hidden="true">
-  <svg viewBox="0 0 260 880" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Same SVG as right vine — CSS mirrors it via scaleX(-1) -->
-    <path class="vs d1" d="M195,0 C188,82 208,168 194,262 C180,356 158,430 166,525 C174,620 192,692 180,785 C168,878 154,900 158,920" stroke-width="2.8"/>
-    <path class="vs d2" d="M155,0 C162,70 148,148 158,228 C168,308 190,380 178,462 C166,544 142,612 150,698 C158,784 168,848 162,880" stroke-width="2.2"/>
-    <path class="vs d3" d="M220,0 C215,65 235,140 222,218 C209,296 185,362 194,448 C203,534 218,605 210,692" stroke-width="1.8"/>
-    <path class="vs d2" d="M188,82 C158,68 122,72 88,90 C64,102 50,118 54,132"/>
-    <path class="vs d3" d="M208,168 C178,153 144,158 114,178 C88,193 74,212 78,226"/>
-    <path class="vs d4" d="M194,262 C164,247 130,252 100,272 C74,288 60,308 64,322"/>
-    <path class="vs d2" d="M166,430 C136,416 102,420 74,440 C50,454 38,474 42,488"/>
-    <path class="vs d3" d="M174,525 C144,510 110,515 82,535 C56,550 44,570 48,584"/>
-    <path class="vs d4" d="M180,692 C150,678 114,682 88,702 C62,718 50,738 54,752"/>
-    <path class="vs d3" d="M148,128 C118,115 85,120 58,140 C38,154 28,172 32,186"/>
-    <path class="vs d4" d="M186,332 C156,318 122,322 96,342"/>
-    <path class="vs d2" d="M162,612 C132,598 98,602 72,622"/>
-    <ellipse class="vl l1" cx="188" cy="32" rx="16" ry="9" fill="#3A6030" transform="rotate(-18 188 32)"/>
-    <ellipse class="vl l1" cx="208" cy="18" rx="14" ry="8" fill="#2C5226" transform="rotate(25 208 18)"/>
-    <ellipse class="vl l1" cx="160" cy="22" rx="18" ry="10" fill="#3A6030" transform="rotate(-30 160 22)"/>
-    <ellipse class="vl l1" cx="225" cy="35" rx="12" ry="7" fill="#2C5226" transform="rotate(12 225 35)"/>
-    <ellipse class="vl l2" cx="172" cy="55" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 172 55)"/>
-    <ellipse class="vl l2" cx="200" cy="48" rx="14" ry="8" fill="#2C5226" transform="rotate(18 200 48)"/>
-    <ellipse class="vl l2" cx="96" cy="88" rx="14" ry="8" fill="#3A6030" transform="rotate(-12 96 88)"/>
-    <ellipse class="vl l2" cx="68" cy="100" rx="12" ry="7" fill="#2C5226" transform="rotate(22 68 100)"/>
-    <ellipse class="vl l2" cx="118" cy="75" rx="16" ry="9" fill="#3A6030" transform="rotate(-28 118 75)"/>
-    <ellipse class="vl l2" cx="50" cy="118" rx="14" ry="8" fill="#2C5226" transform="rotate(8 50 118)"/>
-    <ellipse class="vl l3" cx="192" cy="125" rx="16" ry="9" fill="#3A6030" transform="rotate(-20 192 125)"/>
-    <ellipse class="vl l3" cx="172" cy="148" rx="14" ry="8" fill="#2C5226" transform="rotate(15 172 148)"/>
-    <ellipse class="vl l3" cx="210" cy="142" rx="12" ry="7" fill="#3A6030" transform="rotate(-10 210 142)"/>
-    <ellipse class="vl l3" cx="122" cy="175" rx="14" ry="8" fill="#2C5226" transform="rotate(-18 122 175)"/>
-    <ellipse class="vl l3" cx="94" cy="192" rx="16" ry="9" fill="#3A6030" transform="rotate(22 94 192)"/>
-    <ellipse class="vl l3" cx="68" cy="210" rx="12" ry="7" fill="#2C5226" transform="rotate(-8 68 210)"/>
-    <ellipse class="vl l4" cx="52" cy="228" rx="14" ry="8" fill="#3A6030" transform="rotate(15 52 228)"/>
-    <ellipse class="vl l4" cx="190" cy="220" rx="16" ry="9" fill="#2C5226" transform="rotate(-25 190 220)"/>
-    <ellipse class="vl l4" cx="175" cy="245" rx="14" ry="8" fill="#3A6030" transform="rotate(18 175 245)"/>
-    <ellipse class="vl l4" cx="200" cy="265" rx="12" ry="7" fill="#2C5226" transform="rotate(-12 200 265)"/>
-    <ellipse class="vl l4" cx="95" cy="128" rx="14" ry="8" fill="#3A6030" transform="rotate(8 95 128)"/>
-    <ellipse class="vl l4" cx="68" cy="145" rx="12" ry="7" fill="#2C5226" transform="rotate(-20 68 145)"/>
-    <ellipse class="vl l4" cx="42" cy="165" rx="14" ry="8" fill="#3A6030" transform="rotate(14 42 165)"/>
-    <ellipse class="vl l5" cx="108" cy="268" rx="14" ry="8" fill="#2C5226" transform="rotate(-15 108 268)"/>
-    <ellipse class="vl l5" cx="82" cy="285" rx="16" ry="9" fill="#3A6030" transform="rotate(20 82 285)"/>
-    <ellipse class="vl l5" cx="58" cy="305" rx="12" ry="7" fill="#2C5226" transform="rotate(-8 58 305)"/>
-    <ellipse class="vl l5" cx="185" cy="318" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 185 318)"/>
-    <ellipse class="vl l5" cx="168" cy="342" rx="14" ry="8" fill="#2C5226" transform="rotate(16 168 342)"/>
-    <ellipse class="vl l5" cx="195" cy="362" rx="12" ry="7" fill="#3A6030" transform="rotate(-10 195 362)"/>
-    <ellipse class="vl l5" cx="178" cy="390" rx="16" ry="9" fill="#2C5226" transform="rotate(24 178 390)"/>
-    <ellipse class="vl l6" cx="192" cy="412" rx="14" ry="8" fill="#3A6030" transform="rotate(-18 192 412)"/>
-    <ellipse class="vl l6" cx="112" cy="438" rx="14" ry="8" fill="#2C5226" transform="rotate(-12 112 438)"/>
-    <ellipse class="vl l6" cx="86" cy="455" rx="16" ry="9" fill="#3A6030" transform="rotate(18 86 455)"/>
-    <ellipse class="vl l6" cx="58" cy="472" rx="12" ry="7" fill="#2C5226" transform="rotate(-6 58 472)"/>
-    <ellipse class="vl l6" cx="182" cy="478" rx="16" ry="9" fill="#3A6030" transform="rotate(-20 182 478)"/>
-    <ellipse class="vl l6" cx="165" cy="502" rx="14" ry="8" fill="#2C5226" transform="rotate(14 165 502)"/>
-    <ellipse class="vl l6" cx="190" cy="522" rx="12" ry="7" fill="#3A6030" transform="rotate(-8 190 522)"/>
-    <ellipse class="vl l6" cx="105" cy="532" rx="14" ry="8" fill="#2C5226" transform="rotate(-15 105 532)"/>
-    <ellipse class="vl l6" cx="80" cy="548" rx="16" ry="9" fill="#3A6030" transform="rotate(20 80 548)"/>
-    <ellipse class="vl l6" cx="55" cy="568" rx="12" ry="7" fill="#2C5226" transform="rotate(-10 55 568)"/>
-    <ellipse class="vl l6" cx="185" cy="590" rx="16" ry="9" fill="#3A6030" transform="rotate(-22 185 590)"/>
-    <ellipse class="vl l6" cx="168" cy="615" rx="14" ry="8" fill="#2C5226" transform="rotate(16 168 615)"/>
-    <ellipse class="vl l6" cx="182" cy="645" rx="12" ry="7" fill="#3A6030" transform="rotate(-12 182 645)"/>
-    <ellipse class="vl l6" cx="115" cy="700" rx="14" ry="8" fill="#2C5226" transform="rotate(-8 115 700)"/>
-    <ellipse class="vl l6" cx="88" cy="718" rx="16" ry="9" fill="#3A6030" transform="rotate(18 88 718)"/>
-    <ellipse class="vl l6" cx="62" cy="738" rx="12" ry="7" fill="#2C5226" transform="rotate(-14 62 738)"/>
-    <ellipse class="vb b1" cx="48" cy="126" rx="14" ry="8" fill="#C4186A" transform="rotate(-20 48 126)"/>
-    <ellipse class="vb b1" cx="36" cy="136" rx="16" ry="9" fill="#D42272" transform="rotate(15 36 136)"/>
-    <ellipse class="vb b2" cx="56" cy="140" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-30 56 140)"/>
-    <ellipse class="vb b2" cx="42" cy="150" rx="15" ry="8" fill="#E03080" transform="rotate(10 42 150)"/>
-    <ellipse class="vb b3" cx="28" cy="148" rx="14" ry="8" fill="#C4186A" transform="rotate(-15 28 148)"/>
-    <ellipse class="vb b4" cx="72" cy="220" rx="14" ry="8" fill="#D42272" transform="rotate(-25 72 220)"/>
-    <ellipse class="vb b4" cx="58" cy="230" rx="16" ry="9" fill="#C4186A" transform="rotate(18 58 230)"/>
-    <ellipse class="vb b5" cx="78" cy="238" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-12 78 238)"/>
-    <ellipse class="vb b5" cx="62" cy="244" rx="15" ry="8" fill="#E03080" transform="rotate(22 62 244)"/>
-    <ellipse class="vb b6" cx="46" cy="240" rx="14" ry="8" fill="#D42272" transform="rotate(-8 46 240)"/>
-    <ellipse class="vb b7" cx="58" cy="316" rx="14" ry="8" fill="#C4186A" transform="rotate(-18 58 316)"/>
-    <ellipse class="vb b7" cx="44" cy="326" rx="16" ry="9" fill="#D42272" transform="rotate(12 44 326)"/>
-    <ellipse class="vb b8" cx="62" cy="334" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-28 62 334)"/>
-    <ellipse class="vb b8" cx="48" cy="342" rx="15" ry="8" fill="#E03080" transform="rotate(16 48 342)"/>
-    <ellipse class="vb b9" cx="32" cy="336" rx="14" ry="8" fill="#C4186A" transform="rotate(-10 32 336)"/>
-    <ellipse class="vb b4" cx="26" cy="180" rx="13" ry="7" fill="#E03080" transform="rotate(-22 26 180)"/>
-    <ellipse class="vb b5" cx="18" cy="192" rx="15" ry="8" fill="#D42272" transform="rotate(14 18 192)"/>
-    <ellipse class="vb b6" cx="32" cy="198" rx="12" ry="7" fill="#C4186A" transform="rotate(-8 32 198)"/>
-    <ellipse class="vb b10" cx="36" cy="482" rx="14" ry="8" fill="#C4186A" transform="rotate(-20 36 482)"/>
-    <ellipse class="vb b10" cx="24" cy="492" rx="16" ry="9" fill="#D42272" transform="rotate(15 24 492)"/>
-    <ellipse class="vb b11" cx="42" cy="500" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-30 42 500)"/>
-    <ellipse class="vb b11" cx="28" cy="508" rx="15" ry="8" fill="#E03080" transform="rotate(10 28 508)"/>
-    <ellipse class="vb b12" cx="14" cy="502" rx="14" ry="8" fill="#D42272" transform="rotate(-15 14 502)"/>
-    <ellipse class="vb b7" cx="42" cy="578" rx="14" ry="8" fill="#C4186A" transform="rotate(-18 42 578)"/>
-    <ellipse class="vb b8" cx="30" cy="588" rx="16" ry="9" fill="#E03080" transform="rotate(12 30 588)"/>
-    <ellipse class="vb b9" cx="46" cy="596" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-25 46 596)"/>
-    <ellipse class="vb b9" cx="32" cy="604" rx="15" ry="8" fill="#D42272" transform="rotate(18 32 604)"/>
-    <ellipse class="vb b10" cx="48" cy="746" rx="14" ry="8" fill="#C4186A" transform="rotate(-22 48 746)"/>
-    <ellipse class="vb b11" cx="36" cy="756" rx="16" ry="9" fill="#D42272" transform="rotate(15 36 756)"/>
-    <ellipse class="vb b12" cx="52" cy="764" rx="13" ry="7" fill="#AA0E5C" transform="rotate(-12 52 764)"/>
-    <ellipse class="vb b12" cx="38" cy="772" rx="15" ry="8" fill="#E03080" transform="rotate(20 38 772)"/>
-    <ellipse class="vb b3" cx="172" cy="60" rx="12" ry="7" fill="#C4186A" transform="rotate(-15 172 60)"/>
-    <ellipse class="vb b4" cx="185" cy="72" rx="14" ry="8" fill="#D42272" transform="rotate(20 185 72)"/>
-    <ellipse class="vb b6" cx="178" cy="198" rx="13" ry="7" fill="#E03080" transform="rotate(-18 178 198)"/>
-    <ellipse class="vb b7" cx="192" cy="208" rx="12" ry="7" fill="#C4186A" transform="rotate(12 192 208)"/>
-    <ellipse class="vb b9" cx="180" cy="445" rx="13" ry="7" fill="#D42272" transform="rotate(-20 180 445)"/>
-    <ellipse class="vb b10" cx="195" cy="455" rx="12" ry="7" fill="#AA0E5C" transform="rotate(14 195 455)"/>
-    <ellipse class="vb b12" cx="178" cy="658" rx="13" ry="7" fill="#C4186A" transform="rotate(-16 178 658)"/>
-    <ellipse class="vb b12" cx="192" cy="668" rx="12" ry="7" fill="#D42272" transform="rotate(10 192 668)"/>
-  </svg>
-</div>
 
 </div><!-- /#site -->
 
