@@ -988,131 +988,320 @@
     .ph-sym{ font-size:44px; }
   }
 
-  /* ── Events Flex Panels ────────────────────────────── */
-  #events-flex{
+  /* ── Victorian Events Section ───────────────────────── */
+  #events-vic{
     scroll-snap-align:start;
-    height:100vh;
-    display:flex;
+    min-height:100vh;
     background:var(--ivory);
-    overflow:hidden;
-  }
-  .ev-panel{
-    flex:1;
-    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
     position:relative;
     overflow:hidden;
-    cursor:pointer;
-    border-right:0.5px solid rgba(197,151,58,0.12);
-    transition:flex 0.7s cubic-bezier(0.22,1,0.36,1);
-    background:var(--ivory);
-    -webkit-tap-highlight-color:transparent;
+    padding:48px 52px;
+    box-sizing:border-box;
   }
-  .ev-panel:last-child{ border-right:none; }
-  #events-flex.has-open .ev-panel:not(.open){ flex:0.12; }
-  .ev-panel.open{ flex:5; cursor:default; }
-
-  /* slim view */
-  .ev-slim{
-    position:absolute; inset:0;
-    display:flex; flex-direction:column;
-    align-items:center; justify-content:space-between;
-    padding:44px 0 36px;
-    opacity:1; transition:opacity 0.25s ease;
+  /* double border frame */
+  #events-vic::before{
+    content:'';
+    position:absolute;
+    inset:18px;
+    border:0.75px solid rgba(197,151,58,0.28);
+    pointer-events:none;
+    z-index:0;
   }
-  .ev-panel.open .ev-slim{ opacity:0; pointer-events:none; }
-  .ev-slim-n{
+  #events-vic::after{
+    content:'';
+    position:absolute;
+    inset:24px;
+    border:0.5px solid rgba(197,151,58,0.1);
+    pointer-events:none;
+    z-index:0;
+  }
+  /* ── Header ────────────────────────────────────────── */
+  .vic-hdr{
+    position:relative; z-index:1;
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .vic-rule{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:10px 0;
+  }
+  .vic-rule::before,.vic-rule::after{
+    content:'';
+    display:block;
+    height:0.5px;
+    width:90px;
+    background:linear-gradient(90deg, transparent, rgba(197,151,58,0.38));
+  }
+  .vic-rule::after{ background:linear-gradient(90deg, rgba(197,151,58,0.38), transparent); }
+  .vic-rule-orn{
     font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.3em;
-    color:rgba(197,151,58,0.5);
+    font-size:11px;
+    color:rgba(197,151,58,0.6);
+    letter-spacing:0.12em;
   }
-  .ev-slim-name{
+  .vic-hdr-title{
     font-family:'Beau Rivage',cursive;
-    font-size:clamp(26px,2.8vw,44px);
-    color:var(--ink); line-height:1;
-    writing-mode:vertical-rl; text-orientation:mixed;
-    transform:rotate(180deg);
+    font-size:clamp(40px,5.5vw,78px);
+    line-height:1;
+    color:var(--ink);
   }
-  .ev-slim-bot{ display:flex; flex-direction:column; align-items:center; gap:8px; }
-  .ev-slim-date{
+  .vic-hdr-sub{
+    font-family:'EB Garamond',serif;
+    font-size:9.5px;
+    letter-spacing:0.4em;
+    text-transform:uppercase;
+    color:rgba(26,20,16,0.32);
+    margin-top:6px;
+  }
+  /* ── Grid ──────────────────────────────────────────── */
+  .vic-grid{
+    position:relative; z-index:1;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    width:100%;
+    max-width:800px;
+    border:0.5px solid rgba(197,151,58,0.2);
+  }
+  .vic-tile{
+    position:relative;
+    padding:clamp(32px,4vw,56px) clamp(28px,3.5vw,48px);
+    cursor:pointer;
+    text-align:center;
+    transition:background 0.4s ease;
+    overflow:hidden;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+  }
+  .vic-tile:nth-child(1),.vic-tile:nth-child(3){ border-right:0.5px solid rgba(197,151,58,0.18); }
+  .vic-tile:nth-child(1),.vic-tile:nth-child(2){ border-bottom:0.5px solid rgba(197,151,58,0.18); }
+  .vic-tile:hover{ background:rgba(197,151,58,0.025); }
+  /* watermark roman numeral */
+  .vic-roman{
+    position:absolute;
+    top:-4px; right:4px;
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+    font-size:clamp(60px,9vw,112px);
+    line-height:1;
+    color:rgba(197,151,58,0.048);
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+  }
+  /* corner ornaments */
+  .vic-c{
+    position:absolute;
+    font-family:'EB Garamond',serif;
+    font-size:7.5px;
+    color:rgba(197,151,58,0.32);
+    line-height:1;
+    transition:color 0.3s ease;
+  }
+  .vic-tile:hover .vic-c{ color:rgba(197,151,58,0.55); }
+  .vic-c-tl{ top:12px; left:12px; }
+  .vic-c-tr{ top:12px; right:12px; }
+  .vic-c-bl{ bottom:12px; left:12px; }
+  .vic-c-br{ bottom:12px; right:12px; }
+  /* tile content */
+  .vic-eyebrow{
+    position:relative; z-index:1;
+    font-family:'EB Garamond',serif;
+    font-size:9px; letter-spacing:0.36em; text-transform:uppercase;
+    color:rgba(197,151,58,0.72);
+    margin-bottom:14px;
+  }
+  .vic-name{
+    position:relative; z-index:1;
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(44px,5.8vw,84px);
+    line-height:0.9;
+    color:var(--ink);
+    margin-bottom:14px;
+  }
+  .vic-div{
+    position:relative; z-index:1;
+    font-family:'EB Garamond',serif;
+    font-size:9.5px;
+    color:rgba(197,151,58,0.48);
+    letter-spacing:0.28em;
+    margin-bottom:14px;
+  }
+  .vic-info{
+    position:relative; z-index:1;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(13.5px,1.6vw,16.5px);
+    color:var(--ink-soft);
+    opacity:0.6;
+    line-height:1.5;
+  }
+  .vic-tag{
+    position:relative; z-index:1;
     font-family:'EB Garamond',serif;
     font-size:9px; letter-spacing:0.22em; text-transform:uppercase;
-    color:rgba(26,20,16,0.32); writing-mode:vertical-rl; transform:rotate(180deg);
+    color:rgba(26,20,16,0.28);
+    margin-top:10px;
   }
-  .ev-slim-caret{
-    font-size:12px; color:rgba(197,151,58,0.45);
-    animation:caret-bob 2.2s ease-in-out infinite;
+  /* open hint */
+  .vic-hint{
+    position:absolute;
+    bottom:14px; left:50%; transform:translateX(-50%);
+    font-family:'EB Garamond',serif;
+    font-size:8px; letter-spacing:0.3em; text-transform:uppercase;
+    color:rgba(197,151,58,0.38);
+    opacity:0;
+    transition:opacity 0.3s ease;
+    white-space:nowrap;
   }
-  @keyframes caret-bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(4px);} }
-
-  /* full view */
-  .ev-full{
-    position:absolute; inset:0;
-    opacity:0; pointer-events:none;
-    transition:opacity 0.35s ease 0.38s;
-    display:flex; flex-direction:column;
+  .vic-tile:hover .vic-hint{ opacity:1; }
+  /* footer ornament */
+  .vic-footer{
+    position:relative; z-index:1;
+    margin-top:20px;
+    font-family:'EB Garamond',serif;
+    font-size:14px;
+    color:rgba(197,151,58,0.4);
+    letter-spacing:0.4em;
   }
-  .ev-panel.open .ev-full{
-    opacity:1; pointer-events:auto;
+  /* ── Overlay ─────────────────────────────────────────── */
+  #vic-ov{
+    position:fixed;
+    inset:0;
+    z-index:160;
+    background:var(--ivory);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.4s ease;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
   }
-  .ev-full-top{
-    position:relative;
-    padding:60px 52px 44px;
-    background:linear-gradient(170deg, #FDFAF6 0%, #EDE5D6 100%);
-    border-bottom:0.5px solid rgba(197,151,58,0.2);
+  #vic-ov.open{ opacity:1; pointer-events:auto; }
+  .vic-ov-frame{
+    position:absolute;
+    inset:14px;
+    border:0.75px solid rgba(197,151,58,0.22);
+    pointer-events:none;
+    z-index:0;
+  }
+  .vic-ov-frame2{
+    position:absolute;
+    inset:20px;
+    border:0.5px solid rgba(197,151,58,0.1);
+    pointer-events:none;
+    z-index:0;
+  }
+  .vic-ov-bar{
+    position:relative; z-index:2;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 52px;
+    border-bottom:0.5px solid rgba(197,151,58,0.16);
+    background:rgba(253,250,245,0.97);
+    backdrop-filter:blur(14px);
     flex-shrink:0;
   }
-  .ev-full-top .ev-eyebrow{
+  .vic-ov-cur{
     font-family:'EB Garamond',serif;
-    font-size:9.5px; letter-spacing:0.38em; text-transform:uppercase;
-    color:rgba(197,151,58,0.78); margin-bottom:18px;
+    font-size:9.5px; letter-spacing:0.4em; text-transform:uppercase;
+    color:rgba(197,151,58,0.7);
   }
-  .ev-full-top .ev-title{
-    font-family:'Beau Rivage',cursive;
-    font-size:clamp(72px,8.5vw,130px);
-    line-height:0.88; letter-spacing:-0.01em;
-    color:var(--ink); margin-bottom:10px;
-  }
-  .ev-full-top .ev-sub{
-    font-family:'Cormorant Garamond',serif;
-    font-style:italic; font-size:17px; font-weight:300;
-    color:var(--ink-soft); opacity:0.7;
-  }
-  .ev-full-close{
-    position:absolute; top:22px; right:28px;
+  .vic-ov-close{
     background:none; border:none;
     border-bottom:0.5px solid rgba(26,20,16,0.18);
     padding:0 0 4px; cursor:pointer;
     font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.36em; text-transform:uppercase;
+    font-size:9.5px; letter-spacing:0.38em; text-transform:uppercase;
     color:rgba(26,20,16,0.4);
-    transition:color 0.2s ease;
+    transition:color 0.2s ease, border-color 0.2s ease;
   }
-  .ev-full-close:hover{ color:rgba(197,151,58,0.9); }
-  .ev-full-body{
+  .vic-ov-close:hover{ color:rgba(197,151,58,0.85); border-color:rgba(197,151,58,0.4); }
+  .vic-ov-body{
     flex:1; overflow-y:auto;
-    padding:52px 52px 72px;
-    max-width:680px;
+    padding:56px 80px 90px;
+    position:relative; z-index:1;
   }
-  .ev-full-body .story{ font-size:18.5px; line-height:1.82; opacity:0.84; color:var(--ink); max-width:560px; }
-  .ev-full-body .story + .story{ margin-top:14px; }
-  .ev-full-body .guest-note{ margin:28px 0 0; font-size:16px; font-style:italic; opacity:0.6; max-width:520px; }
-
-  /* Mobile: stack vertically */
+  .vic-ov-inner{
+    max-width:680px;
+    margin:0 auto;
+  }
+  /* overlay story/content styles */
+  .vic-ov-body .ov-eyebrow{
+    font-family:'EB Garamond',serif;
+    font-size:9.5px; letter-spacing:0.4em; text-transform:uppercase;
+    color:rgba(197,151,58,0.7);
+    margin-bottom:14px;
+  }
+  .vic-ov-body .ov-title{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(72px,9vw,130px);
+    line-height:0.88;
+    color:var(--ink);
+    margin-bottom:12px;
+  }
+  .vic-ov-body .ov-sub{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size:17px; font-weight:300;
+    color:var(--ink-soft); opacity:0.65;
+    margin-bottom:38px;
+  }
+  .vic-ov-body .ov-rule{
+    height:0.5px;
+    background:linear-gradient(90deg, rgba(197,151,58,0.4), transparent);
+    margin-bottom:38px;
+  }
+  /* drop cap on first paragraph */
+  .vic-ov-body .story:first-of-type::first-letter{
+    font-family:'Beau Rivage',cursive;
+    font-size:5.4em;
+    line-height:0.7;
+    float:left;
+    margin-right:8px;
+    margin-top:6px;
+    color:rgba(197,151,58,0.6);
+  }
+  .vic-ov-body .story{
+    font-family:'Cormorant Garamond',serif;
+    font-size:18.5px; line-height:1.82; opacity:0.86;
+    color:var(--ink); max-width:640px;
+  }
+  .vic-ov-body .story + .story{ margin-top:14px; }
+  .vic-ov-body .timeline{ margin:34px 0 0; }
+  .vic-ov-body .guest-note{ margin:32px 0 0; font-size:16px; font-style:italic; opacity:0.6; }
+  .vic-ov-body .qa{ margin-top:28px; max-width:600px; }
+  .vic-ov-body .couplet{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size:clamp(19px,2vw,24px);
+    line-height:1.55; color:var(--ink);
+    padding:28px 0 28px 22px;
+    border-left:1px solid rgba(197,151,58,0.3);
+    margin:34px 0 0; max-width:560px;
+  }
+  .vic-ov-body .attr{
+    margin-top:10px;
+    font-family:'EB Garamond',serif; font-style:normal;
+    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.48;
+  }
+  /* mobile */
   @media(max-width:700px){
-    #events-flex{ height:auto; flex-direction:column; }
-    .ev-panel{ height:72px; flex:none; overflow:hidden; border-right:none; border-bottom:0.5px solid rgba(197,151,58,0.12); transition:height 0.65s cubic-bezier(0.22,1,0.36,1); }
-    #events-flex.has-open .ev-panel:not(.open){ height:56px; }
-    .ev-panel.open{ height:92vh; flex:none; overflow-y:auto; }
-    .ev-slim{ flex-direction:row; padding:0 22px; justify-content:space-between; }
-    .ev-slim-name{ writing-mode:horizontal-tb; transform:none; font-size:28px; }
-    .ev-slim-date{ writing-mode:horizontal-tb; transform:none; }
-    .ev-slim-bot{ flex-direction:row; align-items:center; gap:10px; }
-    .ev-slim-caret{ animation:none; transform:rotate(-90deg); }
-    .ev-panel.open .ev-slim-caret{ transform:rotate(90deg); }
-    .ev-full-top{ padding:40px 24px 28px; }
-    .ev-full-top .ev-title{ font-size:clamp(56px,12vw,88px); }
-    .ev-full-body{ padding:36px 24px 52px; }
-    .ev-full-body .story{ font-size:17px; }
+    #events-vic{ padding:44px 22px; }
+    #events-vic::before{ inset:10px; }
+    #events-vic::after{ inset:15px; }
+    .vic-grid{ grid-template-columns:1fr; }
+    .vic-tile:nth-child(1),.vic-tile:nth-child(3){ border-right:none; }
+    .vic-tile:nth-child(1),.vic-tile:nth-child(2),.vic-tile:nth-child(3){ border-bottom:0.5px solid rgba(197,151,58,0.18); }
+    .vic-tile:nth-child(4){ border-bottom:none; }
+    .vic-tile{ padding:28px 22px; }
+    .vic-ov-bar{ padding:16px 24px; }
+    .vic-ov-body{ padding:36px 24px 60px; }
   }
   </style>
 </head>
@@ -1260,160 +1449,185 @@
   </svg>
 </div>
 
-<section id="events-flex" data-hud-key="events">
+<section id="events-vic" data-hud-key="events">
 
-  <!-- ── 01 MANJA ─────────────────────────────────── -->
-  <div class="ev-panel manja" data-event="manja" data-hud-key="manja" tabindex="0" role="button" aria-label="Manja — 28 August">
-    <div class="ev-slim">
-      <span class="ev-slim-n">01</span>
-      <span class="ev-slim-name">Manja</span>
-      <div class="ev-slim-bot">
-        <span class="ev-slim-date">28 Aug</span>
-        <span class="ev-slim-caret">↓</span>
-      </div>
-    </div>
-    <div class="ev-full">
-      <div class="ev-full-top">
-        <button class="ev-full-close" aria-label="Close Manja">Close</button>
-        <div class="ev-eyebrow">28 August · Friday · 8 pm · Our Home, Shadnagar</div>
-        <h2 class="ev-title">Manja</h2>
-        <div class="ev-sub">Hyderabad's answer to Haldi</div>
-      </div>
-      <div class="ev-full-body">
-        <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
-        <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
-        <div class="timeline">
-          <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early.</div></div></div>
-          <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. You will get yellow on you — that's the point.</div></div></div>
-          <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
-        </div>
-        <p class="guest-note">Yellow is the colour of the evening. The turmeric has no respect for nice clothes.</p>
-      </div>
-    </div>
+  <div class="vic-hdr">
+    <div class="vic-rule"><span class="vic-rule-orn">✦</span></div>
+    <div class="vic-hdr-title">The Celebrations</div>
+    <div class="vic-hdr-sub">Azhar &amp; Zeenath · August 2026 · Shadnagar &amp; Hyderabad</div>
+    <div class="vic-rule"><span class="vic-rule-orn">✦</span></div>
   </div>
 
-  <!-- ── 02 MEHENDI ────────────────────────────────── -->
-  <div class="ev-panel mehendi" data-event="mehendi" data-hud-key="mehendi" tabindex="0" role="button" aria-label="Mehendi — 29 August">
-    <div class="ev-slim">
-      <span class="ev-slim-n">02</span>
-      <span class="ev-slim-name">Mehendi</span>
-      <div class="ev-slim-bot">
-        <span class="ev-slim-date">29 Aug</span>
-        <span class="ev-slim-caret">↓</span>
-      </div>
+  <div class="vic-grid">
+
+    <!-- I : Manja -->
+    <div class="vic-tile" data-event="manja" tabindex="0" role="button" aria-label="Manja — open for details">
+      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
+      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <div class="vic-roman">I</div>
+      <div class="vic-eyebrow">28 August · Friday</div>
+      <h3 class="vic-name">Manja</h3>
+      <div class="vic-div">— ✦ —</div>
+      <div class="vic-info">Our Home, Shadnagar<br>8 pm onwards</div>
+      <div class="vic-tag">Hyderabad's answer to Haldi</div>
+      <div class="vic-hint">Read more</div>
     </div>
-    <div class="ev-full">
-      <div class="ev-full-top">
-        <button class="ev-full-close" aria-label="Close Mehendi">Close</button>
-        <div class="ev-eyebrow">29 August · Saturday · 9 am · Our Home, Shadnagar</div>
-        <h2 class="ev-title">Mehendi</h2>
-        <div class="ev-sub">&amp; Choodi</div>
-      </div>
-      <div class="ev-full-body">
-        <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
-        <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
-        <div class="timeline">
-          <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — pick your pattern, pick your bangles.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
-        </div>
-        <p class="guest-note">Wear something you don't mind getting henna on. Come get your hands done — we will be a bit offended if you don't.</p>
-      </div>
+
+    <!-- II : Mehendi -->
+    <div class="vic-tile" data-event="mehendi" tabindex="0" role="button" aria-label="Mehendi — open for details">
+      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
+      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <div class="vic-roman">II</div>
+      <div class="vic-eyebrow">29 August · Saturday</div>
+      <h3 class="vic-name">Mehendi</h3>
+      <div class="vic-div">— ✦ —</div>
+      <div class="vic-info">Our Home, Shadnagar<br>9 am onwards</div>
+      <div class="vic-tag">&amp; Choodi</div>
+      <div class="vic-hint">Read more</div>
     </div>
+
+    <!-- III : Nikah -->
+    <div class="vic-tile" data-event="nikah" tabindex="0" role="button" aria-label="Nikah — open for details">
+      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
+      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <div class="vic-roman">III</div>
+      <div class="vic-eyebrow">30 August · Sunday</div>
+      <h3 class="vic-name">Nikah</h3>
+      <div class="vic-div">— ✦ —</div>
+      <div class="vic-info">Heritage Palace, Attapur<br>12 noon</div>
+      <div class="vic-tag">&amp; the Jalwa</div>
+      <div class="vic-hint">Read more</div>
+    </div>
+
+    <!-- IV : Reception -->
+    <div class="vic-tile" data-event="reception" tabindex="0" role="button" aria-label="Reception — open for details">
+      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
+      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <div class="vic-roman">IV</div>
+      <div class="vic-eyebrow">30 August · Sunday</div>
+      <h3 class="vic-name">Reception</h3>
+      <div class="vic-div">— ✦ —</div>
+      <div class="vic-info">Heritage Palace, Attapur<br>8 pm</div>
+      <div class="vic-tag">The evening they've been waiting to throw</div>
+      <div class="vic-hint">Read more</div>
+    </div>
+
   </div>
 
-  <!-- ── 03 NIKAH ──────────────────────────────────── -->
-  <div class="ev-panel nikah" data-event="nikah" data-hud-key="nikah" tabindex="0" role="button" aria-label="Nikah — 30 August">
-    <div class="ev-slim">
-      <span class="ev-slim-n">03</span>
-      <span class="ev-slim-name">Nikah</span>
-      <div class="ev-slim-bot">
-        <span class="ev-slim-date">30 Aug</span>
-        <span class="ev-slim-caret">↓</span>
-      </div>
-    </div>
-    <div class="ev-full">
-      <div class="ev-full-top">
-        <button class="ev-full-close" aria-label="Close Nikah">Close</button>
-        <div class="ev-eyebrow">30 August · Sunday · 12 noon · Heritage Palace, Attapur</div>
-        <h2 class="ev-title">Nikah</h2>
-        <div class="ev-sub">&amp; the Jalwa</div>
-      </div>
-      <div class="ev-full-body">
-        <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything.</p>
-        <div class="qa">
-          <details>
-            <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
-            <div class="qa-body">
-              <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence. One verse on two souls being of the same root. One on speaking plainly and truthfully. One on holding steady through the ordinary stretch of a life together.</p>
-            </div>
-          </details>
-          <details>
-            <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
-            <div class="qa-body">
-              <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali, witnessed by two men present in the room with her.</p>
-              <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Zeenath says it three times; Azhar will have already said his. That's it. Done.</p>
-            </div>
-          </details>
-          <details>
-            <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
-            <div class="qa-body">
-              <p>First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up. Their first look at each other as husband and wife.</p>
-              <p>Guests then do Salaami — elders first. On your way out: small packets of Maleeda.</p>
-            </div>
-          </details>
-          <details>
-            <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
-            <div class="qa-body">
-              <p>During the khutbah: listen and stay seated. When the dua is read: say Ameen out loud, together. When Qubool Hai is confirmed: clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
-            </div>
-          </details>
-        </div>
-        <div class="couplet">
-          "So race toward all that is good."
-          <div class="attr">Surah Al-Baqarah, 2:148</div>
-        </div>
-        <div class="timeline">
-          <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Please stay seated and quiet through the ceremony.</div></div></div>
-          <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
-          <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, Arsi Mushaf, Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── 04 RECEPTION ──────────────────────────────── -->
-  <div class="ev-panel reception" data-event="reception" data-hud-key="reception" tabindex="0" role="button" aria-label="Reception — 30 August">
-    <div class="ev-slim">
-      <span class="ev-slim-n">04</span>
-      <span class="ev-slim-name">Reception</span>
-      <div class="ev-slim-bot">
-        <span class="ev-slim-date">30 Aug</span>
-        <span class="ev-slim-caret">↓</span>
-      </div>
-    </div>
-    <div class="ev-full">
-      <div class="ev-full-top">
-        <button class="ev-full-close" aria-label="Close Reception">Close</button>
-        <div class="ev-eyebrow">30 August · Sunday · 8 pm · Heritage Palace, Attapur</div>
-        <h2 class="ev-title">Reception</h2>
-        <div class="ev-sub">The evening they've been waiting to throw</div>
-      </div>
-      <div class="ev-full-body">
-        <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
-        <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
-        <div class="couplet">
-          "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
-          <div class="attr">Mawlana Jalal al-Din Rumi</div>
-        </div>
-        <p class="guest-note">Your presence at their table is the only gift they're after.</p>
-      </div>
-    </div>
-  </div>
+  <div class="vic-footer">⁂</div>
 
 </section>
 
+<!-- Victorian Event Overlay -->
+<div id="vic-ov" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="vic-ov-frame" aria-hidden="true"></div>
+  <div class="vic-ov-frame2" aria-hidden="true"></div>
+  <div class="vic-ov-bar">
+    <span class="vic-ov-cur"></span>
+    <button class="vic-ov-close">Close</button>
+  </div>
+  <div class="vic-ov-body">
+    <div class="vic-ov-inner"></div>
+  </div>
+</div>
+
+<!-- Hidden content store for event overlays -->
+<div id="vic-panels" style="display:none" aria-hidden="true">
+
+  <div id="vp-manja">
+    <div class="ov-eyebrow">28 August · Friday · 8 pm · Our Home, Shadnagar</div>
+    <div class="ov-title">Manja</div>
+    <div class="ov-sub">Hyderabad's answer to Haldi</div>
+    <div class="ov-rule"></div>
+    <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
+    <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early.</div></div></div>
+      <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. You will get yellow on you — that's the point.</div></div></div>
+      <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
+    </div>
+    <p class="guest-note">Yellow is the colour of the evening. The turmeric has no respect for nice clothes.</p>
+  </div>
+
+  <div id="vp-mehendi">
+    <div class="ov-eyebrow">29 August · Saturday · 9 am · Our Home, Shadnagar</div>
+    <div class="ov-title">Mehendi</div>
+    <div class="ov-sub">&amp; Choodi</div>
+    <div class="ov-rule"></div>
+    <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
+    <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — pick your pattern, pick your bangles.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+    </div>
+    <p class="guest-note">Wear something you don't mind getting henna on. Come get your hands done — we will be a bit offended if you don't.</p>
+  </div>
+
+  <div id="vp-nikah">
+    <div class="ov-eyebrow">30 August · Sunday · 12 noon · Heritage Palace, Attapur</div>
+    <div class="ov-title">Nikah</div>
+    <div class="ov-sub">&amp; the Jalwa</div>
+    <div class="ov-rule"></div>
+    <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything.</p>
+    <div class="qa">
+      <details>
+        <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence. One verse on two souls being of the same root. One on speaking plainly and truthfully. One on holding steady through the ordinary stretch of a life together.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali, witnessed by two men present in the room with her.</p>
+          <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Zeenath says it three times; Azhar will have already said his. That's it. Done.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up. Their first look at each other as husband and wife.</p>
+          <p>Guests then do Salaami — elders first. On your way out: small packets of Maleeda.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>During the khutbah: listen and stay seated. When the dua is read: say Ameen out loud, together. When Qubool Hai is confirmed: clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
+        </div>
+      </details>
+    </div>
+    <div class="couplet">
+      "So race toward all that is good."
+      <div class="attr">Surah Al-Baqarah, 2:148</div>
+    </div>
+    <div class="timeline">
+      <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Please stay seated and quiet through the ceremony.</div></div></div>
+      <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
+      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, Arsi Mushaf, Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
+    </div>
+  </div>
+
+  <div id="vp-reception">
+    <div class="ov-eyebrow">30 August · Sunday · 8 pm · Heritage Palace, Attapur</div>
+    <div class="ov-title">Reception</div>
+    <div class="ov-sub">The evening they've been waiting to throw</div>
+    <div class="ov-rule"></div>
+    <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
+    <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
+    <div class="couplet">
+      "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
+      <div class="attr">Mawlana Jalal al-Din Rumi</div>
+    </div>
+    <p class="guest-note">Your presence at their table is the only gift they're after.</p>
+  </div>
+
+</div>
+
+
+<!-- WHO IS ZEHAR -->
 
 
 <!-- WHO IS ZEHAR -->
@@ -2175,69 +2389,50 @@
 
 
 
-  // ── Events flex panel expand/collapse ───────────────
+  // ── Victorian Event Overlay ──────────────────────────
   (function(){
-    const track = document.getElementById('events-flex');
-    if(!track) return;
+    const ov      = document.getElementById('vic-ov');
+    const cur     = ov.querySelector('.vic-ov-cur');
+    const inner   = ov.querySelector('.vic-ov-inner');
+    const closeBtn= ov.querySelector('.vic-ov-close');
+    if(!ov) return;
 
-    function openPanel(panel){
-      const prev = track.querySelector('.ev-panel.open');
-      if(prev && prev !== panel){
-        prev.style.overflow = '';
-        prev.classList.remove('open');
-      }
-      track.classList.add('has-open');
-      panel.classList.add('open');
-      panel.setAttribute('aria-expanded', 'true');
-      // Allow inner scroll after animation
-      clearTimeout(panel._ot);
-      panel._ot = setTimeout(function(){
-        if(panel.classList.contains('open')) panel.style.overflowY = 'auto';
-      }, 720);
-      const key = panel.getAttribute('data-event');
+    const labels = {
+      manja:     'Manja · 28 August',
+      mehendi:   'Mehendi · 29 August',
+      nikah:     'Nikah · 30 August',
+      reception: 'Reception · 30 August'
+    };
+
+    function openOv(key){
+      const src = document.getElementById('vp-' + key);
+      if(!src) return;
+      inner.innerHTML = src.innerHTML;
+      cur.textContent = labels[key] || key;
+      ov.setAttribute('aria-hidden','false');
+      ov.classList.add('open');
+      ov.querySelector('.vic-ov-body').scrollTop = 0;
       if(typeof cycle === 'function') cycle(key);
     }
 
-    function closePanel(panel){
-      panel.style.overflowY = '';
-      panel.classList.remove('open');
-      panel.setAttribute('aria-expanded', 'false');
-      // Remove has-open after animation if none open
-      clearTimeout(track._ct);
-      track._ct = setTimeout(function(){
-        if(!track.querySelector('.ev-panel.open')){
-          track.classList.remove('has-open');
-        }
-      }, 720);
+    function closeOv(){
+      ov.classList.remove('open');
+      ov.setAttribute('aria-hidden','true');
     }
 
-    track.querySelectorAll('.ev-panel').forEach(function(panel){
-      panel.addEventListener('click', function(e){
-        if(panel.classList.contains('open')){
-          // Only close if clicking the panel itself (not the content)
-          if(!e.target.closest('.ev-full-body') && !e.target.closest('.qa')){
-            // clicking close button or top area
-            if(e.target.closest('.ev-full-close')) closePanel(panel);
-          }
-          return;
-        }
-        openPanel(panel);
+    document.querySelectorAll('.vic-tile').forEach(function(tile){
+      tile.addEventListener('click', function(){
+        openOv(tile.getAttribute('data-event'));
       });
-      panel.addEventListener('keydown', function(e){
-        if(!panel.classList.contains('open') && (e.key === 'Enter' || e.key === ' ')){
-          e.preventDefault(); openPanel(panel);
-        }
-        if(e.key === 'Escape' && panel.classList.contains('open')) closePanel(panel);
+      tile.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); tile.click(); }
       });
     });
 
-    // Close button inside each panel
-    track.querySelectorAll('.ev-full-close').forEach(function(btn){
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        const panel = btn.closest('.ev-panel');
-        if(panel) closePanel(panel);
-      });
+    closeBtn.addEventListener('click', closeOv);
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && ov.classList.contains('open')) closeOv();
     });
   })();
 
