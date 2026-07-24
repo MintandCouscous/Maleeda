@@ -393,7 +393,7 @@
   }
 
   /* ── Body typography ── */
-  .ev-body .story{ font-size:19.5px; line-height:1.82; max-width:540px; margin:0; opacity:0.88; color:var(--ink); }
+  .ev-body .story{ font-size:19.5px; line-height:1.85; max-width:540px; margin:0; opacity:0.82; color:var(--ink); }
   .ev-body .story + .story{ margin-top:14px; }
 
   .ev-body .couplet{
@@ -410,7 +410,7 @@
   .tl-event{ font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:3px; }
   .tl-note{ font-size:15px; opacity:0.82; }
 
-  .ev-body .guest-note{ margin:32px 0 0; max-width:520px; font-size:17.5px; font-style:italic; opacity:0.75; }
+  .ev-body .guest-note{ margin:36px 0 0; max-width:520px; font-size:16.5px; font-style:italic; opacity:0.62; letter-spacing:0.01em; }
 
   .ev-body .qa{ margin-top:28px; max-width:560px; }
   .qa details{ border-top:0.5px solid rgba(197,151,58,0.3); padding:15px 2px; }
@@ -642,8 +642,8 @@
   #hud-bubble::after{ display:none; }
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:18px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
   @media(max-width:640px){
-    #hud{ width:150px; padding:10px 12px 0; border-bottom-left-radius:18px; }
-    #hud-avatar svg.bird{ width:70px; height:70px; }
+    #hud{ width:158px; padding:10px 12px 0; border-bottom-left-radius:20px; }
+    #hud-avatar svg.bird{ width:80px; height:80px; }
     #hud-bubble{ font-size:13px; }
     #hud-bubble.visible{ padding:9px 2px 14px; }
     .who{ font-size:15px; }
@@ -988,7 +988,162 @@
     .polaroid-strip{ gap:24px 16px; }
     .ph-sym{ font-size:44px; }
   }
-</style>
+
+  /* ── Events Gallery ───────────────────────────────── */
+  #events-gallery{
+    scroll-snap-align:start;
+    min-height:100vh;
+    display:flex; flex-direction:column;
+    background:var(--ivory);
+    overflow:hidden;
+  }
+  .events-gallery-header{
+    padding:72px 60px 44px;
+    border-bottom:0.5px solid rgba(197,151,58,0.15);
+    flex-shrink:0;
+  }
+  .events-eyebrow{
+    font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.44em; text-transform:uppercase;
+    color:rgba(197,151,58,0.7); margin-bottom:10px;
+  }
+  .events-hed{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(52px,7vw,100px);
+    line-height:1; color:var(--ink);
+  }
+  .events-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    flex:1;
+  }
+  .ev-card{
+    padding:44px 36px 40px;
+    border-right:0.5px solid rgba(197,151,58,0.12);
+    cursor:pointer;
+    display:flex; flex-direction:column; justify-content:space-between;
+    position:relative; overflow:hidden;
+    transition:background 0.35s ease;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .ev-card:last-child{ border-right:none; }
+  .ev-card::after{
+    content:attr(data-event);
+    position:absolute; bottom:-0.1em; right:-0.02em;
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(90px,13vw,190px);
+    color:rgba(197,151,58,0.055);
+    line-height:1; pointer-events:none; text-transform:capitalize;
+  }
+  .ev-card:hover{ background:rgba(197,151,58,0.03); }
+  .ev-card:hover .ev-card-cta{ opacity:1; transform:translateY(0); }
+  .ev-card:active{ background:rgba(197,151,58,0.06); }
+  .ev-card-n{
+    font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.32em;
+    color:rgba(197,151,58,0.5);
+  }
+  .ev-card-mid{ margin:auto 0; padding:22px 0; }
+  .ev-card-name{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(42px,5vw,76px);
+    line-height:0.95; color:var(--ink); margin-bottom:6px;
+  }
+  .ev-card-tagline{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size:14.5px; font-weight:300;
+    color:var(--ink-soft); opacity:0.55;
+  }
+  .ev-card-date{
+    font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--ink-soft); opacity:0.6; margin-bottom:3px;
+  }
+  .ev-card-place{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic; font-size:13.5px;
+    color:var(--ink-soft); opacity:0.45; margin-bottom:16px;
+  }
+  .ev-card-cta{
+    font-family:'EB Garamond',serif;
+    font-size:9.5px; letter-spacing:0.36em; text-transform:uppercase;
+    color:rgba(197,151,58,0.8);
+    border-bottom:0.5px solid rgba(197,151,58,0.28);
+    padding-bottom:4px; align-self:flex-start;
+    opacity:0; transform:translateY(5px);
+    transition:opacity 0.28s ease, transform 0.28s ease;
+  }
+
+  /* ── Event Modal ───────────────────────────────────── */
+  #ev-modal{
+    position:fixed; inset:0; z-index:160;
+    background:var(--ivory);
+    transform:translateY(100%);
+    transition:transform 0.65s cubic-bezier(0.22,1,0.36,1);
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+    display:flex; flex-direction:column;
+  }
+  #ev-modal.open{ transform:translateY(0); }
+  .ev-modal-bar{
+    position:sticky; top:0; z-index:10;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 52px;
+    background:rgba(253,250,245,0.97);
+    border-bottom:0.5px solid rgba(197,151,58,0.13);
+    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    flex-shrink:0;
+  }
+  .ev-modal-cur{
+    font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.4em; text-transform:uppercase;
+    color:rgba(197,151,58,0.65);
+  }
+  .ev-modal-close{
+    background:none; border:none;
+    border-bottom:0.5px solid rgba(26,20,16,0.18);
+    padding:0 0 5px; cursor:pointer;
+    font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.36em; text-transform:uppercase;
+    color:rgba(26,20,16,0.42);
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .ev-modal-close:hover{ color:rgba(197,151,58,0.9); border-color:rgba(197,151,58,0.38); }
+  .ev-modal-body{ flex:1; }
+  #ev-modal .event-section{
+    min-height:calc(100vh - 60px);
+    scroll-snap-align:none;
+    border-bottom:none;
+  }
+
+  /* ── Hud-hud — bob while perched ─────────────────── */
+  @keyframes hud-bob{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    28%{ transform:translateY(-5px) rotate(-3deg); }
+    60%{ transform:translateY(-3px) rotate(2deg); }
+  }
+  #hud.peek-in:not(.flying):not(.bowing):not(.arriving) #hud-avatar{
+    animation:hud-bob 3.6s ease-in-out infinite;
+  }
+  #hud-avatar svg.bird{ width:96px; height:96px; filter:drop-shadow(0 4px 12px rgba(35,15,15,0.2)); }
+
+  /* ── Mobile gallery ───────────────────────────────── */
+  @media(max-width:700px){
+    .events-gallery-header{ padding:48px 28px 32px; }
+    .events-cards{
+      grid-template-columns:repeat(2,1fr);
+    }
+    .ev-card{
+      padding:26px 20px 22px;
+      border-bottom:0.5px solid rgba(197,151,58,0.12);
+    }
+    .ev-card:nth-child(2n){ border-right:none; }
+    .ev-card:nth-child(n+3){ border-top:none; }
+    .ev-modal-bar{ padding:16px 22px; }
+    #ev-modal .event-section{ grid-template-columns:1fr; min-height:auto; }
+    #ev-modal .ev-head{ max-height:none; padding:52px 28px 32px; }
+    #ev-modal .ev-body{ padding:36px 28px 56px; }
+  }
+  </style>
 </head>
 <body>
 
@@ -1134,120 +1289,192 @@
   </svg>
 </div>
 
-<section class="event-section manja" id="manja" data-hud-key="manja">
-  <div class="ev-head" data-watermark="M">
-    <div class="ev-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
-    <h2 class="ev-title">Manja</h2>
-    <div class="ev-sub">Hyderabad's answer to Haldi</div>
+<section id="events-gallery" data-hud-key="events">
+  <div class="events-gallery-header">
+    <div class="events-eyebrow">28 – 30 August · Shadnagar &amp; Hyderabad</div>
+    <div class="events-hed">The Celebrations</div>
   </div>
-  <div class="ev-body">
-    <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
-    <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. The turmeric is meant to make her glow, and it will — also everything she owns for roughly three days after. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
-    <p class="story">Come expecting organised chaos. There will be dinner, then turmeric, then the kind of dancing that happens when someone's aunt picks up a dhol and refuses to put it down.</p>
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early. It goes fast.</div></div></div>
-      <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. Then everyone joins in. You will get yellow on you — that's the point.</div></div></div>
-      <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
+  <div class="events-cards">
+    <div class="ev-card manja-card" data-event="manja" tabindex="0" role="button" aria-label="Open Manja details">
+      <div class="ev-card-top"><span class="ev-card-n">01</span></div>
+      <div class="ev-card-mid">
+        <div class="ev-card-name">Manja</div>
+        <div class="ev-card-tagline">Hyderabad's answer to Haldi</div>
+      </div>
+      <div class="ev-card-bot">
+        <div class="ev-card-date">28 August · Friday · 8 pm</div>
+        <div class="ev-card-place">Our Home, Shadnagar</div>
+        <div class="ev-card-cta">Details</div>
+      </div>
     </div>
-    <p class="guest-note">Yellow is the colour of the evening — wear it if you have it. If not, wear something you're OK getting golden. The turmeric has no respect for nice clothes.</p>
-  </div>
-</section>
-
-<section class="event-section mehendi" id="mehendi" data-hud-key="mehendi">
-  <div class="ev-head" data-watermark="M">
-    <div class="ev-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
-    <h2 class="ev-title">Mehendi</h2>
-    <div class="ev-sub">&amp; Choodi</div>
-  </div>
-  <div class="ev-body">
-    <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
-    <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+    <div class="ev-card mehendi-card" data-event="mehendi" tabindex="0" role="button" aria-label="Open Mehendi details">
+      <div class="ev-card-top"><span class="ev-card-n">02</span></div>
+      <div class="ev-card-mid">
+        <div class="ev-card-name">Mehendi</div>
+        <div class="ev-card-tagline">&amp; Choodi</div>
+      </div>
+      <div class="ev-card-bot">
+        <div class="ev-card-date">29 August · Saturday · 9 am</div>
+        <div class="ev-card-place">Our Home, Shadnagar</div>
+        <div class="ev-card-cta">Details</div>
+      </div>
     </div>
-    <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
-  </div>
-</section>
-
-<section class="event-section nikah" id="nikah" data-hud-key="nikah">
-  <div class="ev-head" data-watermark="N">
-    <div class="ev-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
-    <h2 class="ev-title">Nikah</h2>
-    <div class="ev-sub">&amp; the Jalwa</div>
-  </div>
-  <div class="ev-body">
-    <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything. Tap through for what actually happens:</p>
-    <div class="qa">
-      <details>
-        <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence — this is the ceremony's only sermon, and it sets the entire tone of what follows.</p>
-          <p>One verse on two souls being of the same root, returning to each other. One on speaking plainly and truthfully — a marriage runs on exactly that, every day, for decades. One on holding steady through the ordinary stretch of a life together. Three minutes, and somehow all of it covered.</p>
-        </div>
-      </details>
-      <details>
-        <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries rather than face to face: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali (her father, speaking for her and with her full consent), witnessed by two men present in the room with her.</p>
-          <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Qubool from the Arabic root meaning to receive, to welcome, to turn toward. Zeenath says it three times; Azhar will have already said his. That's it. Done. Married on paper. Everything after is ceremony, tradition, and celebration.</p>
-        </div>
-      </details>
-      <details>
-        <summary><span>What's in the Nikahnama?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>The Nikahnama is the marriage contract — a physical document, signed by both, witnessed, and kept. At its centre is the Mehr: a gift Azhar owes Zeenath outright, decided and written down before either of them says a word. It is hers alone. Not symbolic, not a formality, not the family's to touch. She can claim it any time, no reason required.</p>
-          <p>The amount is announced aloud during the ceremony. This is deliberate — the witnesses are there precisely so it cannot be quietly changed later.</p>
-        </div>
-      </details>
-      <details>
-        <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>Two customs, back to back, both Hyderabadi through and through. First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. The room watches. He sees her.</p>
-          <p>Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up with a Quran resting just above it. Their first look at each other as husband and wife — through that mirror, same second. Under the shawl, they read a few verses to one another quietly. First words as a married couple: scripture.</p>
-          <p>Guests then do Salaami — elders first, then everyone else. On your way out: small packets of Maleeda — crushed fried roti, ghee, sugar, cardamom. A Hyderabadi tradition at weddings.</p>
-        </div>
-      </details>
-      <details>
-        <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>During the khutbah: listen. Stay seated and quiet — the ceremony is short and deserves attention.</p>
-          <p>When the dua is read at the close of the khutbah: say Ameen out loud, together. The room does it in unison. It sounds like one voice.</p>
-          <p>When Qubool Hai is confirmed: clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
-          <p>At the Jalwa: watch, then come forward for Salaami when it begins. Elders go first.</p>
-        </div>
-      </details>
+    <div class="ev-card nikah-card" data-event="nikah" tabindex="0" role="button" aria-label="Open Nikah details">
+      <div class="ev-card-top"><span class="ev-card-n">03</span></div>
+      <div class="ev-card-mid">
+        <div class="ev-card-name">Nikah</div>
+        <div class="ev-card-tagline">&amp; the Jalwa</div>
+      </div>
+      <div class="ev-card-bot">
+        <div class="ev-card-date">30 August · Sunday · 12 noon</div>
+        <div class="ev-card-place">Heritage Palace, Attapur</div>
+        <div class="ev-card-cta">Details</div>
+      </div>
     </div>
-    <div class="couplet">
-      "So race toward all that is good."
-      <div class="attr">Surah Al-Baqarah, 2:148</div>
-    </div>
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Two sides seated apart. Please stay seated and quiet through the ceremony.</div></div></div>
-      <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, then Arsi Mushaf, then Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
+    <div class="ev-card reception-card" data-event="reception" tabindex="0" role="button" aria-label="Open Reception details">
+      <div class="ev-card-top"><span class="ev-card-n">04</span></div>
+      <div class="ev-card-mid">
+        <div class="ev-card-name">Reception</div>
+        <div class="ev-card-tagline">The evening they have been waiting to throw</div>
+      </div>
+      <div class="ev-card-bot">
+        <div class="ev-card-date">30 August · Sunday · 8 pm</div>
+        <div class="ev-card-place">Heritage Palace, Attapur</div>
+        <div class="ev-card-cta">Details</div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="event-section reception" id="reception" data-hud-key="reception">
-  <div class="ev-head" data-watermark="R">
-    <div class="ev-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
-    <h2 class="ev-title">Reception</h2>
-    <div class="ev-sub">The evening they've been waiting to throw</div>
-  </div>
-  <div class="ev-body">
-    <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
-    <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
-    <div class="couplet">
-      "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
-      <div class="attr">Mawlana Jalal al-Din Rumi</div>
+<!-- EVENT CONTENT PANELS (modal source, not rendered) -->
+<div id="ev-panels" style="display:none" aria-hidden="true">
+
+  <section id="panel-manja" class="event-section manja">
+    <div class="ev-head" data-watermark="M">
+      <div class="ev-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
+      <h2 class="ev-title">Manja</h2>
+      <div class="ev-sub">Hyderabad's answer to Haldi</div>
     </div>
-    <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
+    <div class="ev-body">
+      <p class="story">Azhar's family sends the turmeric over first — mixed with sandalwood and rosewater into a paste the colour of marigolds — and that is what opens the evening. Not flowers, not sweets. This. It travels from his house to hers, and the moment it arrives, the Manja begins. Meanwhile, on the other side of the city, the same paste is being worked into Azhar's hands by his women. Two ceremonies, same night, same ritual, one city apart. Tradition's way of starting them together even before they're in the same room.</p>
+      <p class="story">The women of Zeenath's family apply it in turns — oldest first, that part is not negotiable. Hands, face, feet. Each round comes with a quiet dua: for health, for ease, for whatever the woman saying it most wants for her. The turmeric is meant to make her glow, and it will — also everything she owns for roughly three days after. From tonight, she doesn't step out of the house again until Sunday's Nikah. The house holds her. That's the tradition, and we're keeping it.</p>
+      <p class="story">Come expecting organised chaos. There will be dinner, then turmeric, then the kind of dancing that happens when someone's aunt picks up a dhol and refuses to put it down.</p>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-time">8 pm</div><div><div class="tl-event">Dinner</div><div class="tl-note">Come hungry, come early. It goes fast.</div></div></div>
+        <div class="tl-row"><div class="tl-time">After dinner</div><div><div class="tl-event">The Manja</div><div class="tl-note">Elders apply first. Then everyone joins in. You will get yellow on you — that's the point.</div></div></div>
+        <div class="tl-row"><div class="tl-time">After that</div><div><div class="tl-event">Music &amp; dancing</div><div class="tl-note">No formal end time. The night decides.</div></div></div>
+      </div>
+      <p class="guest-note">Yellow is the colour of the evening — wear it if you have it. If not, wear something you're OK getting golden. The turmeric has no respect for nice clothes.</p>
+    </div>
+  </section>
+
+  <section id="panel-mehendi" class="event-section mehendi">
+    <div class="ev-head" data-watermark="M">
+      <div class="ev-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
+      <h2 class="ev-title">Mehendi</h2>
+      <div class="ev-sub">&amp; Choodi</div>
+    </div>
+    <div class="ev-body">
+      <p class="story">Same house as last night — daylight now, breakfast instead of dinner, a lot less turmeric to worry about. Today's whole plot: someone paints your hands, you let them.</p>
+      <p class="story">Several henna artists on hand, so no queue eating your whole morning — wander over, pick a pattern, get it done between cups of chai. Choodi happens alongside it, bangles chosen purely on vibes. Zeenath included.</p>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-time">9 am</div><div><div class="tl-event">Breakfast</div><div class="tl-note">Come whenever, the morning runs loose.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Through the morning</div><div><div class="tl-event">Mehendi &amp; Choodi</div><div class="tl-note">Multiple artists on hand — get in line for your own, and pick your bangles.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Afternoon</div><div><div class="tl-event">Lunch</div><div class="tl-note">For everyone, whether you're mid-henna or done.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Dinner</div><div class="tl-note">For anyone who stays on.</div></div></div>
+      </div>
+      <p class="guest-note">Wear something you don't mind getting a little henna on. Come get your hands done — genuinely, we will be a bit offended if you don't.</p>
+    </div>
+  </section>
+
+  <section id="panel-nikah" class="event-section nikah">
+    <div class="ev-head" data-watermark="N">
+      <div class="ev-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
+      <h2 class="ev-title">Nikah</h2>
+      <div class="ev-sub">&amp; the Jalwa</div>
+    </div>
+    <div class="ev-body">
+      <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything. Tap through for what actually happens:</p>
+      <div class="qa">
+        <details>
+          <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
+          <div class="qa-body">
+            <p>The Qari opens with three Quranic verses in Arabic, then translates. The congregation listens in silence — this is the ceremony's only sermon, and it sets the entire tone of what follows.</p>
+            <p>One verse on two souls being of the same root, returning to each other. One on speaking plainly and truthfully — a marriage runs on exactly that, every day, for decades. One on holding steady through the ordinary stretch of a life together. Three minutes, and somehow all of it covered.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
+          <div class="qa-body">
+            <p>His side, her side, seated apart — tradition, not logistics. The contract passes through intermediaries rather than face to face: a proposal spoken on Azhar's behalf, carried to Zeenath by her Wali (her father, speaking for her and with her full consent), witnessed by two men present in the room with her.</p>
+            <p>It rests entirely on one moment: <em>Qubool Hai</em> — "I accept." Said three times, out loud, clearly. Qubool from the Arabic root meaning to receive, to welcome, to turn toward. Zeenath says it three times; Azhar will have already said his. That's it. Done. Married on paper. Everything after is ceremony, tradition, and celebration.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span>What's in the Nikahnama?</span><span class="icon">+</span></summary>
+          <div class="qa-body">
+            <p>The Nikahnama is the marriage contract — a physical document, signed by both, witnessed, and kept. At its centre is the Mehr: a gift Azhar owes Zeenath outright, decided and written down before either of them says a word. It is hers alone. Not symbolic, not a formality, not the family's to touch. She can claim it any time, no reason required.</p>
+            <p>The amount is announced aloud during the ceremony. This is deliberate — the witnesses are there precisely so it cannot be quietly changed later.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
+          <div class="qa-body">
+            <p>Two customs, back to back, both Hyderabadi through and through. First, the <em>Jilwa</em>: Zeenath's female relatives hold a cloth around her and lower it slowly, revealing her to Azhar's side in full bridal dress for the first time. The room watches. He sees her.</p>
+            <p>Then the <em>Arsi Mushaf</em>: one shawl drawn over both of them, a mirror held up with a Quran resting just above it. Their first look at each other as husband and wife — through that mirror, same second. Under the shawl, they read a few verses to one another quietly. First words as a married couple: scripture.</p>
+            <p>Guests then do Salaami — elders first, then everyone else. On your way out: small packets of Maleeda — crushed fried roti, ghee, sugar, cardamom. A Hyderabadi tradition at weddings.</p>
+          </div>
+        </details>
+        <details>
+          <summary><span>What do guests actually do?</span><span class="icon">+</span></summary>
+          <div class="qa-body">
+            <p>During the khutbah: listen. Stay seated and quiet — the ceremony is short and deserves attention.</p>
+            <p>When the dua is read at the close of the khutbah: say Ameen out loud, together. The room does it in unison. It sounds like one voice.</p>
+            <p>When Qubool Hai is confirmed: clap, ululate, say Mubarak. This is the moment. Let it be loud.</p>
+            <p>At the Jalwa: watch, then come forward for Salaami when it begins. Elders go first.</p>
+          </div>
+        </details>
+      </div>
+      <div class="couplet">
+        "So race toward all that is good."
+        <div class="attr">Surah Al-Baqarah, 2:148</div>
+      </div>
+      <div class="timeline">
+        <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Two sides seated apart. Please stay seated and quiet through the ceremony.</div></div></div>
+        <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
+        <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jilwa, then Arsi Mushaf, then Salaami — elders first. Collect your Maleeda on the way out.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="panel-reception" class="event-section reception">
+    <div class="ev-head" data-watermark="R">
+      <div class="ev-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
+      <h2 class="ev-title">Reception</h2>
+      <div class="ev-sub">The evening they've been waiting to throw</div>
+    </div>
+    <div class="ev-body">
+      <p class="story">This one isn't about ritual at all. It's just the two of them, married now, wanting everyone they love in the same room at once. Full formalwear, real dinner, no rush.</p>
+      <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
+      <div class="couplet">
+        "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
+        <div class="attr">Mawlana Jalal al-Din Rumi</div>
+      </div>
+      <p class="guest-note">Your presence at their table really is the only gift they're after.</p>
+    </div>
+  </section>
+
+</div>
+
+<!-- EVENT MODAL -->
+<div id="ev-modal" role="dialog" aria-modal="true" aria-label="Event details">
+  <div class="ev-modal-bar">
+    <span class="ev-modal-cur"></span>
+    <button class="ev-modal-close" aria-label="Close event">Close</button>
   </div>
-</section>
+  <div class="ev-modal-body"></div>
+</div>
+
 
 <!-- WHO IS ZEHAR -->
 <section class="zehar-section" id="zehar" data-hud-key="zehar">
@@ -1602,6 +1829,10 @@
     rsvp: [
       "The caterer needs to know. So, frankly, do I.",
       "Say yes. The biryani is counted by heads.",
+    ],
+    events: [
+      "Four celebrations. Three days. Pick one.",
+      "Tap a card. I will tell you what happens inside.",
     ],
     venue: [
       "Heritage Palace. Scouted. Approved. Magnificent.",
@@ -2000,6 +2231,51 @@
     } else {
       startVine();
     }
+  })();
+
+
+  // ── Event card → modal ──────────────────────────────
+  (function(){
+    const modal = document.getElementById('ev-modal');
+    const body = modal && modal.querySelector('.ev-modal-body');
+    const cur  = modal && modal.querySelector('.ev-modal-cur');
+    const closeBtn = modal && modal.querySelector('.ev-modal-close');
+    if(!modal || !body) return;
+
+    const LABELS = {
+      manja:'Manja', mehendi:'Mehendi', nikah:'Nikah', reception:'Reception'
+    };
+
+    function openModal(key){
+      const panel = document.getElementById('panel-' + key);
+      if(!panel) return;
+      body.innerHTML = '';
+      body.appendChild(panel.cloneNode(true));
+      if(cur) cur.textContent = LABELS[key] || '';
+      modal.classList.add('open');
+      modal.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+      if(typeof cycle === 'function') cycle(key);
+      // Re-init QA details toggle (cloned <details> work natively)
+    }
+
+    function closeModal(){
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.ev-card').forEach(function(card){
+      function go(){ openModal(card.getAttribute('data-event')); }
+      card.addEventListener('click', go);
+      card.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); }
+      });
+    });
+
+    if(closeBtn) closeBtn.addEventListener('click', closeModal);
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    });
   })();
 
 </script>
