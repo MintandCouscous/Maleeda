@@ -67,7 +67,7 @@
     position:fixed; inset:0; z-index:200; background:#FDFAF5;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    overflow:hidden; transition:opacity 1.8s ease;
+    overflow:hidden; transition:opacity 0.85s ease;
   }
   #gate.leaving{ opacity:0; pointer-events:none; }
   #gate canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; display:block; }
@@ -88,8 +88,8 @@
     display:flex; align-items:baseline; justify-content:center;
     gap:0.08em;
     opacity:0; transform:translateY(24px);
-    transition:opacity 2.6s cubic-bezier(0.16,1,0.3,1),
-               transform 2.6s cubic-bezier(0.16,1,0.3,1);
+    transition:opacity 1.2s cubic-bezier(0.16,1,0.3,1),
+               transform 1.2s cubic-bezier(0.16,1,0.3,1);
   }
   #gate.names-in .gate-names-wrap{ opacity:1; transform:translateY(0); }
 
@@ -106,12 +106,12 @@
     margin-top:22px; font-family:'EB Garamond',serif;
     font-size:10px; letter-spacing:0.46em; text-transform:uppercase;
     color:rgba(26,20,16,0.35);
-    opacity:0; transition:opacity 2.2s ease 0.6s;
+    opacity:0; transition:opacity 1s ease 0.25s;
   }
   .gate-place{
     margin-top:7px; font-family:'EB Garamond',serif; font-style:italic;
     font-size:13px; letter-spacing:0.06em; color:rgba(74,62,56,0.42);
-    opacity:0; transition:opacity 2.2s ease 1s;
+    opacity:0; transition:opacity 1s ease 0.45s;
   }
   #gate.names-in .gate-date,
   #gate.names-in .gate-place{ opacity:1; }
@@ -123,7 +123,7 @@
     color:rgba(26,20,16,0.4); font-family:'EB Garamond',serif;
     font-size:10px; letter-spacing:0.42em; text-transform:uppercase;
     padding:0 0 9px; cursor:pointer;
-    opacity:0; transition:opacity 1.6s ease, border-color 0.4s ease, color 0.4s ease;
+    opacity:0; transition:opacity 0.9s ease, border-color 0.3s ease, color 0.3s ease;
   }
   .gate-enter:hover{
     border-color:rgba(197,151,58,0.5); color:rgba(197,151,58,0.9);
@@ -526,7 +526,7 @@
 
   /* ═══ HUD-HUD HOUSE — top-right panel, self-contained, never blocks content ═══ */
   #hud{
-    position:fixed; z-index:80;
+    position:fixed; z-index:180;
     right:0; top:0; left:auto; bottom:auto;
     width:188px;
     background:rgba(255,252,247,0.97);
@@ -559,8 +559,7 @@
   #hud.perched #hud-branch{ opacity:1; }
   #wing-l, #wing-r{ transform-origin:24px 24px; animation:hud-flap 0.9s ease-in-out infinite; }
   #wing-r{ animation-delay:0.05s; }
-  #hud.flying #wing-l, #hud.flying #wing-r{ animation:hud-flap-fast 0.26s ease-in-out infinite; }
-  #hud.flying #hud-avatar{ animation:none; }
+  #hud.flying #hud-avatar video.bird{ opacity:0.8; }
   @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
   @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
   @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
@@ -643,7 +642,7 @@
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:18px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
   @media(max-width:640px){
     #hud{ width:158px; padding:10px 12px 0; border-bottom-left-radius:20px; }
-    #hud-avatar svg.bird{ width:80px; height:80px; }
+    #hud-avatar video.bird{ width:88px; height:88px; object-fit:contain; display:block; }
     #hud-bubble{ font-size:13px; }
     #hud-bubble.visible{ padding:9px 2px 14px; }
     .who{ font-size:15px; }
@@ -992,7 +991,7 @@
   /* ── Events Gallery ───────────────────────────────── */
   #events-gallery{
     scroll-snap-align:start;
-    min-height:100vh;
+    min-height:auto;
     display:flex; flex-direction:column;
     background:var(--ivory);
     overflow:hidden;
@@ -1074,46 +1073,7 @@
     transition:opacity 0.28s ease, transform 0.28s ease;
   }
 
-  /* ── Event Modal ───────────────────────────────────── */
-  #ev-modal{
-    position:fixed; inset:0; z-index:160;
-    background:var(--ivory);
-    transform:translateY(100%);
-    transition:transform 0.65s cubic-bezier(0.22,1,0.36,1);
-    overflow-y:auto; -webkit-overflow-scrolling:touch;
-    display:flex; flex-direction:column;
-  }
-  #ev-modal.open{ transform:translateY(0); }
-  .ev-modal-bar{
-    position:sticky; top:0; z-index:10;
-    display:flex; align-items:center; justify-content:space-between;
-    padding:18px 52px;
-    background:rgba(253,250,245,0.97);
-    border-bottom:0.5px solid rgba(197,151,58,0.13);
-    backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
-    flex-shrink:0;
-  }
-  .ev-modal-cur{
-    font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.4em; text-transform:uppercase;
-    color:rgba(197,151,58,0.65);
-  }
-  .ev-modal-close{
-    background:none; border:none;
-    border-bottom:0.5px solid rgba(26,20,16,0.18);
-    padding:0 0 5px; cursor:pointer;
-    font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.36em; text-transform:uppercase;
-    color:rgba(26,20,16,0.42);
-    transition:color 0.2s ease, border-color 0.2s ease;
-  }
-  .ev-modal-close:hover{ color:rgba(197,151,58,0.9); border-color:rgba(197,151,58,0.38); }
-  .ev-modal-body{ flex:1; }
-  #ev-modal .event-section{
-    min-height:calc(100vh - 60px);
-    scroll-snap-align:none;
-    border-bottom:none;
-  }
+
 
   /* ── Hud-hud — bob while perched ─────────────────── */
   @keyframes hud-bob{
@@ -1124,7 +1084,7 @@
   #hud.peek-in:not(.flying):not(.bowing):not(.arriving) #hud-avatar{
     animation:hud-bob 3.6s ease-in-out infinite;
   }
-  #hud-avatar svg.bird{ width:96px; height:96px; filter:drop-shadow(0 4px 12px rgba(35,15,15,0.2)); }
+  #hud-avatar video.bird{ width:108px; height:108px; object-fit:contain; display:block; }
 
   /* ── Mobile gallery ───────────────────────────────── */
   @media(max-width:700px){
@@ -1347,9 +1307,9 @@
 </section>
 
 <!-- EVENT CONTENT PANELS (modal source, not rendered) -->
-<div id="ev-panels" style="display:none" aria-hidden="true">
+<div id="ev-panels">
 
-  <section id="panel-manja" class="event-section manja">
+  <section id="panel-manja" class="event-section manja" data-hud-key="manja">
     <div class="ev-head" data-watermark="M">
       <div class="ev-eyebrow">28 August, Friday · 8 pm · Our Home, Shadnagar</div>
       <h2 class="ev-title">Manja</h2>
@@ -1368,7 +1328,7 @@
     </div>
   </section>
 
-  <section id="panel-mehendi" class="event-section mehendi">
+  <section id="panel-mehendi" class="event-section mehendi" data-hud-key="mehendi">
     <div class="ev-head" data-watermark="M">
       <div class="ev-eyebrow">29 August, Saturday · 9 am · Our Home, Shadnagar</div>
       <h2 class="ev-title">Mehendi</h2>
@@ -1387,7 +1347,7 @@
     </div>
   </section>
 
-  <section id="panel-nikah" class="event-section nikah">
+  <section id="panel-nikah" class="event-section nikah" data-hud-key="nikah">
     <div class="ev-head" data-watermark="N">
       <div class="ev-eyebrow">30 August, Sunday · 12 noon · Heritage Palace, Attapur</div>
       <h2 class="ev-title">Nikah</h2>
@@ -1447,7 +1407,7 @@
     </div>
   </section>
 
-  <section id="panel-reception" class="event-section reception">
+  <section id="panel-reception" class="event-section reception" data-hud-key="reception">
     <div class="ev-head" data-watermark="R">
       <div class="ev-eyebrow">30 August, Sunday · 8 pm · Heritage Palace, Attapur</div>
       <h2 class="ev-title">Reception</h2>
@@ -1466,14 +1426,7 @@
 
 </div>
 
-<!-- EVENT MODAL -->
-<div id="ev-modal" role="dialog" aria-modal="true" aria-label="Event details">
-  <div class="ev-modal-bar">
-    <span class="ev-modal-cur"></span>
-    <button class="ev-modal-close" aria-label="Close event">Close</button>
-  </div>
-  <div class="ev-modal-body"></div>
-</div>
+
 
 
 <!-- WHO IS ZEHAR -->
@@ -1618,25 +1571,9 @@
 
 <div id="hud" class="hidden">
   <div id="hud-avatar">
-    <svg class="bird" viewBox="0 0 48 48" fill="none">
-      <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
-      <path id="wing-l" d="M16 26 C 8 24, 4 30, 6 38 C 12 36, 17 32, 18 27 Z" fill="#D9BE85" stroke="#B8912F" stroke-width="1"/>
-      <path id="wing-r" d="M26 26 C 30 32, 27 38, 20 39 C 19 33, 22 28, 26 26 Z" fill="#C3A46B" stroke="#B8912F" stroke-width="1"/>
-      <path d="M8 24 C 4 18, 6 10, 12 8 C 10 13, 11 18, 14 21 Z" fill="#B8912F"/>
-      <path d="M11 14 C 9 8, 11 2, 13 4 C 13 8, 13 12, 14 13 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
-      <circle cx="13" cy="3" r="2.2" fill="#3A2E22"/>
-      <path d="M14 12 C 13 5, 16 0, 18 3 C 17 7, 16 10, 16 12 Z" fill="#D9BE85" stroke="#7A5A12" stroke-width="0.4"/>
-      <circle cx="18" cy="2" r="2.2" fill="#3A2E22"/>
-      <path d="M17 11 C 17 4, 20 0, 22 3 C 21 6, 20 9, 19 11 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
-      <circle cx="22" cy="2" r="2.2" fill="#3A2E22"/>
-      <path d="M20 12 C 21 5, 24 1, 26 4 C 25 8, 23 11, 22 12 Z" fill="#D9BE85" stroke="#7A5A12" stroke-width="0.4"/>
-      <circle cx="26" cy="4" r="2.2" fill="#3A2E22"/>
-      <path d="M22 14 C 24 8, 26 5, 27 8 C 26 11, 24 13, 23 14 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
-      <circle cx="27" cy="7" r="2.2" fill="#3A2E22"/>
-      <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
-      <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
-      <path d="M12 30 C 16 34, 26 34, 30 30" stroke="#B8912F" stroke-width="1.2" fill="none"/>
-    </svg>
+    <video class="bird" autoplay muted loop playsinline>
+      <source src="hudhud.mp4" type="video/mp4">
+    </video>
     <button id="hud-close" aria-label="Hide Hud-hud" title="Hide Hud-hud">&times;</button>
   </div>
     <svg id="hud-branch" viewBox="0 0 90 22" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:88%;display:block;margin:0 auto -2px;">
@@ -1795,48 +1732,48 @@
 
   const hudLines = {
     greeting: [
-      "Hello! I am Hud-hud.",
-      "Your guide for three days of joy — tap me any time.",
-    ],
-    manja: [
-      "Turmeric. The original filter.",
-      "Everyone leaves yellow and in love. Rude. Effective.",
-    ],
-    mehendi: [
-      "Art you cannot peel off. Lucky you.",
-      "Darker means deeper love — so says every mehendi artist, ever.",
-    ],
-    nikah: [
-      "Three words. Said thrice. Done.",
-      "Qubool hai. The whole story, in six syllables.",
-    ],
-    reception: [
-      "The biryani. That is the announcement.",
-      "Fairy lights. Best outfits. Maximum feeling.",
-    ],
-    moments: [
-      "Four years. Many flights. One word.",
-      "Air India sends their regards.",
-    ],
-    zehar: [
-      "Zehar means poison. He googled it after.",
-      "She named it. He agreed. Here we are.",
-    ],
-    registry: [
-      "They said 'just come.' Then made this page.",
-      "Optional. Very.",
-    ],
-    rsvp: [
-      "The caterer needs to know. So, frankly, do I.",
-      "Say yes. The biryani is counted by heads.",
+      "Good day. I am Hud-hud.",
+      "I will be your guide through three days of celebration.",
     ],
     events: [
-      "Four celebrations. Three days. Pick one.",
-      "Tap a card. I will tell you what happens inside.",
+      "Three days of celebration in Shadnagar and Hyderabad.",
+      "Tap any event to read what happens and when.",
+    ],
+    manja: [
+      "The Manja is where the three days begin.",
+      "Turmeric, family, and a long night ahead — in the very best way.",
+    ],
+    mehendi: [
+      "A morning of henna and bangles.",
+      "Take your time. There is no rush at all.",
+    ],
+    nikah: [
+      "The ceremony is short. Every word in it carries great weight.",
+      "Qubool Hai — said three times, clearly and out loud.",
+    ],
+    reception: [
+      "The final evening, and the grandest one.",
+      "Full formalwear, a proper dinner, everyone they love in one room.",
+    ],
+    moments: [
+      "Four years across two cities.",
+      "Everything that followed was very worth it.",
+    ],
+    zehar: [
+      "The name they gave to what they have together.",
+      "Borrowed from both of them. Meant for both of them.",
+    ],
+    registry: [
+      "A small wishlist, entirely optional.",
+      "Their greatest wish is simply that you come.",
+    ],
+    rsvp: [
+      "Kindly let them know you are coming.",
+      "It means a great deal to them.",
     ],
     venue: [
-      "Heritage Palace. Scouted. Approved. Magnificent.",
-      "Marble, arches, gold. My kind of venue.",
+      "Heritage Palace, Attapur.",
+      "The setting is rather beautiful.",
     ]
   };
 
@@ -2234,49 +2171,23 @@
   })();
 
 
-  // ── Event card → modal ──────────────────────────────
-  (function(){
-    const modal = document.getElementById('ev-modal');
-    const body = modal && modal.querySelector('.ev-modal-body');
-    const cur  = modal && modal.querySelector('.ev-modal-cur');
-    const closeBtn = modal && modal.querySelector('.ev-modal-close');
-    if(!modal || !body) return;
 
-    const LABELS = {
-      manja:'Manja', mehendi:'Mehendi', nikah:'Nikah', reception:'Reception'
-    };
-
-    function openModal(key){
-      const panel = document.getElementById('panel-' + key);
-      if(!panel) return;
-      body.innerHTML = '';
-      body.appendChild(panel.cloneNode(true));
-      if(cur) cur.textContent = LABELS[key] || '';
-      modal.classList.add('open');
-      modal.scrollTop = 0;
-      document.body.style.overflow = 'hidden';
+  // ── Event card → smooth scroll to section ───────────
+  document.querySelectorAll('.ev-card').forEach(function(card){
+    card.addEventListener('click', function(){
+      const key = card.getAttribute('data-event');
+      const target = document.getElementById('panel-' + key);
+      const site = document.getElementById('site');
+      if(!target || !site) return;
+      site.scrollTo({ top: target.offsetTop - 48, behavior: 'smooth' });
       if(typeof cycle === 'function') cycle(key);
-      // Re-init QA details toggle (cloned <details> work natively)
-    }
-
-    function closeModal(){
-      modal.classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    document.querySelectorAll('.ev-card').forEach(function(card){
-      function go(){ openModal(card.getAttribute('data-event')); }
-      card.addEventListener('click', go);
-      card.addEventListener('keydown', function(e){
-        if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); go(); }
-      });
     });
-
-    if(closeBtn) closeBtn.addEventListener('click', closeModal);
-    document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault(); card.click();
+      }
     });
-  })();
+  });
 
 </script>
 
