@@ -1057,7 +1057,7 @@
     font-size:9.5px;
     letter-spacing:0.4em;
     text-transform:uppercase;
-    color:rgba(26,20,16,0.32);
+    color:rgba(26,20,16,0.55);
     margin-top:6px;
   }
   /* ── Grid ──────────────────────────────────────────── */
@@ -1100,11 +1100,11 @@
     position:absolute;
     font-family:'EB Garamond',serif;
     font-size:7.5px;
-    color:rgba(197,151,58,0.32);
+    color:rgba(197,151,58,0.55);
     line-height:1;
     transition:color 0.3s ease;
   }
-  .vic-tile:hover .vic-c{ color:rgba(197,151,58,0.55); }
+  .vic-tile:hover .vic-c{ color:rgba(197,151,58,0.82); }
   .vic-c-tl{ top:12px; left:12px; }
   .vic-c-tr{ top:12px; right:12px; }
   .vic-c-bl{ bottom:12px; left:12px; }
@@ -1114,7 +1114,7 @@
     position:relative; z-index:1;
     font-family:'EB Garamond',serif;
     font-size:9px; letter-spacing:0.36em; text-transform:uppercase;
-    color:rgba(197,151,58,0.72);
+    color:rgba(197,151,58,0.9);
     margin-bottom:14px;
   }
   .vic-name{
@@ -1129,7 +1129,7 @@
     position:relative; z-index:1;
     font-family:'EB Garamond',serif;
     font-size:9.5px;
-    color:rgba(197,151,58,0.48);
+    color:rgba(197,151,58,0.7);
     letter-spacing:0.28em;
     margin-bottom:14px;
   }
@@ -1139,14 +1139,14 @@
     font-style:italic;
     font-size:clamp(13.5px,1.6vw,16.5px);
     color:var(--ink-soft);
-    opacity:0.6;
+    opacity:0.82;
     line-height:1.5;
   }
   .vic-tag{
     position:relative; z-index:1;
     font-family:'EB Garamond',serif;
     font-size:9px; letter-spacing:0.22em; text-transform:uppercase;
-    color:rgba(26,20,16,0.28);
+    color:rgba(26,20,16,0.55);
     margin-top:10px;
   }
   /* open hint */
@@ -1289,6 +1289,25 @@
     margin-top:10px;
     font-family:'EB Garamond',serif; font-style:normal;
     font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.48;
+  }
+  /* overlay prev/next nav */
+  .vic-ov-nav{
+    display:flex; gap:28px; align-items:center;
+  }
+  .vic-ov-prev, .vic-ov-next{
+    background:none; border:none;
+    border-bottom:0.5px solid rgba(26,20,16,0.15);
+    padding:0 0 3px; cursor:pointer;
+    font-family:'EB Garamond',serif;
+    font-size:9.5px; letter-spacing:0.32em; text-transform:uppercase;
+    color:rgba(26,20,16,0.38);
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .vic-ov-prev:hover, .vic-ov-next:hover{
+    color:rgba(197,151,58,0.85); border-color:rgba(197,151,58,0.4);
+  }
+  .vic-ov-prev:disabled, .vic-ov-next:disabled{
+    opacity:0.2; cursor:default;
   }
   /* mobile */
   @media(max-width:700px){
@@ -1524,7 +1543,11 @@
   <div class="vic-ov-frame2" aria-hidden="true"></div>
   <div class="vic-ov-bar">
     <span class="vic-ov-cur"></span>
-    <button class="vic-ov-close">Close</button>
+    <div class="vic-ov-nav">
+      <button class="vic-ov-prev" aria-label="Previous event">← Prev</button>
+      <button class="vic-ov-next" aria-label="Next event">Next →</button>
+      <button class="vic-ov-close">Close</button>
+    </div>
   </div>
   <div class="vic-ov-body">
     <div class="vic-ov-inner"></div>
@@ -1652,53 +1675,53 @@
 
 <!-- MOMENTS / PHOTOS -->
 <section class="photos-section" id="moments" data-hud-key="moments">
-  <div class="photos-eyebrow">Four years in frames</div>
+  <div class="photos-eyebrow">Ek cup irani chai se yahan tak</div>
   <h2 class="photos-heading">Moments</h2>
   <div class="polaroid-strip">
 
     <div class="polaroid" style="--r:-6deg; --d:0s">
       <div class="polaroid-pin"></div>
       <div class="polaroid-frame">
-        <!-- replace with: <img src="YOUR_URL" alt="How it started"> -->
-        <span class="ph-sym">A & Z</span>
+        <!-- replace with: <img src="YOUR_URL" alt="Nimrah Café"> -->
+        <span class="ph-sym">☕</span>
       </div>
-      <div class="polaroid-label">How it started · Oct 2021</div>
+      <div class="polaroid-label">Nimrah Café, Charminar · Oct 2021<br><em style="font-size:10.5px; opacity:0.7">"just friends," they said. the chai knew otherwise.</em></div>
     </div>
 
     <div class="polaroid" style="--r:4deg; --d:0.1s">
       <div class="polaroid-pin"></div>
       <div class="polaroid-frame">
         <!-- replace with: <img src="YOUR_URL" alt="Zehar"> -->
-        <span class="ph-sym">Zehar</span>
+        <span class="ph-sym">زهر</span>
       </div>
-      <div class="polaroid-label">When we named it · Jan 2022</div>
+      <div class="polaroid-label">She named it Zehar · Jan 2022<br><em style="font-size:10.5px; opacity:0.7">he googled "zehar meaning" three months later. too late.</em></div>
     </div>
 
     <div class="polaroid" style="--r:-2deg; --d:0.2s">
       <div class="polaroid-pin"></div>
       <div class="polaroid-frame">
-        <!-- replace with: <img src="YOUR_URL" alt="Different cities"> -->
+        <!-- replace with: <img src="YOUR_URL" alt="DEL-HYD commute"> -->
         <span class="ph-sym">✈</span>
       </div>
-      <div class="polaroid-label">Different cities, same show</div>
+      <div class="polaroid-label">DEL ⇄ HYD · 2022–2025<br><em style="font-size:10.5px; opacity:0.7">Air India. IndiGo. whoever was cheapest that week.</em></div>
     </div>
 
     <div class="polaroid" style="--r:7deg; --d:0.3s">
       <div class="polaroid-pin"></div>
       <div class="polaroid-frame">
-        <!-- replace with: <img src="YOUR_URL" alt="Air India regulars"> -->
+        <!-- replace with: <img src="YOUR_URL" alt="Eid apart"> -->
         <span class="ph-sym">☽</span>
       </div>
-      <div class="polaroid-label">Air India regulars</div>
+      <div class="polaroid-label">Eid · Two cities, one biryani recipe<br><em style="font-size:10.5px; opacity:0.7">same handi. different kitchens. absolutely not the same.</em></div>
     </div>
 
     <div class="polaroid" style="--r:-4deg; --d:0.4s">
       <div class="polaroid-pin"></div>
       <div class="polaroid-frame">
         <!-- replace with: <img src="YOUR_URL" alt="Hyderabad finally"> -->
-        <span class="ph-sym">✿</span>
+        <span class="ph-sym">❋</span>
       </div>
-      <div class="polaroid-label">Hyderabad, finally</div>
+      <div class="polaroid-label">Hyderabad, finally · 2025<br><em style="font-size:10.5px; opacity:0.7">same city. same zomato account. amma approved.</em></div>
     </div>
 
     <div class="polaroid" style="--r:2deg; --d:0.5s">
@@ -1707,7 +1730,7 @@
         <!-- replace with: <img src="YOUR_URL" alt="Wedding day"> -->
         <span class="ph-sym">28.8</span>
       </div>
-      <div class="polaroid-label">28 August 2026</div>
+      <div class="polaroid-label">28 August 2026<br><em style="font-size:10.5px; opacity:0.7">every flight delay led here. worth it.</em></div>
     </div>
 
   </div>
@@ -1949,48 +1972,48 @@
 
   const hudLines = {
     greeting: [
-      "Good day. I am Hud-hud.",
-      "I will be your guide through three days of celebration.",
+      "Oh! Oh, hello! You're here! I have been waiting in this tree for DAYS.",
+      "I am Hud-hud. I am very soft. Please enjoy the wedding.",
     ],
     events: [
-      "Three days of celebration in Shadnagar and Hyderabad.",
-      "Tap any event to read what happens and when.",
+      "Three whole days of celebration! I get a new perch for each one.",
+      "Tap any card — I will tell you everything. I know everything.",
     ],
     manja: [
-      "The Manja is where the three days begin.",
-      "Turmeric, family, and a long night ahead — in the very best way.",
+      "Turmeric! My favourite smell after orange blossoms and joy!",
+      "Everyone leaves yellow. It is honestly the best tradition ever invented.",
     ],
     mehendi: [
-      "A morning of henna and bangles.",
-      "Take your time. There is no rush at all.",
+      "Henna! Bangles! Chai! Morning light! I am having such a good time.",
+      "Multiple artists on hand — no queue — you can pet me while you wait.",
     ],
     nikah: [
-      "The ceremony is short. Every word in it carries great weight.",
-      "Qubool Hai — said three times, clearly and out loud.",
+      "Fifteen minutes. The shortest ceremony. The heaviest words.",
+      "Qubool Hai, three times — and then everything is different.",
     ],
     reception: [
-      "The final evening, and the grandest one.",
-      "Full formalwear, a proper dinner, everyone they love in one room.",
+      "The biryani at Heritage Palace. I have been thinking about it all year.",
+      "Full formalwear. Proper dinner. Everyone they love. I will be perched nearby.",
     ],
     moments: [
-      "Four years across two cities.",
-      "Everything that followed was very worth it.",
+      "Four years. Two cities. One very patient bird watching from a tree.",
+      "I saw the whole thing. It was beautiful. I am a little emotional.",
     ],
     zehar: [
-      "The name they gave to what they have together.",
-      "Borrowed from both of them. Meant for both of them.",
+      "She named it. He googled it months later. He is now legally bound.",
+      "A very good joke that turned into a very good marriage.",
     ],
     registry: [
-      "A small wishlist, entirely optional.",
-      "Their greatest wish is simply that you come.",
+      "They said they don't need anything! They do not need anything!",
+      "But if you insist — which some of you will — the list is right here.",
     ],
     rsvp: [
-      "Kindly let them know you are coming.",
-      "It means a great deal to them.",
+      "Please come! I have been practicing my welcome chirp for weeks!",
+      "Just fill this in. I will personally supervise the biryani portion on your behalf.",
     ],
     venue: [
-      "Heritage Palace, Attapur.",
-      "The setting is rather beautiful.",
+      "Heritage Palace, Attapur. Very grand. Very beautiful. Very me.",
+      "I have already scouted the best branch. It has an excellent view.",
     ]
   };
 
@@ -2150,32 +2173,30 @@
   // );
   // Enable RLS, add an insert-only policy for the anon role.
 
-  document.getElementById('rsvp-submit').addEventListener('click', async function(){
+  document.getElementById('rsvp-submit').addEventListener('click', function(){
     const status = document.getElementById('rsvp-status');
     const name = document.getElementById('rsvp-name').value.trim();
     if(!name){ status.textContent = 'Please add your name first.'; return; }
 
-    const payload = { name: name };
+    const rows = [];
     document.querySelectorAll('.rsvp-row').forEach(function(row){
-      const field = row.querySelector('.toggle').dataset.field;
-      const active = row.querySelector('button.opt.active').dataset.val;
-      payload[field] = (active === 'yes');
+      const label = row.querySelector('.label').firstChild.textContent.trim();
+      const small = row.querySelector('small') ? row.querySelector('small').textContent.trim() : '';
+      const val   = row.querySelector('button.opt.active').dataset.val === 'yes' ? 'Yes ✓' : 'No ✗';
+      rows.push(label + ' (' + small + '): ' + val);
     });
 
-    if(SUPABASE_URL === 'YOUR_SUPABASE_PROJECT_URL'){
-      console.log('RSVP payload (Supabase not configured yet):', payload);
-      status.textContent = 'RSVP captured locally — connect Supabase to store it for real.';
-      return;
-    }
-    status.textContent = 'Sending...';
-    try{
-      const res = await fetch(SUPABASE_URL + '/rest/v1/rsvps', {
-        method:'POST',
-        headers:{ 'Content-Type':'application/json','apikey':SUPABASE_ANON_KEY,'Authorization':'Bearer '+SUPABASE_ANON_KEY,'Prefer':'return=minimal' },
-        body: JSON.stringify(payload)
-      });
-      status.textContent = res.ok ? 'Thank you — your RSVP is in.' : 'Something went wrong. Please try again.';
-    } catch(err){ status.textContent = 'Something went wrong. Please try again.'; }
+    const body = 'Hi Zeenath & Azhar,%0A%0AHere is my RSVP:%0A%0A'
+               + 'Name: ' + encodeURIComponent(name) + '%0A%0A'
+               + rows.map(function(r){ return encodeURIComponent(r); }).join('%0A')
+               + '%0A%0ALooking forward to celebrating with you!';
+
+    const mailto = 'mailto:jahaanzeenath@gmail.com'
+                 + '?subject=' + encodeURIComponent('RSVP from ' + name)
+                 + '&body=' + body;
+
+    window.location.href = mailto;
+    status.textContent = 'Your email app is opening — just hit send!';
   });
 
   // ════════════════════════════════════════════════
@@ -2392,27 +2413,38 @@
   // ── Victorian Event Overlay ──────────────────────────
   (function(){
     const ov      = document.getElementById('vic-ov');
+    if(!ov) return;
     const cur     = ov.querySelector('.vic-ov-cur');
     const inner   = ov.querySelector('.vic-ov-inner');
     const closeBtn= ov.querySelector('.vic-ov-close');
-    if(!ov) return;
+    const prevBtn = ov.querySelector('.vic-ov-prev');
+    const nextBtn = ov.querySelector('.vic-ov-next');
 
+    const events = ['manja','mehendi','nikah','reception'];
     const labels = {
       manja:     'Manja · 28 August',
       mehendi:   'Mehendi · 29 August',
       nikah:     'Nikah · 30 August',
       reception: 'Reception · 30 August'
     };
+    let currentIdx = 0;
 
-    function openOv(key){
+    function loadEvent(key){
       const src = document.getElementById('vp-' + key);
       if(!src) return;
       inner.innerHTML = src.innerHTML;
       cur.textContent = labels[key] || key;
+      ov.querySelector('.vic-ov-body').scrollTop = 0;
+      currentIdx = events.indexOf(key);
+      prevBtn.disabled = (currentIdx === 0);
+      nextBtn.disabled = (currentIdx === events.length - 1);
+      if(typeof cycle === 'function') cycle(key);
+    }
+
+    function openOv(key){
+      loadEvent(key);
       ov.setAttribute('aria-hidden','false');
       ov.classList.add('open');
-      ov.querySelector('.vic-ov-body').scrollTop = 0;
-      if(typeof cycle === 'function') cycle(key);
     }
 
     function closeOv(){
@@ -2430,9 +2462,18 @@
     });
 
     closeBtn.addEventListener('click', closeOv);
+    prevBtn.addEventListener('click', function(){
+      if(currentIdx > 0) loadEvent(events[currentIdx - 1]);
+    });
+    nextBtn.addEventListener('click', function(){
+      if(currentIdx < events.length - 1) loadEvent(events[currentIdx + 1]);
+    });
 
     document.addEventListener('keydown', function(e){
-      if(e.key === 'Escape' && ov.classList.contains('open')) closeOv();
+      if(!ov.classList.contains('open')) return;
+      if(e.key === 'Escape') closeOv();
+      if(e.key === 'ArrowLeft' && currentIdx > 0) loadEvent(events[currentIdx - 1]);
+      if(e.key === 'ArrowRight' && currentIdx < events.length - 1) loadEvent(events[currentIdx + 1]);
     });
   })();
 
