@@ -1202,28 +1202,50 @@
     position:relative; z-index:2;
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding:20px 52px;
-    border-bottom:0.5px solid rgba(197,151,58,0.16);
+    align-items:flex-end;
+    padding:0 52px 0;
+    border-bottom:0.5px solid rgba(197,151,58,0.2);
     background:rgba(253,250,245,0.97);
     backdrop-filter:blur(14px);
     flex-shrink:0;
   }
-  .vic-ov-cur{
-    font-family:'EB Garamond',serif;
-    font-size:9.5px; letter-spacing:0.4em; text-transform:uppercase;
-    color:rgba(197,151,58,0.7);
+  /* event tabs */
+  .vic-ov-tabs{
+    display:flex;
+    gap:0;
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .vic-ov-tabs::-webkit-scrollbar{ display:none; }
+  .vic-ov-tab{
+    background:none; border:none;
+    border-bottom:2.5px solid transparent;
+    padding:18px 22px 15px;
+    cursor:pointer;
+    font-family:'Cormorant Garamond',serif;
+    font-size:17px; font-style:italic;
+    color:rgba(26,20,16,0.38);
+    white-space:nowrap;
+    transition:color 0.22s ease, border-color 0.22s ease;
+    flex-shrink:0;
+  }
+  .vic-ov-tab:hover{ color:rgba(26,20,16,0.72); }
+  .vic-ov-tab.active{
+    color:rgba(26,20,16,0.92);
+    border-bottom-color:rgba(197,151,58,0.7);
   }
   .vic-ov-close{
     background:none; border:none;
-    border-bottom:0.5px solid rgba(26,20,16,0.18);
-    padding:0 0 4px; cursor:pointer;
+    padding:18px 0 17px;
+    cursor:pointer;
     font-family:'EB Garamond',serif;
-    font-size:9.5px; letter-spacing:0.38em; text-transform:uppercase;
-    color:rgba(26,20,16,0.4);
-    transition:color 0.2s ease, border-color 0.2s ease;
+    font-size:10px; letter-spacing:0.38em; text-transform:uppercase;
+    color:rgba(26,20,16,0.55);
+    flex-shrink:0;
+    margin-left:32px;
+    transition:color 0.2s ease;
   }
-  .vic-ov-close:hover{ color:rgba(197,151,58,0.85); border-color:rgba(197,151,58,0.4); }
+  .vic-ov-close:hover{ color:rgba(197,151,58,0.9); }
   .vic-ov-body{
     flex:1; overflow-y:auto;
     padding:56px 80px 90px;
@@ -1237,7 +1259,7 @@
   .vic-ov-body .ov-eyebrow{
     font-family:'EB Garamond',serif;
     font-size:9.5px; letter-spacing:0.4em; text-transform:uppercase;
-    color:rgba(197,151,58,0.7);
+    color:rgba(197,151,58,1);
     margin-bottom:14px;
   }
   .vic-ov-body .ov-title{
@@ -1250,7 +1272,7 @@
   .vic-ov-body .ov-sub{
     font-family:'Cormorant Garamond',serif;
     font-style:italic; font-size:17px; font-weight:300;
-    color:var(--ink-soft); opacity:0.65;
+    color:var(--ink-soft); opacity:0.88;
     margin-bottom:38px;
   }
   .vic-ov-body .ov-rule{
@@ -1275,7 +1297,7 @@
   }
   .vic-ov-body .story + .story{ margin-top:14px; }
   .vic-ov-body .timeline{ margin:34px 0 0; }
-  .vic-ov-body .guest-note{ margin:32px 0 0; font-size:16px; font-style:italic; opacity:0.6; }
+  .vic-ov-body .guest-note{ margin:32px 0 0; font-size:16px; font-style:italic; opacity:0.78; }
   .vic-ov-body .qa{ margin-top:28px; max-width:600px; }
   .vic-ov-body .couplet{
     font-family:'Cormorant Garamond',serif;
@@ -1288,27 +1310,12 @@
   .vic-ov-body .attr{
     margin-top:10px;
     font-family:'EB Garamond',serif; font-style:normal;
-    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.48;
+    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.68;
   }
-  /* overlay prev/next nav */
-  .vic-ov-nav{
-    display:flex; gap:28px; align-items:center;
-  }
-  .vic-ov-prev, .vic-ov-next{
-    background:none; border:none;
-    border-bottom:0.5px solid rgba(26,20,16,0.15);
-    padding:0 0 3px; cursor:pointer;
-    font-family:'EB Garamond',serif;
-    font-size:9.5px; letter-spacing:0.32em; text-transform:uppercase;
-    color:rgba(26,20,16,0.38);
-    transition:color 0.2s ease, border-color 0.2s ease;
-  }
-  .vic-ov-prev:hover, .vic-ov-next:hover{
-    color:rgba(197,151,58,0.85); border-color:rgba(197,151,58,0.4);
-  }
-  .vic-ov-prev:disabled, .vic-ov-next:disabled{
-    opacity:0.2; cursor:default;
-  }
+  .vic-ov-body .tl-time{ color:rgba(197,151,58,0.9); opacity:1; font-size:13px; font-weight:normal; }
+  .vic-ov-body .tl-note{ opacity:0.8; }
+  .vic-ov-body .tl-event{ font-size:17px; }
+
   /* mobile */
   @media(max-width:700px){
     #events-vic{ padding:44px 22px; }
@@ -1319,7 +1326,8 @@
     .vic-tile:nth-child(1),.vic-tile:nth-child(2),.vic-tile:nth-child(3){ border-bottom:0.5px solid rgba(197,151,58,0.18); }
     .vic-tile:nth-child(4){ border-bottom:none; }
     .vic-tile{ padding:28px 22px; }
-    .vic-ov-bar{ padding:16px 24px; }
+    .vic-ov-bar{ padding:0 16px; }
+    .vic-ov-tab{ padding:14px 14px 12px; font-size:15px; }
     .vic-ov-body{ padding:36px 24px 60px; }
   }
   </style>
@@ -1542,12 +1550,13 @@
   <div class="vic-ov-frame" aria-hidden="true"></div>
   <div class="vic-ov-frame2" aria-hidden="true"></div>
   <div class="vic-ov-bar">
-    <span class="vic-ov-cur"></span>
-    <div class="vic-ov-nav">
-      <button class="vic-ov-prev" aria-label="Previous event">← Prev</button>
-      <button class="vic-ov-next" aria-label="Next event">Next →</button>
-      <button class="vic-ov-close">Close</button>
+    <div class="vic-ov-tabs">
+      <button class="vic-ov-tab" data-event="manja">Manja</button>
+      <button class="vic-ov-tab" data-event="mehendi">Mehendi</button>
+      <button class="vic-ov-tab" data-event="nikah">Nikah</button>
+      <button class="vic-ov-tab" data-event="reception">Reception</button>
     </div>
+    <button class="vic-ov-close">Close</button>
   </div>
   <div class="vic-ov-body">
     <div class="vic-ov-inner"></div>
@@ -2414,30 +2423,16 @@
   (function(){
     const ov      = document.getElementById('vic-ov');
     if(!ov) return;
-    const cur     = ov.querySelector('.vic-ov-cur');
     const inner   = ov.querySelector('.vic-ov-inner');
     const closeBtn= ov.querySelector('.vic-ov-close');
-    const prevBtn = ov.querySelector('.vic-ov-prev');
-    const nextBtn = ov.querySelector('.vic-ov-next');
-
-    const events = ['manja','mehendi','nikah','reception'];
-    const labels = {
-      manja:     'Manja · 28 August',
-      mehendi:   'Mehendi · 29 August',
-      nikah:     'Nikah · 30 August',
-      reception: 'Reception · 30 August'
-    };
-    let currentIdx = 0;
+    const tabs    = ov.querySelectorAll('.vic-ov-tab');
 
     function loadEvent(key){
       const src = document.getElementById('vp-' + key);
       if(!src) return;
       inner.innerHTML = src.innerHTML;
-      cur.textContent = labels[key] || key;
       ov.querySelector('.vic-ov-body').scrollTop = 0;
-      currentIdx = events.indexOf(key);
-      prevBtn.disabled = (currentIdx === 0);
-      nextBtn.disabled = (currentIdx === events.length - 1);
+      tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.event === key); });
       if(typeof cycle === 'function') cycle(key);
     }
 
@@ -2461,19 +2456,15 @@
       });
     });
 
+    tabs.forEach(function(tab){
+      tab.addEventListener('click', function(){ loadEvent(tab.dataset.event); });
+    });
+
     closeBtn.addEventListener('click', closeOv);
-    prevBtn.addEventListener('click', function(){
-      if(currentIdx > 0) loadEvent(events[currentIdx - 1]);
-    });
-    nextBtn.addEventListener('click', function(){
-      if(currentIdx < events.length - 1) loadEvent(events[currentIdx + 1]);
-    });
 
     document.addEventListener('keydown', function(e){
       if(!ov.classList.contains('open')) return;
       if(e.key === 'Escape') closeOv();
-      if(e.key === 'ArrowLeft' && currentIdx > 0) loadEvent(events[currentIdx - 1]);
-      if(e.key === 'ArrowRight' && currentIdx < events.length - 1) loadEvent(events[currentIdx + 1]);
     });
   })();
 
