@@ -1426,10 +1426,17 @@
   }
   /* Landscape: let it breathe without forcing 100vh */
   @media (max-height:520px){
-    #invite{ min-height:0; padding:12px 20px 16px; }
-    .invite-arch-wrap{ padding-top:32px; }
-    .invite-caption{ margin-top:16px; }
-    .invite-names{ font-size:clamp(32px,6vw,56px); }
+    #invite{ min-height:0; padding:8px 16px 8px; }
+    .invite-arch-wrap{ padding-top:0; }
+    .invite-video-wrap{
+      aspect-ratio:unset;
+      height:calc(100vh - 48px);
+      max-height:340px;
+      width:auto;
+      max-width:100%;
+      margin:0 auto;
+    }
+    .invite-caption{ display:none; }
   }
   /* Custom play button overlay */
   .invite-play{
@@ -2502,51 +2509,6 @@
 
 
 
-  // ============ RSVP toggle ============
-  document.querySelectorAll('.toggle').forEach(function(toggle){
-    toggle.addEventListener('click', function(e){
-      var btn = e.target.closest('button.opt');
-      if(!btn) return;
-      toggle.querySelectorAll('button.opt').forEach(function(b){ b.classList.remove('active'); });
-      btn.classList.add('active');
-    });
-  });
-
-  const SUPABASE_URL = 'YOUR_SUPABASE_PROJECT_URL';
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-
-  // create table rsvps (
-  //   id uuid primary key default gen_random_uuid(),
-  //   name text not null, manja boolean not null, mehendi boolean not null,
-  //   nikah boolean not null, reception boolean not null, created_at timestamptz default now()
-  // );
-  // Enable RLS, add an insert-only policy for the anon role.
-
-  document.getElementById('rsvp-submit').addEventListener('click', function(){
-    const status = document.getElementById('rsvp-status');
-    const name = document.getElementById('rsvp-name').value.trim();
-    if(!name){ status.textContent = 'Please add your name first.'; return; }
-
-    const rows = [];
-    document.querySelectorAll('.rsvp-row').forEach(function(row){
-      const label = row.querySelector('.label').firstChild.textContent.trim();
-      const small = row.querySelector('small') ? row.querySelector('small').textContent.trim() : '';
-      const val   = row.querySelector('button.opt.active').dataset.val === 'yes' ? 'Yes ✓' : 'No ✗';
-      rows.push(label + ' (' + small + '): ' + val);
-    });
-
-    const body = 'Hi Zeenath & Azhar,%0A%0AHere is my RSVP:%0A%0A'
-               + 'Name: ' + encodeURIComponent(name) + '%0A%0A'
-               + rows.map(function(r){ return encodeURIComponent(r); }).join('%0A')
-               + '%0A%0ALooking forward to celebrating with you!';
-
-    const mailto = 'mailto:jahaanzeenath@gmail.com'
-                 + '?subject=' + encodeURIComponent('RSVP from ' + name)
-                 + '&body=' + body;
-
-    window.location.href = mailto;
-    status.textContent = 'Your email app is opening — just hit send!';
-  });
 
   // ════════════════════════════════════════════════
   //  MOTION UPGRADE — the full enchilada
