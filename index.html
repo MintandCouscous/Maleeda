@@ -400,16 +400,16 @@
     font-size:24px; line-height:1.52; padding-left:24px;
     border-left:1.5px solid rgba(197,151,58,0.5); color:var(--ink);
   }
-  .couplet .attr{ margin-top:10px; font-family:'EB Garamond',serif; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.55; }
+  .couplet .attr{ margin-top:10px; font-family:'EB Garamond',serif; font-style:normal; font-size:13px; letter-spacing:0.08em; text-transform:uppercase; opacity:0.75; }
 
   .ev-body .timeline{ margin:34px 0 0; max-width:520px; }
   .tl-row{ display:grid; grid-template-columns:115px 1fr; gap:22px; padding:19px 0; border-top:0.5px solid rgba(197,151,58,0.2); }
   .tl-row:first-child{ border-top:none; }
-  .tl-time{ font-size:13.5px; padding-top:2px; opacity:0.6; color:var(--champagne); font-family:'EB Garamond',serif; }
+  .tl-time{ font-size:13.5px; padding-top:2px; opacity:0.85; color:var(--champagne); font-family:'EB Garamond',serif; }
   .tl-event{ font-family:'Cormorant Garamond',serif; font-size:20px; margin-bottom:3px; }
   .tl-note{ font-size:15px; opacity:0.82; }
 
-  .ev-body .guest-note{ margin:36px 0 0; max-width:520px; font-size:16.5px; font-style:italic; opacity:0.62; letter-spacing:0.01em; }
+  .ev-body .guest-note{ margin:36px 0 0; max-width:520px; font-size:17px; font-style:italic; opacity:0.82; letter-spacing:0.01em; }
 
   .ev-body .qa{ margin-top:28px; max-width:560px; }
   .qa details{ border-top:0.5px solid rgba(197,151,58,0.3); padding:15px 2px; }
@@ -1224,7 +1224,7 @@
     cursor:pointer;
     font-family:'Cormorant Garamond',serif;
     font-size:17px; font-style:italic;
-    color:rgba(26,20,16,0.38);
+    color:rgba(26,20,16,0.68);
     white-space:nowrap;
     transition:color 0.22s ease, border-color 0.22s ease;
     flex-shrink:0;
@@ -1272,7 +1272,7 @@
   .vic-ov-body .ov-sub{
     font-family:'Cormorant Garamond',serif;
     font-style:italic; font-size:17px; font-weight:300;
-    color:var(--ink-soft); opacity:0.88;
+    color:var(--ink-soft); opacity:1;
     margin-bottom:38px;
   }
   .vic-ov-body .ov-rule{
@@ -1292,12 +1292,12 @@
   }
   .vic-ov-body .story{
     font-family:'Cormorant Garamond',serif;
-    font-size:18.5px; line-height:1.82; opacity:0.86;
+    font-size:19px; line-height:1.82; opacity:0.94;
     color:var(--ink); max-width:640px;
   }
   .vic-ov-body .story + .story{ margin-top:14px; }
   .vic-ov-body .timeline{ margin:34px 0 0; }
-  .vic-ov-body .guest-note{ margin:32px 0 0; font-size:16px; font-style:italic; opacity:0.78; }
+  .vic-ov-body .guest-note{ margin:32px 0 0; font-size:17px; font-style:italic; opacity:0.88; }
   .vic-ov-body .qa{ margin-top:28px; max-width:600px; }
   .vic-ov-body .couplet{
     font-family:'Cormorant Garamond',serif;
@@ -1310,10 +1310,10 @@
   .vic-ov-body .attr{
     margin-top:10px;
     font-family:'EB Garamond',serif; font-style:normal;
-    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.68;
+    font-size:12px; letter-spacing:0.1em; text-transform:uppercase; opacity:0.82;
   }
   .vic-ov-body .tl-time{ color:rgba(197,151,58,0.9); opacity:1; font-size:13px; font-weight:normal; }
-  .vic-ov-body .tl-note{ opacity:0.8; }
+  .vic-ov-body .tl-note{ opacity:0.88; }
   .vic-ov-body .tl-event{ font-size:17px; }
 
   /* mobile */
@@ -1394,14 +1394,27 @@
     min-height:100vh;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    padding:clamp(40px,7vh,80px) 28px clamp(48px,8vh,96px);
+    padding:clamp(24px,5vh,60px) 28px clamp(32px,5vh,72px);
     background:var(--ivory);
     scroll-snap-align:start;
     position:relative;
   }
-  .invite-video-wrap{
+  /* Arch gateway wrapper */
+  .invite-arch-wrap{
     position:relative;
     width:100%; max-width:860px;
+    padding-top:clamp(40px,7%,76px); /* room for arch crown */
+  }
+  .invite-arch-svg{
+    position:absolute;
+    inset:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    overflow:visible;
+  }
+  .invite-video-wrap{
+    position:relative;
+    width:100%;
     aspect-ratio:16/9;
     background:#1A1410;
     overflow:hidden;
@@ -1410,6 +1423,13 @@
   .invite-video-wrap video{
     width:100%; height:100%;
     object-fit:cover; display:block;
+  }
+  /* Landscape: let it breathe without forcing 100vh */
+  @media (max-height:520px){
+    #invite{ min-height:0; padding:12px 20px 16px; }
+    .invite-arch-wrap{ padding-top:32px; }
+    .invite-caption{ margin-top:16px; }
+    .invite-names{ font-size:clamp(32px,6vw,56px); }
   }
   /* Custom play button overlay */
   .invite-play{
@@ -1499,8 +1519,8 @@
   }
   .ev-history p{
     font-family:'Cormorant Garamond',serif;
-    font-size:15.5px; line-height:1.76;
-    color:rgba(26,20,16,0.75);
+    font-size:17px; line-height:1.76;
+    color:rgba(26,20,16,0.88);
     margin:0 0 10px;
   }
   .ev-history p:last-child{ margin-bottom:0; }
@@ -1767,21 +1787,50 @@
       <li><a href="#reception">Reception</a></li>
       <li><a href="#zehar">Our Story</a></li>
       <li><a href="#moments">Moments</a></li>
-      <li><a href="#rsvp">RSVP</a></li>
     </ul>
   </div>
 </nav>
 
 <section id="invite" data-hud-key="greeting">
-  <div class="invite-video-wrap">
-    <video id="invite-vid" preload="metadata" playsinline>
-      <source src="invite.mp4" type="video/mp4">
-    </video>
-    <button class="invite-play" id="invite-play" aria-label="Play invitation video">
-      <div class="invite-play-ring">
-        <div class="invite-play-tri"></div>
-      </div>
-    </button>
+  <div class="invite-arch-wrap">
+    <!-- Deccani arch gateway frame -->
+    <svg class="invite-arch-svg" viewBox="0 0 860 556" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      <!-- Outer arch — pointed Mughal/Deccani form -->
+      <path d="M 8,556 L 8,228 C 8,90 170,14 430,6 C 690,14 852,90 852,228 L 852,556"
+            stroke="rgba(197,151,58,0.48)" stroke-width="1.6" stroke-linecap="round"/>
+      <!-- Inner arch -->
+      <path d="M 32,556 L 32,240 C 32,110 186,36 430,28 C 674,36 828,110 828,240 L 828,556"
+            stroke="rgba(197,151,58,0.22)" stroke-width="0.9" stroke-linecap="round"/>
+      <!-- Keystone at peak -->
+      <circle cx="430" cy="6" r="5.5" fill="rgba(197,151,58,0.62)"/>
+      <circle cx="430" cy="6" r="11" fill="none" stroke="rgba(197,151,58,0.32)" stroke-width="0.9"/>
+      <path d="M 420,20 L 430,6 L 440,20" fill="none" stroke="rgba(197,151,58,0.4)" stroke-width="0.8"/>
+      <!-- Spring line: where arch meets pillar — left -->
+      <line x1="0" y1="228" x2="40" y2="228" stroke="rgba(197,151,58,0.32)" stroke-width="0.9"/>
+      <circle cx="8" cy="228" r="2.8" fill="rgba(197,151,58,0.42)"/>
+      <!-- Spring line: right -->
+      <line x1="820" y1="228" x2="860" y2="228" stroke="rgba(197,151,58,0.32)" stroke-width="0.9"/>
+      <circle cx="852" cy="228" r="2.8" fill="rgba(197,151,58,0.42)"/>
+      <!-- Pillar horizontal details — lower left -->
+      <line x1="0" y1="490" x2="34" y2="490" stroke="rgba(197,151,58,0.26)" stroke-width="0.8"/>
+      <line x1="0" y1="510" x2="34" y2="510" stroke="rgba(197,151,58,0.16)" stroke-width="0.5"/>
+      <!-- Pillar — lower right -->
+      <line x1="826" y1="490" x2="860" y2="490" stroke="rgba(197,151,58,0.26)" stroke-width="0.8"/>
+      <line x1="826" y1="510" x2="860" y2="510" stroke="rgba(197,151,58,0.16)" stroke-width="0.5"/>
+      <!-- Corner ornaments at video top-left / top-right -->
+      <path d="M 8,72 L 26,72 M 8,72 L 8,90" stroke="rgba(197,151,58,0.28)" stroke-width="0.8"/>
+      <path d="M 852,72 L 834,72 M 852,72 L 852,90" stroke="rgba(197,151,58,0.28)" stroke-width="0.8"/>
+    </svg>
+    <div class="invite-video-wrap">
+      <video id="invite-vid" preload="metadata" playsinline>
+        <source src="invite.mp4" type="video/mp4">
+      </video>
+      <button class="invite-play" id="invite-play" aria-label="Play invitation video">
+        <div class="invite-play-ring">
+          <div class="invite-play-tri"></div>
+        </div>
+      </button>
+    </div>
   </div>
   <div class="invite-caption">
     <div class="invite-names">Azhar <span class="invite-amp">&amp;</span> Zeenath</div>
@@ -1984,9 +2033,8 @@
     <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
     <div class="ev-history">
       <div class="ev-history-head">A little history</div>
-      <p>The Walima is a Sunnah — one of only a handful of customs the Prophet Muhammad specifically encouraged for a wedding. The hadith on it are direct: a feast after marriage is not just permitted but recommended. The word comes from the Arabic <em>walm</em> — companionship, gathering. A Walima makes the marriage publicly known, and community knowledge is itself a form of protection for the union.</p>
-      <p>Hyderabadi biryani at the Walima is not optional, and the dish has a specific history in this city. The dum pukht method — layering rice and meat in a sealed vessel, cooking slowly over indirect heat — was brought to South Asia by the Mughals in the 16th century. What became Hyderabadi biryani was developed in the kitchens of the Asafia dynasty in the 18th century, and refined under Nizam Asaf Jah I. The Hyderabadi version differs from Mughlai biryani in its use of shorter-grain rice, distinct local spicing, and a charcoal cooking method that produces a drier, more aromatic result. The Nizams' court recipes were guarded. Heritage Palace takes its version seriously.</p>
-      <p>The Salaami — the procession of blessings from guests to the couple — follows the meal. Order is fixed: elders first. This isn't hierarchy for its own sake. In Islamic tradition, the dua of someone who has lived longer carries a specific weight. Junior guests follow after.</p>
+      <p>The wedding reception dinner in Hyderabad has one metric by which it is judged above all others: the biryani. This is not hyperbole. Guests remember it, compare it, and bring it up years later. Hyderabadi dum pukht biryani — layering parboiled rice and marinated meat in a sealed vessel, cooking slowly over charcoal — was developed in the kitchens of the Asafia dynasty in the 18th century and refined under Nizam Asaf Jah I. It differs from Mughlai biryani in its use of shorter-grain rice, distinct local spicing, and a dryer finish. The Nizams' court recipes were closely guarded. Heritage Palace works from that tradition.</p>
+      <p>The Salaami — the procession of blessings from guests to the couple — follows the meal. Order is fixed: elders first, always. This is how it has always been done, and it will be done this way on Sunday.</p>
     </div>
     <div class="couplet">
       "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
@@ -2085,49 +2133,7 @@
 </section>
 
 <!-- REGISTRY -->
-<section class="event" id="registry" data-hud-key="registry" style="min-height:auto; padding:60px 28px;">
-  <div class="wrap" style="padding:34px 30px;">
-    <svg class="frame-corner tl" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
-    <svg class="frame-corner tr" viewBox="0 0 46 46" fill="none" stroke="currentColor" stroke-width="1.1"><path d="M2 44 C 2 20, 20 2, 44 2" stroke-opacity="0.6"/><path d="M6 44 C 6 26, 26 6, 44 6" stroke-opacity="0.35"/><circle cx="10" cy="36" r="2.2" fill="currentColor" stroke="none"/><circle cx="20" cy="20" r="1.6" fill="currentColor" stroke="none"/><path d="M30 10 q4 -4 8 0 q-4 4 -8 0 Z" fill="currentColor" stroke="none" opacity="0.8"/></svg>
 
-    <div class="event-eyebrow">If you absolutely insist</div>
-    <h2 class="event-title" style="font-size:48px;">A Small Registry</h2>
-    <div class="event-sub">Hud-hud tried to talk them out of this section. He lost.</div>
-    <p class="story" style="text-align:center; margin-top:18px;">Truly — your presence is the only gift on the list. But enough people asked that we gave in, so here it is, filed under "just in case."</p>
-    <a id="registry-btn" class="submit-btn" style="display:inline-block; text-decoration:none; margin-top:24px; max-width:280px;" href="#" target="_blank" rel="noopener">View the Registry</a>
-  </div>
-</section>
-
-<!-- RSVP -->
-<section class="rsvp" id="rsvp" data-hud-key="rsvp">
-  <div class="wrap">
-    <h2 class="script">RSVP</h2>
-    <p class="lead">Which days will we see you?</p>
-
-    <label class="field-label">Your name</label>
-    <input type="text" id="rsvp-name" placeholder="Full name">
-
-    <div class="rsvp-row" data-event="manja">
-      <div class="label">Manja<small>28 Aug, 8 pm</small></div>
-      <div class="toggle" data-field="manja"><button type="button" class="opt active" data-val="yes">Yes</button><button type="button" class="opt" data-val="no">No</button></div>
-    </div>
-    <div class="rsvp-row" data-event="mehendi">
-      <div class="label">Mehendi &amp; Choodi<small>29 Aug, 9 am</small></div>
-      <div class="toggle" data-field="mehendi"><button type="button" class="opt active" data-val="yes">Yes</button><button type="button" class="opt" data-val="no">No</button></div>
-    </div>
-    <div class="rsvp-row" data-event="nikah">
-      <div class="label">Nikah &amp; Jalwa<small>30 Aug, noon</small></div>
-      <div class="toggle" data-field="nikah"><button type="button" class="opt active" data-val="yes">Yes</button><button type="button" class="opt" data-val="no">No</button></div>
-    </div>
-    <div class="rsvp-row" data-event="reception">
-      <div class="label">Reception<small>30 Aug, 8 pm</small></div>
-      <div class="toggle" data-field="reception"><button type="button" class="opt active" data-val="yes">Yes</button><button type="button" class="opt" data-val="no">No</button></div>
-    </div>
-
-    <button class="submit-btn" id="rsvp-submit">Send RSVP</button>
-    <div class="rsvp-status" id="rsvp-status"></div>
-  </div>
-</section>
 
 <section class="venue" data-hud-key="venue">
   <h2 class="script">Getting There</h2>
@@ -2353,14 +2359,7 @@
       "She named a whole marriage after a word she invented. He fell for it entirely. Very romantic.",
       "He googled 'zehar meaning' three months later. He did not leave. That is the story.",
     ],
-    registry: [
-      "They said they don't need anything. They don't! But you're going to insist, aren't you.",
-      "The list is right there. I neither endorse nor discourage. I simply observe.",
-    ],
-    rsvp: [
-      "Please come! I have been rehearsing my welcome chirp since January!",
-      "Fill this in. I will personally supervise your biryani portion. This is not a small thing I am offering.",
-    ],
+
     venue: [
       "Heritage Palace, Attapur. The chandeliers are magnificent. I have already claimed one.",
       "I have scouted every perch. The branch by the south window is exceptional. That one is mine.",
