@@ -1071,7 +1071,7 @@
   }
   .vic-tile{
     position:relative;
-    padding:clamp(32px,4vw,56px) clamp(28px,3.5vw,48px);
+    padding:clamp(28px,3.5vw,48px) clamp(24px,3vw,40px) clamp(32px,4vw,52px);
     cursor:pointer;
     text-align:center;
     background:var(--ivory);
@@ -1082,12 +1082,79 @@
     -webkit-tap-highlight-color:transparent;
     user-select:none;
   }
+  /* ── Card colour identities ── */
+  .vic-tile[data-event="manja"]{
+    background:rgba(218,140,28,0.06);
+    border-color:rgba(218,140,28,0.32);
+    --card-accent:rgba(198,120,18,0.9);
+    --card-accent-soft:rgba(218,140,28,0.14);
+  }
+  .vic-tile[data-event="mehendi"]{
+    background:rgba(68,120,76,0.06);
+    border-color:rgba(68,120,76,0.28);
+    --card-accent:rgba(54,104,62,0.9);
+    --card-accent-soft:rgba(68,120,76,0.13);
+  }
+  .vic-tile[data-event="nikah"]{
+    background:rgba(176,88,112,0.06);
+    border-color:rgba(176,88,112,0.26);
+    --card-accent:rgba(162,72,96,0.9);
+    --card-accent-soft:rgba(176,88,112,0.12);
+  }
+  .vic-tile[data-event="reception"]{
+    background:rgba(64,56,120,0.06);
+    border-color:rgba(64,56,120,0.26);
+    --card-accent:rgba(52,44,108,0.9);
+    --card-accent-soft:rgba(64,56,120,0.12);
+  }
+  /* override shared elements to use card accent */
+  .vic-tile .vic-eyebrow-date{ color:var(--card-accent,rgba(197,151,58,0.9)); }
+  .vic-tile .vic-c{ color:var(--card-accent,rgba(197,151,58,0.55)); opacity:0.7; }
+  .vic-tile .vic-div-line{ background:var(--card-accent,rgba(197,151,58,0.5)); }
   .vic-tile:hover{
-    background:rgba(253,250,245,1);
     box-shadow:0 6px 32px rgba(26,20,16,0.12), 0 2px 8px rgba(26,20,16,0.06);
     transform:translateY(-2px);
   }
   .vic-tile:active{ transform:translateY(0); }
+  /* Mughal jali corner pieces */
+  .vic-jali{
+    position:absolute;
+    width:36px; height:36px;
+    opacity:0.32;
+    pointer-events:none;
+    color:var(--card-accent,rgba(197,151,58,0.8));
+  }
+  .vic-jali-tl{ top:8px; left:8px; }
+  .vic-jali-tr{ top:8px; right:8px; transform:scaleX(-1); }
+  .vic-jali-bl{ bottom:8px; left:8px; transform:scaleY(-1); }
+  .vic-jali-br{ bottom:8px; right:8px; transform:scale(-1); }
+  /* Date/time — prominent */
+  .vic-eyebrow-date{
+    position:relative; z-index:1;
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(20px,2.4vw,28px);
+    font-weight:600;
+    line-height:1.1;
+    color:var(--card-accent,rgba(197,151,58,0.9));
+    margin-bottom:4px;
+  }
+  .vic-eyebrow-day{
+    position:relative; z-index:1;
+    font-family:'EB Garamond',serif;
+    font-size:clamp(10px,1.1vw,12.5px);
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+    color:rgba(26,20,16,0.5);
+    margin-bottom:16px;
+  }
+  /* Mughal cusped arch divider replacing — ✦ — */
+  .vic-arch-div{
+    position:relative; z-index:1;
+    display:flex; align-items:center; justify-content:center;
+    margin:0 auto 16px;
+    width:clamp(80px,60%,140px);
+    height:24px;
+  }
   /* watermark roman numeral */
   .vic-roman{
     position:absolute;
@@ -1122,6 +1189,7 @@
     font-size:9px; letter-spacing:0.36em; text-transform:uppercase;
     color:rgba(197,151,58,0.9);
     margin-bottom:14px;
+    display:none; /* replaced by vic-eyebrow-date + vic-eyebrow-day */
   }
   .vic-name{
     position:relative; z-index:1;
@@ -1132,12 +1200,7 @@
     margin-bottom:14px;
   }
   .vic-div{
-    position:relative; z-index:1;
-    font-family:'EB Garamond',serif;
-    font-size:9.5px;
-    color:rgba(197,151,58,0.7);
-    letter-spacing:0.28em;
-    margin-bottom:14px;
+    display:none; /* replaced by .vic-arch-div SVG */
   }
   .vic-info{
     position:relative; z-index:1;
@@ -1408,6 +1471,29 @@
   /* ═══════════════════════════════════════════════
      INVITE VIDEO SECTION
      ═══════════════════════════════════════════════ */
+  .invite-title-block{
+    text-align:center;
+    margin-bottom:clamp(20px,3vh,36px);
+  }
+  .invite-supertitle{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(13px,1.8vw,17px);
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:rgba(26,20,16,0.52);
+    margin-bottom:10px;
+  }
+  .invite-title-rule{
+    font-family:'EB Garamond',serif;
+    font-size:11px;
+    color:rgba(197,151,58,0.6);
+    letter-spacing:0.3em;
+    display:flex; align-items:center; justify-content:center; gap:12px;
+  }
+  .invite-title-rule::before,.invite-title-rule::after{
+    content:''; display:block; width:clamp(40px,8vw,80px); height:0.5px;
+    background:rgba(197,151,58,0.4);
+  }
   #invite{
     min-height:100vh;
     display:flex; flex-direction:column;
@@ -1817,6 +1903,10 @@
 </nav>
 
 <section id="invite" data-hud-key="greeting">
+  <div class="invite-title-block">
+    <div class="invite-supertitle">A Wedding Invitation</div>
+    <div class="invite-title-rule"><span>✦</span></div>
+  </div>
   <div class="invite-arch-wrap">
     <!-- Deccani arch gateway frame -->
     <svg class="invite-arch-svg" viewBox="0 0 420 770" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
@@ -1877,53 +1967,169 @@
 
     <!-- I : Manja -->
     <div class="vic-tile" data-event="manja" tabindex="0" role="button" aria-label="Manja — open for details">
-      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
-      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <svg class="vic-jali vic-jali-tl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-tr" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-bl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-br" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
       <div class="vic-roman">I</div>
-      <div class="vic-eyebrow">28 August · Friday</div>
+      <div class="vic-eyebrow-date">28 August</div>
+      <div class="vic-eyebrow-day">Friday &nbsp;·&nbsp; 8 pm</div>
       <h3 class="vic-name">Manja</h3>
-      <div class="vic-div">— ✦ —</div>
-      <div class="vic-info">Our Home, Shadnagar<br>8 pm onwards</div>
+      <div class="vic-arch-div" aria-hidden="true">
+        <svg viewBox="0 0 140 24" fill="none" width="100%" height="24" style="color:var(--card-accent,rgba(197,151,58,0.7)); opacity:0.65">
+          <path d="M0,24 L0,14 Q10,2 20,14 Q30,2 40,14 Q50,2 60,14 Q70,2 80,14 Q90,2 100,14 Q110,2 120,14 Q130,2 140,14 L140,24"
+                stroke="currentColor" stroke-width="0.9" fill="none"/>
+          <line x1="0" y1="23.5" x2="140" y2="23.5" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">Hyderabad's answer to Haldi</div>
       <div class="vic-hint">Read more</div>
     </div>
 
     <!-- II : Mehendi -->
     <div class="vic-tile" data-event="mehendi" tabindex="0" role="button" aria-label="Mehendi — open for details">
-      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
-      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <svg class="vic-jali vic-jali-tl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-tr" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-bl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-br" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
       <div class="vic-roman">II</div>
-      <div class="vic-eyebrow">29 August · Saturday</div>
+      <div class="vic-eyebrow-date">29 August</div>
+      <div class="vic-eyebrow-day">Saturday &nbsp;·&nbsp; 9 am</div>
       <h3 class="vic-name">Mehendi</h3>
-      <div class="vic-div">— ✦ —</div>
-      <div class="vic-info">Our Home, Shadnagar<br>9 am onwards</div>
+      <div class="vic-arch-div" aria-hidden="true">
+        <svg viewBox="0 0 140 24" fill="none" width="100%" height="24" style="color:var(--card-accent,rgba(197,151,58,0.7)); opacity:0.65">
+          <path d="M0,24 L0,14 Q10,2 20,14 Q30,2 40,14 Q50,2 60,14 Q70,2 80,14 Q90,2 100,14 Q110,2 120,14 Q130,2 140,14 L140,24"
+                stroke="currentColor" stroke-width="0.9" fill="none"/>
+          <line x1="0" y1="23.5" x2="140" y2="23.5" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">&amp; Choodi</div>
       <div class="vic-hint">Read more</div>
     </div>
 
     <!-- III : Nikah -->
     <div class="vic-tile" data-event="nikah" tabindex="0" role="button" aria-label="Nikah — open for details">
-      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
-      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <svg class="vic-jali vic-jali-tl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-tr" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-bl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-br" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
       <div class="vic-roman">III</div>
-      <div class="vic-eyebrow">30 August · Sunday</div>
+      <div class="vic-eyebrow-date">30 August</div>
+      <div class="vic-eyebrow-day">Sunday &nbsp;·&nbsp; 12 noon</div>
       <h3 class="vic-name">Nikah</h3>
-      <div class="vic-div">— ✦ —</div>
-      <div class="vic-info">Heritage Palace, Attapur<br>12 noon</div>
+      <div class="vic-arch-div" aria-hidden="true">
+        <svg viewBox="0 0 140 24" fill="none" width="100%" height="24" style="color:var(--card-accent,rgba(197,151,58,0.7)); opacity:0.65">
+          <path d="M0,24 L0,14 Q10,2 20,14 Q30,2 40,14 Q50,2 60,14 Q70,2 80,14 Q90,2 100,14 Q110,2 120,14 Q130,2 140,14 L140,24"
+                stroke="currentColor" stroke-width="0.9" fill="none"/>
+          <line x1="0" y1="23.5" x2="140" y2="23.5" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">&amp; the Jalwa</div>
       <div class="vic-hint">Read more</div>
     </div>
 
     <!-- IV : Reception -->
     <div class="vic-tile" data-event="reception" tabindex="0" role="button" aria-label="Reception — open for details">
-      <span class="vic-c vic-c-tl">✦</span><span class="vic-c vic-c-tr">✦</span>
-      <span class="vic-c vic-c-bl">✦</span><span class="vic-c vic-c-br">✦</span>
+      <svg class="vic-jali vic-jali-tl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-tr" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-bl" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
+      <svg class="vic-jali vic-jali-br" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+        <path d="M2,2 L14,2 L14,14 L2,14 Z" stroke="currentColor" stroke-width="0.8" fill="none"/>
+        <path d="M8,2 L8,14 M2,8 L14,8" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="8" cy="8" r="2.5" stroke="currentColor" stroke-width="0.7" fill="none"/>
+        <path d="M2,2 L8,8 M14,2 L8,8 M2,14 L8,8 M14,14 L8,8" stroke="currentColor" stroke-width="0.4" opacity="0.5"/>
+      </svg>
       <div class="vic-roman">IV</div>
-      <div class="vic-eyebrow">30 August · Sunday</div>
+      <div class="vic-eyebrow-date">30 August</div>
+      <div class="vic-eyebrow-day">Sunday &nbsp;·&nbsp; 8 pm</div>
       <h3 class="vic-name">Reception</h3>
-      <div class="vic-div">— ✦ —</div>
-      <div class="vic-info">Heritage Palace, Attapur<br>8 pm</div>
-      <div class="vic-tag">The evening they've been waiting to throw</div>
+      <div class="vic-arch-div" aria-hidden="true">
+        <svg viewBox="0 0 140 24" fill="none" width="100%" height="24" style="color:var(--card-accent,rgba(197,151,58,0.7)); opacity:0.65">
+          <path d="M0,24 L0,14 Q10,2 20,14 Q30,2 40,14 Q50,2 60,14 Q70,2 80,14 Q90,2 100,14 Q110,2 120,14 Q130,2 140,14 L140,24"
+                stroke="currentColor" stroke-width="0.9" fill="none"/>
+          <line x1="0" y1="23.5" x2="140" y2="23.5" stroke="currentColor" stroke-width="0.5" opacity="0.4"/>
+        </svg>
+      </div>
+      <div class="vic-info">Heritage Palace, Attapur</div>
+      <div class="vic-tag">Dinner &amp; Salaami</div>
       <div class="vic-hint">Read more</div>
     </div>
 
