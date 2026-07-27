@@ -143,9 +143,9 @@
     position:relative; min-height:100vh;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    /* Bright garden at dawn */
-    background:linear-gradient(160deg, #FDFAF5 0%, #F8F5EF 100%);
-    overflow:hidden; padding:60px 32px 120px;
+    /* Garden at golden hour — warm vellum */
+    background:radial-gradient(ellipse 140% 90% at 50% 60%, #FAF4E8 0%, #F5EDDA 42%, #EDE2CC 100%);
+    overflow:hidden; padding:80px 32px 130px;
     scroll-snap-align:start;
   }
   #rumi-screen canvas{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; display:block; }
@@ -162,22 +162,34 @@
     pointer-events:none; z-index:2;
   }
 
-  .rumi-lines{ position:relative; z-index:2; text-align:center; max-width:640px; width:100%; }
+  .rumi-poem-frame{
+    position:relative; z-index:2;
+    display:flex; flex-direction:column; align-items:center;
+    max-width:580px; width:100%;
+  }
+  .rumi-frame-top{
+    width:clamp(160px,30vw,280px);
+    margin-bottom:clamp(20px,3vh,36px);
+    opacity:0;
+    transition:opacity 1.8s ease;
+  }
+  .rumi-frame-top.lit{ opacity:0.72; }
+  .rumi-lines{ position:relative; z-index:2; text-align:center; width:100%; }
 
   .r-line{
     display:block;
     font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:400;
-    font-size:clamp(19px,2.8vw,36px); line-height:1.85; color:#1A1410;
-    letter-spacing:0.015em;
-    opacity:0; transform:translateY(18px);
-    transition:opacity 1.9s cubic-bezier(0.16,1,0.3,1),
-               transform 1.9s cubic-bezier(0.16,1,0.3,1);
+    font-size:clamp(22px,3.2vw,42px); line-height:1.82; color:#1A1410;
+    letter-spacing:0.01em;
+    opacity:0; transform:translateY(20px);
+    transition:opacity 2s cubic-bezier(0.16,1,0.3,1),
+               transform 2s cubic-bezier(0.16,1,0.3,1);
   }
   .r-line.lit{ opacity:1; transform:translateY(0); }
-  .r-gap{ display:block; height:clamp(14px,2.4vh,28px); }
+  .r-gap{ display:block; height:clamp(16px,2.6vh,32px); }
 
-  .r-paradox{ font-size:clamp(16px,2.1vw,27px); color:rgba(26,20,16,0.84); }
-  .r-paradox-2{ color:rgba(26,20,16,0.68); }
+  .r-paradox{ font-size:clamp(17px,2.3vw,30px); color:rgba(26,20,16,0.82); }
+  .r-paradox-2{ color:rgba(26,20,16,0.62); }
 
   .rumi-attr{
     position:relative; z-index:2; margin-top:clamp(28px,4.5vh,52px);
@@ -1444,25 +1456,29 @@
   /* Rumi botanicals — triggered by .lit class via JS */
   .rumi-bot-l{
     z-index:2;
-    top:50%; left:clamp(4px,3vw,40px);
-    transform:translateY(-50%);
-    width:clamp(70px,8vw,130px);
+    top:50%; left:clamp(0px,1vw,24px);
+    transform:translateY(-54%);
+    width:clamp(120px,13vw,210px);
     height:auto;
     opacity:0;
-    transition:opacity 2.4s ease;
+    transition:opacity 2.8s ease;
   }
   .rumi-bot-r{
     z-index:2;
-    top:50%; right:clamp(4px,3vw,40px);
-    transform:translateY(-50%) scaleX(-1);
-    width:clamp(55px,6vw,105px);
+    top:50%; right:clamp(0px,1vw,24px);
+    transform:translateY(-48%) scaleX(-1);
+    width:clamp(110px,12vw,195px);
     height:auto;
     opacity:0;
-    transition:opacity 2.4s ease;
+    transition:opacity 2.8s ease;
   }
-  .rumi-bot-l.lit{ opacity:0.52; }
-  .rumi-bot-r.lit{ opacity:0.42; }
-  @media(max-width:700px){
+  .rumi-bot-l.lit{ opacity:0.88; }
+  .rumi-bot-r.lit{ opacity:0.78; }
+  @media(max-width:780px){
+    .rumi-bot-l{ width:clamp(70px,10vw,120px); left:0; }
+    .rumi-bot-r{ width:clamp(65px,9vw,110px); right:0; }
+  }
+  @media(max-width:540px){
     .rumi-bot-l, .rumi-bot-r{ display:none; }
     .gate-bot-tr{ display:none; }
     .gate-bot-bl{ width:clamp(120px,42vw,190px); }
@@ -1795,95 +1811,312 @@
 
 <section id="rumi-screen">
   <canvas id="rumi-canvas"></canvas>
-  <!-- Botanical branches flanking Rumi poem — pomegranate theme -->
-  <svg class="bot-svg rumi-bot-l" viewBox="0 0 120 280" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Main stem -->
-    <path d="M90 274 C80 248 70 212 62 172 C54 132 50 98 52 58 C54 32 60 12 68 2"
-          stroke="rgba(135,102,62,0.44)" stroke-width="1.5" stroke-linecap="round"/>
-    <!-- Branch left lower -->
-    <path d="M62 172 C44 158 26 155 12 148"
-          stroke="rgba(135,102,62,0.38)" stroke-width="1.1" stroke-linecap="round"/>
-    <!-- Branch right mid -->
-    <path d="M56 116 C72 102 86 98 98 94"
-          stroke="rgba(135,102,62,0.36)" stroke-width="1.0" stroke-linecap="round"/>
-    <!-- Branch left upper -->
-    <path d="M64 66 C46 56 30 52 16 48"
-          stroke="rgba(135,102,62,0.34)" stroke-width="0.9" stroke-linecap="round"/>
-    <!-- Leaves -->
-    <path d="M12 148 C-2 136 -6 118 4 108 C14 98 30 106 30 120 C30 132 22 152 12 148 Z"
-          fill="rgba(86,116,66,0.52)"/>
-    <path d="M62 172 C74 158 86 155 90 165 C93 173 86 186 74 188 C64 190 58 180 62 172 Z"
-          fill="rgba(108,140,80,0.45)"/>
-    <path d="M98 94 C108 80 118 77 120 87 C122 94 116 106 106 108 C98 110 94 100 98 94 Z"
-          fill="rgba(86,116,66,0.50)"/>
-    <path d="M16 48 C4 36 0 18 10 10 C20 2 36 10 36 26 C36 40 26 54 16 48 Z"
-          fill="rgba(108,140,80,0.48)"/>
-    <path d="M56 116 C44 104 42 86 52 78 C62 70 78 78 76 94 C74 108 64 122 56 116 Z"
-          fill="rgba(86,116,66,0.48)"/>
-    <!-- Pomegranate fruit at top (nod to the poem) -->
-    <g transform="translate(68,2)">
-      <circle cx="0" cy="0" r="9" fill="rgba(197,151,58,0.14)" stroke="rgba(197,151,58,0.48)" stroke-width="1"/>
-      <!-- Crown (calyx) -->
-      <path d="M-4 -9 C-3 -13 -1 -15 0 -14 C1 -15 3 -13 4 -9 C2 -11 -2 -11 -4 -9 Z"
-            fill="rgba(86,116,66,0.6)"/>
-      <path d="M-2 -9 C-1 -12 1 -12 2 -9" stroke="rgba(86,116,66,0.5)" stroke-width="0.7" fill="none"/>
-      <circle cx="0" cy="0" r="4.5" fill="rgba(197,151,58,0.55)"/>
-    </g>
-    <!-- Mogra flower: lower left -->
-    <g transform="translate(12,148)">
-      <circle cx="-4.5" cy="-1" r="3.2" fill="rgba(253,250,245,0.92)" stroke="rgba(197,151,58,0.40)" stroke-width="0.6"/>
-      <circle cx="4.5" cy="-1" r="3.2" fill="rgba(253,250,245,0.92)" stroke="rgba(197,151,58,0.40)" stroke-width="0.6"/>
-      <circle cx="0" cy="-5.5" r="3.2" fill="rgba(253,250,245,0.92)" stroke="rgba(197,151,58,0.40)" stroke-width="0.6"/>
-      <circle cx="0" cy="0" r="3.2" fill="rgba(253,250,245,0.94)" stroke="rgba(197,151,58,0.40)" stroke-width="0.6"/>
-      <circle cx="0" cy="0" r="2" fill="rgba(197,151,58,0.65)"/>
-    </g>
-    <!-- Buds/dots -->
-    <circle cx="36" cy="108" r="2.2" fill="rgba(197,151,58,0.40)"/>
-    <circle cx="42" cy="102" r="1.8" fill="rgba(197,151,58,0.34)"/>
-    <circle cx="30" cy="104" r="1.8" fill="rgba(197,151,58,0.36)"/>
-    <circle cx="90" cy="168" r="2" fill="rgba(197,151,58,0.36)"/>
-  </svg>
-  <svg class="bot-svg rumi-bot-r" viewBox="0 0 100 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-    <!-- Mirror stem (scaleX(-1) applied via CSS) -->
-    <path d="M12 234 C20 210 30 178 38 144 C46 110 50 80 48 48 C46 26 40 8 34 2"
-          stroke="rgba(135,102,62,0.40)" stroke-width="1.4" stroke-linecap="round"/>
-    <path d="M38 144 C56 130 72 127 84 120"
-          stroke="rgba(135,102,62,0.35)" stroke-width="1.0" stroke-linecap="round"/>
-    <path d="M44 90 C28 78 14 75 2 70"
-          stroke="rgba(135,102,62,0.33)" stroke-width="0.9" stroke-linecap="round"/>
-    <!-- Leaves -->
-    <path d="M84 120 C96 108 104 105 106 114 C108 122 100 134 88 136 C78 138 80 128 84 120 Z"
-          fill="rgba(86,116,66,0.48)"/>
-    <path d="M2 70 C-10 58 -12 42 -2 34 C8 26 24 34 22 48 C20 60 10 74 2 70 Z"
-          fill="rgba(108,140,80,0.45)"/>
-    <path d="M38 144 C24 132 22 114 32 106 C42 98 58 108 56 122 C54 136 48 150 38 144 Z"
-          fill="rgba(86,116,66,0.48)"/>
-    <path d="M44 90 C56 76 68 73 72 83 C74 91 66 103 54 105 C44 107 40 98 44 90 Z"
-          fill="rgba(108,140,80,0.42)"/>
-    <!-- Small marigold at top -->
-    <g transform="translate(34,2)">
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.60)" transform="rotate(0 0 0)"/>
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.55)" transform="rotate(60 0 0)"/>
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.50)" transform="rotate(120 0 0)"/>
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.55)" transform="rotate(180 0 0)"/>
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.60)" transform="rotate(240 0 0)"/>
-      <ellipse cx="0" cy="-6.5" rx="2.8" ry="4.8" fill="rgba(197,151,58,0.55)" transform="rotate(300 0 0)"/>
-      <circle cx="0" cy="0" r="4.5" fill="rgba(158,108,28,0.70)"/>
-      <circle cx="0" cy="0" r="2.2" fill="rgba(197,151,58,0.88)"/>
-    </g>
-    <!-- Berry dots -->
-    <circle cx="22" cy="50" r="2.2" fill="rgba(197,151,58,0.38)"/>
-    <circle cx="28" cy="45" r="1.8" fill="rgba(197,151,58,0.32)"/>
-  </svg>
 
-  <div class="rumi-lines">
-    <span class="r-line r-l1">Come to the orchard in Spring.</span>
-    <span class="r-gap"></span>
-    <span class="r-line r-l2">There is light and wine,</span>
-    <span class="r-line r-l3">and sweethearts in the pomegranate flowers.</span>
-    <span class="r-gap"></span>
-    <span class="r-line r-paradox r-l4">If you do not come, these do not matter.</span>
-    <span class="r-line r-paradox r-paradox-2 r-l5">If you do come, these do not matter.</span>
+  <svg class="bot-svg rumi-bot-l" viewBox="0 0 200 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="stem-l" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(90,58,26,0.7)"/>
+      <stop offset="100%" stop-color="rgba(90,58,26,0.3)"/>
+    </linearGradient>
+  </defs>
+  <!-- Cypress tree — tall flame silhouette, the signature Mughal garden tree -->
+  <path d="M130,558 C126,530 118,500 114,468 C110,436 112,410 116,384 C120,356 128,336 128,308 C128,278 122,256 120,228 C118,200 122,178 124,152 C126,124 130,104 132,80 C134,58 134,36 136,18 C138,6 140,2 140,2 C140,2 142,6 144,18 C146,36 146,58 148,80 C150,104 154,124 156,152 C158,178 162,200 160,228 C158,256 152,278 152,308 C152,336 160,356 164,384 C168,410 170,436 166,468 C162,500 154,530 150,558 Z"
+        fill="rgba(50,80,42,0.14)" stroke="rgba(50,80,42,0.22)" stroke-width="0.6"/>
+  <!-- Cypress inner texture lines -->
+  <path d="M140,18 C138,50 132,80 128,110 C124,140 120,165 118,192 C116,220 120,248 122,276 C124,304 126,330 124,356 C122,384 116,410 114,440 C112,468 120,498 130,528"
+        stroke="rgba(50,80,42,0.18)" stroke-width="0.7" fill="none"/>
+  <path d="M140,18 C142,50 148,80 152,110 C156,140 160,165 162,192 C164,220 160,248 158,276 C156,304 154,330 156,356 C158,384 164,410 166,440 C168,468 160,498 150,528"
+        stroke="rgba(50,80,42,0.18)" stroke-width="0.7" fill="none"/>
+  <!-- Main curving stem rises left of cypress -->
+  <path d="M110,558 C106,520 100,480 90,444 C80,408 68,376 60,340 C52,306 52,272 54,240 C56,208 62,180 60,150 C58,120 50,96 44,70 C40,52 38,32 40,14"
+        stroke="url(#stem-l)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <!-- Branch 1 — lower: sweeps right, ends in pomegranate -->
+  <path d="M60,340 C44,328 28,322 8,318"
+        stroke="rgba(90,58,26,0.55)" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  <!-- Leaves on branch 1 — elongated pointed Mughal style -->
+  <g transform="translate(30,321)">
+    <ellipse cx="-14" cy="-6" rx="5" ry="10" fill="rgba(48,88,42,0.62)" transform="rotate(-25 -14 -6)"/>
+    <line x1="-14" y1="-14" x2="-14" y2="2" stroke="rgba(48,88,42,0.3)" stroke-width="0.5"/>
+    <ellipse cx="-8" cy="-16" rx="4" ry="9" fill="rgba(66,108,52,0.55)" transform="rotate(-60 -8 -16)"/>
+    <line x1="-8" y1="-23" x2="-8" y2="-9" stroke="rgba(48,88,42,0.3)" stroke-width="0.5"/>
+    <ellipse cx="2" cy="-12" rx="4" ry="8" fill="rgba(48,88,42,0.58)" transform="rotate(15 2 -12)"/>
+  </g>
+  <!-- Pomegranate at end of branch 1 -->
+  <g transform="translate(8,316)">
+    <path d="M0,-18 C-14,-18 -18,-6 -16,4 C-14,16 -6,20 0,20 C6,20 14,16 16,4 C18,-6 14,-18 0,-18 Z"
+          fill="rgba(160,50,50,0.28)" stroke="rgba(160,50,50,0.55)" stroke-width="0.8"/>
+    <!-- Crown calyx — 5 points -->
+    <path d="M-6,-18 C-5,-25 -2,-28 0,-26 C2,-28 5,-25 6,-18 C3,-21 -3,-21 -6,-18 Z"
+          fill="rgba(48,88,42,0.7)"/>
+    <path d="M-10,-14 C-12,-20 -10,-23 -8,-22 C-6,-23 -6,-20 -8,-16" stroke="rgba(48,88,42,0.5)" stroke-width="0.6" fill="rgba(48,88,42,0.4)"/>
+    <path d="M10,-14 C12,-20 10,-23 8,-22 C6,-23 6,-20 8,-16" stroke="rgba(48,88,42,0.5)" stroke-width="0.6" fill="rgba(48,88,42,0.4)"/>
+    <!-- Seeds visible -->
+    <circle cx="-5" cy="-2" r="2.4" fill="rgba(180,60,60,0.55)"/>
+    <circle cx="0" cy="-6" r="2.4" fill="rgba(180,60,60,0.55)"/>
+    <circle cx="5" cy="-2" r="2.4" fill="rgba(180,60,60,0.55)"/>
+    <circle cx="-3" cy="5" r="2.4" fill="rgba(180,60,60,0.50)"/>
+    <circle cx="4" cy="5" r="2.4" fill="rgba(180,60,60,0.50)"/>
+    <!-- Gold highlight -->
+    <path d="M-4,-18 C-2,-16 2,-16 4,-18" stroke="rgba(197,151,58,0.4)" stroke-width="0.6" fill="none"/>
+  </g>
+  <!-- Branch 2 — middle: extends right, rose -->
+  <path d="M54,240 C72,226 90,220 112,216"
+        stroke="rgba(90,58,26,0.50)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <!-- Leaves on branch 2 -->
+  <g transform="translate(85,218)">
+    <ellipse cx="0" cy="-10" rx="3.5" ry="8" fill="rgba(48,88,42,0.6)" transform="rotate(-40 0 -10)"/>
+    <line x1="0" y1="-16" x2="0" y2="-4" stroke="rgba(48,88,42,0.3)" stroke-width="0.5"/>
+    <ellipse cx="12" cy="-7" rx="3.5" ry="8" fill="rgba(66,108,52,0.55)" transform="rotate(20 12 -7)"/>
+    <ellipse cx="-6" cy="-18" rx="3" ry="7" fill="rgba(48,88,42,0.55)" transform="rotate(-70 -6 -18)"/>
+  </g>
+  <!-- Rose at end of branch 2 — layered petals -->
+  <g transform="translate(112,210)">
+    <ellipse cx="0" cy="-9" rx="5.5" ry="7" fill="rgba(190,120,110,0.45)" transform="rotate(0 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5.5" ry="7" fill="rgba(210,140,120,0.42)" transform="rotate(51 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5.5" ry="7" fill="rgba(190,120,110,0.40)" transform="rotate(102 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5.5" ry="7" fill="rgba(210,140,120,0.42)" transform="rotate(153 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5.5" ry="7" fill="rgba(190,120,110,0.40)" transform="rotate(204 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5" ry="6.5" fill="rgba(225,160,140,0.45)" transform="rotate(255 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="5" ry="6.5" fill="rgba(210,140,120,0.42)" transform="rotate(306 0 0)"/>
+    <circle cx="0" cy="0" r="5" fill="rgba(190,100,90,0.55)"/>
+    <circle cx="0" cy="0" r="2.5" fill="rgba(197,151,58,0.7)"/>
+    <!-- Sepals -->
+    <path d="M-4,4 C-6,10 -4,14 -2,12" stroke="rgba(48,88,42,0.5)" stroke-width="0.7" fill="rgba(48,88,42,0.25)"/>
+    <path d="M4,4 C6,10 4,14 2,12" stroke="rgba(48,88,42,0.5)" stroke-width="0.7" fill="rgba(48,88,42,0.25)"/>
+  </g>
+  <!-- Branch 3 — upper: marigold cluster -->
+  <path d="M60,150 C40,138 20,132 2,128"
+        stroke="rgba(90,58,26,0.45)" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+  <!-- Fine leaves on branch 3 — serrated pairs -->
+  <g transform="translate(32,134)">
+    <ellipse cx="-10" cy="-8" rx="3" ry="7" fill="rgba(48,88,42,0.58)" transform="rotate(-50 -10 -8)"/>
+    <line x1="-10" y1="-14" x2="-10" y2="-2" stroke="rgba(48,88,42,0.28)" stroke-width="0.5"/>
+    <ellipse cx="-4" cy="-16" rx="3" ry="7" fill="rgba(66,108,52,0.52)" transform="rotate(-80 -4 -16)"/>
+    <line x1="-4" y1="-22" x2="-4" y2="-10" stroke="rgba(48,88,42,0.28)" stroke-width="0.5"/>
+    <ellipse cx="4" cy="-12" rx="2.5" ry="6" fill="rgba(48,88,42,0.55)" transform="rotate(-10 4 -12)"/>
+  </g>
+  <!-- Marigold at branch 3 end -->
+  <g transform="translate(2,122)">
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(197,151,58,0.62)" transform="rotate(0 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(218,172,60,0.58)" transform="rotate(40 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(197,151,58,0.58)" transform="rotate(80 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(218,172,60,0.62)" transform="rotate(120 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(197,151,58,0.58)" transform="rotate(160 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(218,172,60,0.60)" transform="rotate(200 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(197,151,58,0.62)" transform="rotate(240 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="4" ry="6.5" fill="rgba(218,172,60,0.58)" transform="rotate(280 0 0)"/>
+    <ellipse cx="0" cy="-8" rx="3.5" ry="6" fill="rgba(197,151,58,0.55)" transform="rotate(320 0 0)"/>
+    <circle cx="0" cy="0" r="5" fill="rgba(150,100,18,0.7)"/>
+    <circle cx="0" cy="0" r="2.5" fill="rgba(197,151,58,0.9)"/>
+  </g>
+  <!-- Top of main stem — jasmine/mogra blossoms -->
+  <g transform="translate(40,14)">
+    <!-- Mogra 1 -->
+    <ellipse cx="-8" cy="-5" rx="3.5" ry="5.5" fill="rgba(252,248,240,0.94)" stroke="rgba(197,151,58,0.35)" stroke-width="0.5" transform="rotate(-30 -8 -5)"/>
+    <ellipse cx="-3" cy="-10" rx="3.5" ry="5.5" fill="rgba(252,248,240,0.94)" stroke="rgba(197,151,58,0.35)" stroke-width="0.5" transform="rotate(20 -3 -10)"/>
+    <ellipse cx="3" cy="-8" rx="3.5" ry="5.5" fill="rgba(252,248,240,0.94)" stroke="rgba(197,151,58,0.35)" stroke-width="0.5" transform="rotate(60 3 -8)"/>
+    <ellipse cx="0" cy="-3" rx="3" ry="5" fill="rgba(252,248,240,0.96)" stroke="rgba(197,151,58,0.3)" stroke-width="0.5" transform="rotate(-50 0 -3)"/>
+    <circle cx="0" cy="-6" r="2.5" fill="rgba(197,151,58,0.75)"/>
+    <!-- Mogra 2 (smaller, nearby) -->
+    <ellipse cx="10" cy="2" rx="2.8" ry="4.5" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(40 10 2)"/>
+    <ellipse cx="14" cy="-3" rx="2.8" ry="4.5" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(80 14 -3)"/>
+    <ellipse cx="8" cy="-7" rx="2.8" ry="4.5" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(-10 8 -7)"/>
+    <circle cx="11" cy="-2" r="2" fill="rgba(197,151,58,0.65)"/>
+  </g>
+  <!-- Arabesque tendril spirals -->
+  <path d="M54,240 C50,252 44,260 36,264 C28,268 22,262 26,254 C30,246 42,250 42,258"
+        stroke="rgba(90,58,26,0.28)" stroke-width="0.7" fill="none"/>
+  <path d="M60,340 C56,354 52,364 44,372 C36,380 30,376 32,366 C34,356 46,358 44,368"
+        stroke="rgba(90,58,26,0.24)" stroke-width="0.6" fill="none"/>
+  <!-- Small gold detail dots — like illuminated manuscript highlights -->
+  <circle cx="44" cy="70" r="1.8" fill="rgba(197,151,58,0.5)"/>
+  <circle cx="50" cy="96" r="1.4" fill="rgba(197,151,58,0.42)"/>
+  <circle cx="62" cy="178" r="1.6" fill="rgba(197,151,58,0.45)"/>
+  <circle cx="56" cy="268" r="1.4" fill="rgba(197,151,58,0.38)"/>
+  <circle cx="68" cy="400" r="1.6" fill="rgba(197,151,58,0.4)"/>
+  <!-- Fine secondary leaf pairs along main stem -->
+  <ellipse cx="50" cy="80" rx="2.5" ry="6" fill="rgba(48,88,42,0.45)" transform="rotate(-60 50 80)"/>
+  <ellipse cx="56" cy="76" rx="2" ry="5" fill="rgba(66,108,52,0.4)" transform="rotate(30 56 76)"/>
+  <ellipse cx="50" cy="200" rx="2.5" ry="6" fill="rgba(48,88,42,0.42)" transform="rotate(-50 50 200)"/>
+  <ellipse cx="58" cy="196" rx="2" ry="5" fill="rgba(66,108,52,0.38)" transform="rotate(40 58 196)"/>
+  <ellipse cx="52" cy="300" rx="2.5" ry="6" fill="rgba(48,88,42,0.42)" transform="rotate(-45 52 300)"/>
+  <ellipse cx="60" cy="296" rx="2" ry="5" fill="rgba(66,108,52,0.38)" transform="rotate(35 60 296)"/>
+  <!-- Bud clusters along stem -->
+  <g transform="translate(46,390)">
+    <path d="M0,-8 C-4,-12 -5,-18 0,-16 C5,-18 4,-12 0,-8 Z" fill="rgba(197,151,58,0.5)"/>
+    <path d="M-5,-6 C-10,-8 -12,-14 -8,-14 C-6,-14 -4,-10 -5,-6 Z" fill="rgba(48,88,42,0.45)"/>
+    <path d="M5,-6 C10,-8 12,-14 8,-14 C6,-14 4,-10 5,-6 Z" fill="rgba(48,88,42,0.45)"/>
+  </g>
+  <g transform="translate(48,440)">
+    <path d="M0,-7 C-3,-10 -4,-15 0,-14 C4,-15 3,-10 0,-7 Z" fill="rgba(190,120,110,0.45)"/>
+    <path d="M-4,-5 C-8,-6 -9,-12 -6,-12 C-4,-12 -3,-8 -4,-5 Z" fill="rgba(48,88,42,0.4)"/>
+    <path d="M4,-5 C8,-6 9,-12 6,-12 C4,-12 3,-8 4,-5 Z" fill="rgba(48,88,42,0.4)"/>
+  </g>
+</svg>
+  <svg class="bot-svg rumi-bot-r" viewBox="0 0 200 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <defs>
+    <linearGradient id="stem-r" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(90,58,26,0.65)"/>
+      <stop offset="100%" stop-color="rgba(90,58,26,0.28)"/>
+    </linearGradient>
+  </defs>
+  <!-- Cypress (offset right) -->
+  <path d="M50,558 C54,530 62,500 66,468 C70,436 68,410 64,384 C60,356 52,336 52,308 C52,278 58,256 60,228 C62,200 58,178 56,152 C54,124 50,104 48,80 C46,58 46,36 44,18 C42,6 40,2 40,2 C40,2 38,6 36,18 C34,36 34,58 32,80 C30,104 26,124 24,152 C22,178 18,200 20,228 C22,256 28,278 28,308 C28,336 20,356 16,384 C12,410 10,436 14,468 C18,500 26,530 30,558 Z"
+        fill="rgba(50,80,42,0.12)" stroke="rgba(50,80,42,0.2)" stroke-width="0.6"/>
+  <path d="M40,18 C38,50 32,80 28,110 C24,140 20,165 18,192 C16,220 20,248 22,276 C24,304 26,330 24,356 C22,384 16,410 14,440 C12,468 20,498 30,528"
+        stroke="rgba(50,80,42,0.16)" stroke-width="0.7" fill="none"/>
+  <!-- Main stem -->
+  <path d="M90,558 C94,520 100,480 110,444 C120,408 132,376 140,340 C148,306 148,272 146,240 C144,208 138,180 140,150 C142,120 150,96 156,70 C160,52 162,32 160,14"
+        stroke="url(#stem-r)" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+  <!-- Branch 1 lower — jasmine spray -->
+  <path d="M140,340 C156,326 172,320 192,316"
+        stroke="rgba(90,58,26,0.52)" stroke-width="1.4" stroke-linecap="round" fill="none"/>
+  <g transform="translate(168,320)">
+    <ellipse cx="10" cy="-8" rx="3" ry="7" fill="rgba(48,88,42,0.58)" transform="rotate(35 10 -8)"/>
+    <line x1="10" y1="-14" x2="10" y2="-2" stroke="rgba(48,88,42,0.28)" stroke-width="0.5"/>
+    <ellipse cx="4" cy="-15" rx="3" ry="7" fill="rgba(66,108,52,0.52)" transform="rotate(65 4 -15)"/>
+    <ellipse cx="-2" cy="-10" rx="2.5" ry="6" fill="rgba(48,88,42,0.5)" transform="rotate(5 -2 -10)"/>
+  </g>
+  <!-- Jasmine blossoms at branch end -->
+  <g transform="translate(192,308)">
+    <ellipse cx="6" cy="-7" rx="3.5" ry="6" fill="rgba(252,248,240,0.95)" stroke="rgba(197,151,58,0.38)" stroke-width="0.5" transform="rotate(20 6 -7)"/>
+    <ellipse cx="0" cy="-12" rx="3.5" ry="6" fill="rgba(252,248,240,0.95)" stroke="rgba(197,151,58,0.38)" stroke-width="0.5" transform="rotate(70 0 -12)"/>
+    <ellipse cx="-5" cy="-7" rx="3.5" ry="6" fill="rgba(252,248,240,0.95)" stroke="rgba(197,151,58,0.38)" stroke-width="0.5" transform="rotate(130 -5 -7)"/>
+    <ellipse cx="-4" cy="-1" rx="3.5" ry="6" fill="rgba(252,248,240,0.93)" stroke="rgba(197,151,58,0.35)" stroke-width="0.5" transform="rotate(180 -4 -1)"/>
+    <ellipse cx="4" cy="-1" rx="3.5" ry="6" fill="rgba(252,248,240,0.93)" stroke="rgba(197,151,58,0.35)" stroke-width="0.5" transform="rotate(230 4 -1)"/>
+    <circle cx="0" cy="-5" r="3" fill="rgba(197,151,58,0.72)"/>
+    <!-- Second small jasmine -->
+    <ellipse cx="12" cy="4" rx="2.8" ry="4.8" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(50 12 4)"/>
+    <ellipse cx="16" cy="-2" rx="2.8" ry="4.8" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(100 16 -2)"/>
+    <ellipse cx="10" cy="-8" rx="2.8" ry="4.8" fill="rgba(252,248,240,0.90)" stroke="rgba(197,151,58,0.3)" stroke-width="0.4" transform="rotate(-10 10 -8)"/>
+    <circle cx="12" cy="-2" r="2" fill="rgba(197,151,58,0.62)"/>
+  </g>
+  <!-- Branch 2 middle — pomegranate branch -->
+  <path d="M146,240 C130,226 112,222 90,218"
+        stroke="rgba(90,58,26,0.48)" stroke-width="1.3" stroke-linecap="round" fill="none"/>
+  <g transform="translate(114,224)">
+    <ellipse cx="-8" cy="-10" rx="3" ry="7.5" fill="rgba(48,88,42,0.60)" transform="rotate(-30 -8 -10)"/>
+    <line x1="-8" y1="-16" x2="-8" y2="-4" stroke="rgba(48,88,42,0.28)" stroke-width="0.5"/>
+    <ellipse cx="0" cy="-16" rx="3" ry="7" fill="rgba(66,108,52,0.55)" transform="rotate(-65 0 -16)"/>
+    <ellipse cx="6" cy="-11" rx="2.5" ry="6" fill="rgba(48,88,42,0.52)" transform="rotate(20 6 -11)"/>
+  </g>
+  <!-- Pomegranate (open/flowering) at branch 2 end -->
+  <g transform="translate(90,210)">
+    <path d="M0,-20 C-16,-20 -20,-8 -18,4 C-16,18 -8,22 0,22 C8,22 16,18 18,4 C20,-8 16,-20 0,-20 Z"
+          fill="rgba(155,45,45,0.26)" stroke="rgba(155,45,45,0.52)" stroke-width="0.8"/>
+    <path d="M-7,-20 C-6,-28 -3,-32 0,-30 C3,-32 6,-28 7,-20 C4,-24 -4,-24 -7,-20 Z"
+          fill="rgba(48,88,42,0.72)"/>
+    <path d="M-12,-16 C-14,-22 -12,-26 -10,-25 C-8,-26 -8,-22 -10,-18" fill="rgba(48,88,42,0.52)" stroke="rgba(48,88,42,0.4)" stroke-width="0.5"/>
+    <path d="M12,-16 C14,-22 12,-26 10,-25 C8,-26 8,-22 10,-18" fill="rgba(48,88,42,0.52)" stroke="rgba(48,88,42,0.4)" stroke-width="0.5"/>
+    <circle cx="-6" cy="-3" r="2.5" fill="rgba(185,65,65,0.58)"/>
+    <circle cx="0" cy="-7" r="2.5" fill="rgba(185,65,65,0.58)"/>
+    <circle cx="6" cy="-3" r="2.5" fill="rgba(185,65,65,0.58)"/>
+    <circle cx="-4" cy="5" r="2.5" fill="rgba(185,65,65,0.52)"/>
+    <circle cx="4" cy="5" r="2.5" fill="rgba(185,65,65,0.52)"/>
+    <path d="M-6,-20 C-4,-18 4,-18 6,-20" stroke="rgba(197,151,58,0.38)" stroke-width="0.6" fill="none"/>
+  </g>
+  <!-- Branch 3 upper — rose bud + leaves -->
+  <path d="M140,150 C158,138 176,133 196,130"
+        stroke="rgba(90,58,26,0.44)" stroke-width="1.1" stroke-linecap="round" fill="none"/>
+  <g transform="translate(170,134)">
+    <ellipse cx="8" cy="-9" rx="2.8" ry="6.5" fill="rgba(48,88,42,0.58)" transform="rotate(40 8 -9)"/>
+    <line x1="8" y1="-14" x2="8" y2="-4" stroke="rgba(48,88,42,0.28)" stroke-width="0.5"/>
+    <ellipse cx="14" cy="-16" rx="2.8" ry="6.5" fill="rgba(66,108,52,0.52)" transform="rotate(75 14 -16)"/>
+  </g>
+  <!-- Rose bud at top -->
+  <g transform="translate(196,120)">
+    <ellipse cx="0" cy="-11" rx="6" ry="8" fill="rgba(210,140,125,0.48)" transform="rotate(0 0 0)"/>
+    <ellipse cx="0" cy="-11" rx="6" ry="8" fill="rgba(225,155,140,0.44)" transform="rotate(60 0 0)"/>
+    <ellipse cx="0" cy="-11" rx="6" ry="8" fill="rgba(210,140,125,0.44)" transform="rotate(120 0 0)"/>
+    <ellipse cx="0" cy="-11" rx="5.5" ry="7.5" fill="rgba(225,155,140,0.46)" transform="rotate(180 0 0)"/>
+    <ellipse cx="0" cy="-11" rx="5.5" ry="7.5" fill="rgba(210,140,125,0.42)" transform="rotate(240 0 0)"/>
+    <ellipse cx="0" cy="-11" rx="5.5" ry="7.5" fill="rgba(225,155,140,0.44)" transform="rotate(300 0 0)"/>
+    <circle cx="0" cy="0" r="5.5" fill="rgba(195,105,95,0.58)"/>
+    <circle cx="0" cy="0" r="2.8" fill="rgba(197,151,58,0.72)"/>
+    <path d="M-5,5 C-7,12 -5,16 -3,14" stroke="rgba(48,88,42,0.5)" stroke-width="0.7" fill="rgba(48,88,42,0.22)"/>
+    <path d="M5,5 C7,12 5,16 3,14" stroke="rgba(48,88,42,0.5)" stroke-width="0.7" fill="rgba(48,88,42,0.22)"/>
+  </g>
+  <!-- Top of stem — marigold crown -->
+  <g transform="translate(160,14)">
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(197,151,58,0.64)" transform="rotate(0 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(218,172,60,0.60)" transform="rotate(45 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(197,151,58,0.60)" transform="rotate(90 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(218,172,60,0.62)" transform="rotate(135 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(197,151,58,0.60)" transform="rotate(180 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(218,172,60,0.62)" transform="rotate(225 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(197,151,58,0.64)" transform="rotate(270 0 0)"/>
+    <ellipse cx="0" cy="-9" rx="4.5" ry="7" fill="rgba(218,172,60,0.60)" transform="rotate(315 0 0)"/>
+    <circle cx="0" cy="0" r="5.5" fill="rgba(150,100,18,0.72)"/>
+    <circle cx="0" cy="0" r="2.8" fill="rgba(197,151,58,0.92)"/>
+  </g>
+  <!-- Arabesque tendril -->
+  <path d="M146,240 C150,252 156,260 164,264 C172,268 178,262 174,254 C170,246 158,250 158,258"
+        stroke="rgba(90,58,26,0.26)" stroke-width="0.7" fill="none"/>
+  <path d="M140,340 C144,354 148,364 156,372 C164,380 170,376 168,366 C166,356 154,358 156,368"
+        stroke="rgba(90,58,26,0.22)" stroke-width="0.6" fill="none"/>
+  <!-- Gold highlight dots -->
+  <circle cx="156" cy="70" r="1.8" fill="rgba(197,151,58,0.5)"/>
+  <circle cx="150" cy="96" r="1.4" fill="rgba(197,151,58,0.42)"/>
+  <circle cx="138" cy="178" r="1.6" fill="rgba(197,151,58,0.45)"/>
+  <circle cx="144" cy="268" r="1.4" fill="rgba(197,151,58,0.38)"/>
+  <circle cx="132" cy="400" r="1.6" fill="rgba(197,151,58,0.4)"/>
+  <!-- Fine leaf pairs on stem -->
+  <ellipse cx="150" cy="80" rx="2.5" ry="6" fill="rgba(48,88,42,0.44)" transform="rotate(60 150 80)"/>
+  <ellipse cx="144" cy="76" rx="2" ry="5" fill="rgba(66,108,52,0.38)" transform="rotate(-30 144 76)"/>
+  <ellipse cx="150" cy="200" rx="2.5" ry="6" fill="rgba(48,88,42,0.42)" transform="rotate(55 150 200)"/>
+  <ellipse cx="142" cy="196" rx="2" ry="5" fill="rgba(66,108,52,0.36)" transform="rotate(-40 142 196)"/>
+  <ellipse cx="148" cy="300" rx="2.5" ry="6" fill="rgba(48,88,42,0.42)" transform="rotate(50 148 300)"/>
+  <ellipse cx="140" cy="296" rx="2" ry="5" fill="rgba(66,108,52,0.36)" transform="rotate(-35 140 296)"/>
+  <!-- Bud clusters -->
+  <g transform="translate(154,390)">
+    <path d="M0,-8 C-4,-12 -5,-18 0,-16 C5,-18 4,-12 0,-8 Z" fill="rgba(197,151,58,0.5)"/>
+    <path d="M-5,-6 C-10,-8 -12,-14 -8,-14 C-6,-14 -4,-10 -5,-6 Z" fill="rgba(48,88,42,0.44)"/>
+    <path d="M5,-6 C10,-8 12,-14 8,-14 C6,-14 4,-10 5,-6 Z" fill="rgba(48,88,42,0.44)"/>
+  </g>
+  <g transform="translate(152,440)">
+    <path d="M0,-7 C-3,-10 -4,-15 0,-14 C4,-15 3,-10 0,-7 Z" fill="rgba(190,120,110,0.44)"/>
+    <path d="M-4,-5 C-8,-6 -9,-12 -6,-12 C-4,-12 -3,-8 -4,-5 Z" fill="rgba(48,88,42,0.38)"/>
+    <path d="M4,-5 C8,-6 9,-12 6,-12 C4,-12 3,-8 4,-5 Z" fill="rgba(48,88,42,0.38)"/>
+  </g>
+</svg>
+
+  <div class="rumi-poem-frame">
+    <svg class="rumi-frame-top r-attr" viewBox="0 0 280 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- Central rosette/medallion -->
+    <circle cx="140" cy="24" r="10" fill="none" stroke="rgba(197,151,58,0.55)" stroke-width="0.8"/>
+    <circle cx="140" cy="24" r="6" fill="none" stroke="rgba(197,151,58,0.38)" stroke-width="0.6"/>
+    <circle cx="140" cy="24" r="2.5" fill="rgba(197,151,58,0.6)"/>
+    <!-- 8-pointed star in medallion -->
+    <path d="M140,14 L141.5,22 L149,20 L143,26 L149,32 L141.5,30 L140,38 L138.5,30 L131,32 L137,26 L131,20 L138.5,22 Z"
+          fill="none" stroke="rgba(197,151,58,0.42)" stroke-width="0.5"/>
+    <!-- Horizontal bands — left -->
+    <line x1="0" y1="24" x2="118" y2="24" stroke="rgba(197,151,58,0.3)" stroke-width="0.5"/>
+    <line x1="0" y1="20" x2="110" y2="20" stroke="rgba(197,151,58,0.15)" stroke-width="0.4"/>
+    <line x1="0" y1="28" x2="110" y2="28" stroke="rgba(197,151,58,0.15)" stroke-width="0.4"/>
+    <!-- Cusped arch repeating pattern — left -->
+    <path d="M20,24 Q26,16 32,24 Q38,16 44,24 Q50,16 56,24 Q62,16 68,24 Q74,16 80,24 Q86,16 92,24 Q98,16 104,24 Q110,16 116,24"
+          stroke="rgba(197,151,58,0.32)" stroke-width="0.6" fill="none"/>
+    <!-- Right side mirror -->
+    <line x1="162" y1="24" x2="280" y2="24" stroke="rgba(197,151,58,0.3)" stroke-width="0.5"/>
+    <line x1="170" y1="20" x2="280" y2="20" stroke="rgba(197,151,58,0.15)" stroke-width="0.4"/>
+    <line x1="170" y1="28" x2="280" y2="28" stroke="rgba(197,151,58,0.15)" stroke-width="0.4"/>
+    <path d="M164,24 Q170,16 176,24 Q182,16 188,24 Q194,16 200,24 Q206,16 212,24 Q218,16 224,24 Q230,16 236,24 Q242,16 248,24 Q254,16 260,24"
+          stroke="rgba(197,151,58,0.32)" stroke-width="0.6" fill="none"/>
+    <!-- Small diamonds at intervals -->
+    <path d="M10,24 L12,22 L14,24 L12,26 Z" fill="rgba(197,151,58,0.45)"/>
+    <path d="M270,24 L272,22 L274,24 L272,26 Z" fill="rgba(197,151,58,0.45)"/>
+    <path d="M60,20 L62,17 L64,20 L62,23 Z" fill="rgba(197,151,58,0.3)"/>
+    <path d="M216,20 L218,17 L220,20 L218,23 Z" fill="rgba(197,151,58,0.3)"/>
+  </svg>
+    <div class="rumi-lines">
+      <span class="r-line r-l1">Come to the orchard in Spring.</span>
+      <span class="r-gap"></span>
+      <span class="r-line r-l2">There is light and wine,</span>
+      <span class="r-line r-l3">and sweethearts in the pomegranate flowers.</span>
+      <span class="r-gap"></span>
+      <span class="r-line r-paradox r-l4">If you do not come, these do not matter.</span>
+      <span class="r-line r-paradox r-paradox-2 r-l5">If you do come, these do not matter.</span>
+    </div>
   </div>
   <div class="rumi-attr r-attr">&#8212; Rumi</div>
   <div class="rumi-scroll r-scroll">scroll<span class="rumi-scroll-line"></span></div>
@@ -2455,6 +2688,7 @@
       ['.r-l5',   2700],
       ['.rumi-bot-l', 3100],
       ['.rumi-bot-r', 3250],
+      ['.rumi-frame-top', 3400],
       ['.r-attr', 3600],
       ['.r-scroll', 4400],
     ];
