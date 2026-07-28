@@ -1355,30 +1355,124 @@
     margin:0 auto;
   }
   /* overlay story/content styles */
-  .vic-ov-body .ov-eyebrow{
-    font-family:'EB Garamond',serif;
-    font-size:9.5px; letter-spacing:0.4em; text-transform:uppercase;
-    color:rgba(197,151,58,1);
-    margin-bottom:14px;
+  /* ── Prominent datetime badge ── */
+  .ov-datetime{
+    display:flex; flex-direction:column; align-items:center;
+    text-align:center; margin-bottom:28px;
+    padding:18px 24px 16px;
+    background:rgba(197,151,58,0.055);
+    border:0.5px solid rgba(197,151,58,0.22);
+    position:relative;
   }
+  .ov-datetime::before,.ov-datetime::after{
+    content:'✦'; position:absolute; top:8px;
+    font-size:8px; color:rgba(197,151,58,0.5);
+  }
+  .ov-datetime::before{ left:12px; }
+  .ov-datetime::after{ right:12px; }
+  .ov-date-day{
+    font-family:'EB Garamond',serif; font-size:11px;
+    letter-spacing:0.32em; text-transform:uppercase;
+    color:rgba(197,151,58,0.85); margin-bottom:4px;
+  }
+  .ov-date-time{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(46px,8vw,80px); line-height:1;
+    color:var(--ink); margin:-4px 0 2px;
+  }
+  .ov-date-loc{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:clamp(14px,1.8vw,17px); color:rgba(74,62,56,0.68);
+  }
+  /* ── Title / subtitle ── */
+  .vic-ov-body .ov-eyebrow{ display:none; }
   .vic-ov-body .ov-title{
     font-family:'Beau Rivage',cursive;
-    font-size:clamp(72px,9vw,130px);
-    line-height:0.88;
-    color:var(--ink);
-    margin-bottom:12px;
+    font-size:clamp(44px,7vw,76px); line-height:1; color:var(--ink);
+    margin-bottom:6px;
   }
   .vic-ov-body .ov-sub{
-    font-family:'Cormorant Garamond',serif;
-    font-style:italic; font-size:17px; font-weight:300;
-    color:var(--ink-soft); opacity:1;
-    margin-bottom:38px;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:clamp(16px,2.2vw,22px); color:rgba(74,62,56,0.72);
+    margin-bottom:22px;
   }
+  /* ── Mughal rule divider ── */
   .vic-ov-body .ov-rule{
-    height:0.5px;
-    background:linear-gradient(90deg, rgba(197,151,58,0.4), transparent);
-    margin-bottom:38px;
+    margin:0 auto 28px; display:block; width:clamp(160px,30vw,260px);
+    height:auto; opacity:0.55;
   }
+  /* ── Quran verse block ── */
+  .ov-verse-block{
+    margin:22px 0; padding:18px 24px;
+    border-left:2px solid rgba(197,151,58,0.35);
+    background:rgba(197,151,58,0.04);
+  }
+  .ov-verse-arabic{
+    font-size:clamp(13px,1.8vw,16px);
+    letter-spacing:0.04em; direction:rtl; text-align:right;
+    color:rgba(197,151,58,0.9); margin-bottom:8px;
+    font-family:'EB Garamond',serif; font-style:italic;
+  }
+  .ov-verse-text{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(16px,2vw,19px); font-style:italic;
+    line-height:1.65; color:rgba(26,20,16,0.9);
+    margin-bottom:8px;
+  }
+  .ov-verse-ref{
+    font-family:'EB Garamond',serif; font-size:11px;
+    letter-spacing:0.26em; text-transform:uppercase;
+    color:rgba(197,151,58,0.75);
+  }
+  .ov-verse-note{
+    margin-top:10px; font-family:'Cormorant Garamond',serif;
+    font-size:clamp(14px,1.7vw,16px); color:rgba(74,62,56,0.72);
+    line-height:1.6;
+  }
+  /* ── Dress code button on tile ── */
+  .vic-dress-btn{
+    display:block; width:100%; margin-top:18px;
+    background:none; border:0.75px solid var(--card-accent,rgba(197,151,58,0.6));
+    color:var(--card-accent,rgba(197,151,58,0.85));
+    font-family:'EB Garamond',serif; font-size:11px;
+    letter-spacing:0.32em; text-transform:uppercase;
+    padding:8px 0; cursor:pointer;
+    transition:background 0.22s ease, color 0.22s ease;
+    position:relative; z-index:5;
+  }
+  .vic-dress-btn::before{
+    content:'✦ '; font-size:7px; vertical-align:2px;
+    opacity:0.7;
+  }
+  .vic-dress-btn::after{
+    content:' ✦'; font-size:7px; vertical-align:2px;
+    opacity:0.7;
+  }
+  .vic-dress-btn:hover,.vic-tile.dress-open .vic-dress-btn{
+    background:var(--card-accent,rgba(197,151,58,0.8));
+    color:#FDFAF5;
+  }
+  .vic-dress-reveal{
+    max-height:0; overflow:hidden;
+    transition:max-height 0.38s cubic-bezier(0.22,1,0.36,1), padding 0.3s ease;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:clamp(14px,1.6vw,15px); line-height:1.65;
+    color:rgba(26,20,16,0.82);
+    padding:0 2px;
+    position:relative; z-index:5;
+  }
+  .vic-tile.dress-open .vic-dress-reveal{
+    max-height:200px; padding:14px 2px 2px;
+  }
+  /* ── Modal corner ornaments ── */
+  .vic-ov-corner{
+    position:absolute; width:48px; height:48px;
+    pointer-events:none; z-index:1; opacity:0.45;
+  }
+  .vic-ov-corner.tl{ top:0; left:0; }
+  .vic-ov-corner.tr{ top:0; right:0; transform:scaleX(-1); }
+  .vic-ov-corner.bl{ bottom:0; left:0; transform:scaleY(-1); }
+  .vic-ov-corner.br{ bottom:0; right:0; transform:scale(-1); }
   /* drop cap on first paragraph */
   .vic-ov-body .story:first-of-type::first-letter{
     font-family:'Beau Rivage',cursive;
@@ -2885,6 +2979,8 @@
       </div>
       <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">Hyderabad's answer to Haldi</div>
+      <button class="vic-dress-btn" aria-label="Manja dress code">Dress Code</button>
+      <div class="vic-dress-reveal">Something yellow or orange — nothing you love too dearly. The turmeric paste has a personal vendetta against nice kurtas and an impeccable aim.</div>
       <div class="vic-hint">Read more</div>
     </div>
 
@@ -2927,6 +3023,8 @@
       </div>
       <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">&amp; Choodi</div>
+      <button class="vic-dress-btn" aria-label="Mehendi dress code">Dress Code</button>
+      <div class="vic-dress-reveal">Bright and festive — think long Saturday morning at a lovely house. One rule: free sleeves. Henna takes an hour to dry and it cannot wait for your tight cuffs.</div>
       <div class="vic-hint">Read more</div>
     </div>
 
@@ -2969,6 +3067,8 @@
       </div>
       <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">&amp; the Jalwa</div>
+      <button class="vic-dress-btn" aria-label="Nikah dress code">Dress Code</button>
+      <div class="vic-dress-reveal">Your absolute best. This is Heritage Palace on a Sunday and they are getting married. Sherwani, lehenga, anarkali, suit — Indian formal is actively encouraged. You will be photographed.</div>
       <div class="vic-hint">Read more</div>
     </div>
 
@@ -3011,6 +3111,8 @@
       </div>
       <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">Dinner &amp; Salaami</div>
+      <button class="vic-dress-btn" aria-label="Reception dress code">Dress Code</button>
+      <div class="vic-dress-reveal">Full formal. The biryani deserves an outfit that respects it, and so do they. Come dressed like you're celebrating two people you love — because you are.</div>
       <div class="vic-hint">Read more</div>
     </div>
 
@@ -3024,6 +3126,7 @@
 <div id="vic-ov" role="dialog" aria-modal="true" aria-hidden="true">
   <div class="vic-ov-modal">
     <div class="vic-ov-frame" aria-hidden="true"></div>
+    <svg class="vic-ov-corner tl" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M2,2 L18,2 L18,18 L2,18 Z" stroke="rgba(197,151,58,0.7)" stroke-width="0.8" fill="none"/><path d="M10,2 L10,18 M2,10 L18,10" stroke="rgba(197,151,58,0.5)" stroke-width="0.5"/><circle cx="10" cy="10" r="3.5" stroke="rgba(197,151,58,0.6)" stroke-width="0.7" fill="none"/><path d="M18,2 L46,2 M2,18 L2,46" stroke="rgba(197,151,58,0.22)" stroke-width="0.5"/><circle cx="28" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="38" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="28" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="38" r="1.2" fill="rgba(197,151,58,0.35)"/></svg><svg class="vic-ov-corner tr" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M2,2 L18,2 L18,18 L2,18 Z" stroke="rgba(197,151,58,0.7)" stroke-width="0.8" fill="none"/><path d="M10,2 L10,18 M2,10 L18,10" stroke="rgba(197,151,58,0.5)" stroke-width="0.5"/><circle cx="10" cy="10" r="3.5" stroke="rgba(197,151,58,0.6)" stroke-width="0.7" fill="none"/><path d="M18,2 L46,2 M2,18 L2,46" stroke="rgba(197,151,58,0.22)" stroke-width="0.5"/><circle cx="28" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="38" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="28" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="38" r="1.2" fill="rgba(197,151,58,0.35)"/></svg><svg class="vic-ov-corner bl" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M2,2 L18,2 L18,18 L2,18 Z" stroke="rgba(197,151,58,0.7)" stroke-width="0.8" fill="none"/><path d="M10,2 L10,18 M2,10 L18,10" stroke="rgba(197,151,58,0.5)" stroke-width="0.5"/><circle cx="10" cy="10" r="3.5" stroke="rgba(197,151,58,0.6)" stroke-width="0.7" fill="none"/><path d="M18,2 L46,2 M2,18 L2,46" stroke="rgba(197,151,58,0.22)" stroke-width="0.5"/><circle cx="28" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="38" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="28" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="38" r="1.2" fill="rgba(197,151,58,0.35)"/></svg><svg class="vic-ov-corner br" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M2,2 L18,2 L18,18 L2,18 Z" stroke="rgba(197,151,58,0.7)" stroke-width="0.8" fill="none"/><path d="M10,2 L10,18 M2,10 L18,10" stroke="rgba(197,151,58,0.5)" stroke-width="0.5"/><circle cx="10" cy="10" r="3.5" stroke="rgba(197,151,58,0.6)" stroke-width="0.7" fill="none"/><path d="M18,2 L46,2 M2,18 L2,46" stroke="rgba(197,151,58,0.22)" stroke-width="0.5"/><circle cx="28" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="38" cy="2" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="28" r="1.2" fill="rgba(197,151,58,0.35)"/><circle cx="2" cy="38" r="1.2" fill="rgba(197,151,58,0.35)"/></svg>
     <div class="vic-ov-bar">
       <div class="vic-ov-tabs">
         <button class="vic-ov-tab" data-event="manja">Manja</button>
@@ -3043,12 +3146,16 @@
 <div id="vic-panels" style="display:none" aria-hidden="true">
 
   <div id="vp-manja">
-    <div class="ov-eyebrow">28 August · Friday · 8 pm · Our Home, Shadnagar</div>
+    <div class="ov-datetime">
+      <div class="ov-date-day">Friday, 28 August 2026</div>
+      <div class="ov-date-time">8 pm</div>
+      <div class="ov-date-loc">Our Home, Shadnagar</div>
+    </div>
     <div class="ov-title">Manja</div>
     <div class="ov-sub">Hyderabad's answer to Haldi</div>
-    <div class="ov-rule"></div>
-    <p class="story">Azhar's family sends the turmeric over first — sandalwood and rosewater mixed in, the colour of marigolds — and the moment it arrives at Zeenath's house, the Manja begins. Same paste, same night, two houses. His women are doing the same thing on his hands across the city. Tradition's way of beginning together before they're even in the same room.</p>
-    <p class="story">The paste goes on in rounds — oldest first, that part is non-negotiable. Hands, face, feet. After that: music, dancing, and the understanding that yellow is everybody's problem tonight, not just the couple's.</p>
+    <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
+    <p class="story">Azhar's family sends the turmeric first — sandalwood and rosewater mixed in, the colour of marigolds at dusk — and the moment it crosses the threshold, the Manja begins. Same paste, same night, two houses, two sets of women doing identical things to the respective hands of their respective people across opposite ends of the city. Tradition's elegant way of beginning together before the couple is even in the same room.</p>
+    <p class="story">The paste goes on in rounds — elders first, that part is emphatically non-negotiable. Hands, face, feet. After that: music, dancing, and the collective acceptance that yellow is everyone's problem tonight, not just the couple's. There is no avoiding it. There is only deciding how much you love what you're wearing.</p>
     <div class="ev-history">
       <div class="ev-history-head">A little history</div>
       <p>The word "Manja" is specific to the Deccan — elsewhere you'll hear "Haldi," "Pithi," or "Ubtan." Different names, the same root: turmeric applied to the bride and groom before the wedding. Turmeric (<em>Curcuma longa</em>) has been part of South Asian ceremonies for at least two thousand years. Its original appeal was partly medicinal — it's naturally antibacterial and anti-inflammatory, and its use before a wedding made practical sense when people would be in close contact for several days.</p>
@@ -3062,18 +3169,22 @@
     </div>
     <div class="ev-history" style="margin-top:28px">
       <div class="ev-history-head">What to wear</div>
-      <p>Something yellow or orange if you have it — but please, not your best. The turmeric paste has no concept of "off limits" and will find your nicest kurta like it has a personal vendetta. Comfortable, festive, easy to move in. The dancing starts after the Manja and there's no formal end time.</p>
+      <p>Something yellow or orange if you can manage it — but not your best. The turmeric paste has no concept of "off limits" and treats fine fabric the way a toddler treats a white sofa: enthusiastically and without remorse. Comfortable, festive, easy to move in. The dancing begins after the Manja and there is no formal end time. The night decides.</p>
     </div>
-    <p class="guest-note">Yellow is the colour of the evening. Wear something you'll remember fondly even with turmeric on it.</p>
+    <p class="guest-note">Yellow is the colour of the evening. Wear something you will love even more once it has turmeric on it.</p>
   </div>
 
   <div id="vp-mehendi">
-    <div class="ov-eyebrow">29 August · Saturday · 9 am · Our Home, Shadnagar</div>
+    <div class="ov-datetime">
+      <div class="ov-date-day">Saturday, 29 August 2026</div>
+      <div class="ov-date-time">9 am</div>
+      <div class="ov-date-loc">Our Home, Shadnagar</div>
+    </div>
     <div class="ov-title">Mehendi</div>
     <div class="ov-sub">&amp; Choodi</div>
-    <div class="ov-rule"></div>
-    <p class="story">Same house as last night — daylight now, breakfast on the table, no turmeric in sight. Today's job: sit down, pick a pattern, let someone paint your hands, drink chai.</p>
-    <p class="story">Multiple henna artists, so no queue swallowing your whole morning. Choodi happens alongside — the glass bangles chosen and stacked in the traditional green-and-gold, by the women of her family. They stay on through the Nikah tomorrow.</p>
+    <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
+    <p class="story">Same house as last night — daylight now, the turmeric thoroughly gone, breakfast on the table. Today's assignment is considerably gentler: sit down, pick a design, surrender your hands to someone who actually knows what they're doing, drink chai. This is the version of a wedding morning that does not require advance preparation or particular stamina.</p>
+    <p class="story">Multiple henna artists, so there is no queue threatening to swallow your entire Saturday. The Choodi happens alongside — Zeenath's glass bangles, chosen in the traditional green-and-gold, stacked by the women of her family. They go on today and stay on through the Nikah tomorrow. The bangles are doing double duty as jewellery and as a deadline.</p>
     <div class="ev-history">
       <div class="ev-history-head">A little history</div>
       <p>The henna plant (<em>Lawsonia inermis</em>) is native to North Africa and the Arabian Peninsula. The practice of applying its crushed, dried leaves as body art is documented in ancient Egypt; its introduction to South Asia came through medieval trade routes from the Middle East.</p>
@@ -3088,23 +3199,47 @@
     </div>
     <div class="ev-history" style="margin-top:28px">
       <div class="ev-history-head">What to wear</div>
-      <p>Bright works — this is a morning-light, garden-lawn kind of event. Salwar, kurta, a saree you like but don't love — whatever you'd wear to someone's house for a long Saturday morning. The one rule: nothing with tight sleeves if you want henna on your hands and forearms. Henna takes at least an hour to dry and needs space. Come with your arms free.</p>
+      <p>Bright and festive — this is a morning-light, garden-lawn kind of affair. Salwar, kurta, a saree you like but don't actively love — whatever you would wear to someone's house for a long, loose Saturday. The single non-negotiable: nothing with tight sleeves if you want henna on your forearms. Henna takes an hour to dry and has absolutely no patience for restrictive fabric. Come with your arms free and your schedule flexible.</p>
     </div>
-    <p class="guest-note">Get your hands done. We will notice if you don't, and Hud-hud will have thoughts.</p>
+    <p class="guest-note">Get your hands done. We will both notice if you don't, and Hud-hud will compose a detailed personal critique.</p>
   </div>
 
   <div id="vp-nikah">
-    <div class="ov-eyebrow">30 August · Sunday · 12 noon · Heritage Palace, Attapur</div>
+    <div class="ov-datetime">
+      <div class="ov-date-day">Sunday, 30 August 2026</div>
+      <div class="ov-date-time">12 noon</div>
+      <div class="ov-date-loc">Heritage Palace, Attapur</div>
+    </div>
     <div class="ov-title">Nikah</div>
     <div class="ov-sub">&amp; the Jalwa</div>
-    <div class="ov-rule"></div>
-    <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no walking down an aisle — just words, witnesses, and a signature that changes everything.</p>
+    <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
+    <p class="story">A Nikah is one of the shortest ceremonies you will ever attend. Fifteen minutes, maybe twenty. A sermon, three Quranic verses, a proposal, an acceptance, a contract. No rings exchanged mid-ceremony, no aisle, no processional music — just words, witnesses, and a signature that changes the legal and spiritual status of two people permanently. The simplicity is not a limitation. It is the entire point.</p>
     <div class="qa">
       <details>
         <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
         <div class="qa-body">
-          <p>The Qari recites three Quranic verses and translates them, then gives a short sermon. After that: the proposal, the acceptance, and the dua. That's the whole thing. Fifteen to twenty minutes, total.</p>
-          <p>During the dua — say Ameen. Out loud. Together.</p>
+          <p>The Qari opens with three Quranic verses — each one chosen with intention. Together they frame the entire ceremony.</p>
+
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O believers, be mindful of God as He deserves, and do not die except in a state of willing surrender."</div>
+            <div class="ov-verse-ref">Surah Al-Imran · 3:102</div>
+            <div class="ov-verse-note">The first verse arrives like a door opening. It asks the room to wake up — to understand that whatever happens in the next twenty minutes is witnessed by something larger than the guest list. This is not preamble. It is the frame everything else sits inside.</div>
+          </div>
+
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O humanity, be mindful of your Lord Who created you from a single soul — and from it created its mate — and from both of them spread countless men and women."</div>
+            <div class="ov-verse-ref">Surah An-Nisa · 4:1</div>
+            <div class="ov-verse-note">The marriage verse. The Arabic word for spouse — <em>zawj</em> — means "counterpart," "the other of a pair." The verse locates partnership in the structure of creation itself: there is, encoded in the language, the idea that you were always made to come alongside someone. This is not romanticism. It is cosmology.</div>
+          </div>
+
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O believers, be mindful of God and speak the truth. He will set your deeds right for you and forgive your wrongs. And whoever obeys God and His Messenger has won something immense."</div>
+            <div class="ov-verse-ref">Surah Al-Ahzab · 33:70–71</div>
+            <div class="ov-verse-note">The last verse, arriving precisely before the words that will matter most. The entire Nikah runs on spoken language — the proposal, the acceptance, the dua, the three Qubool Hais. This verse asks that every word be honest and held in consciousness. Speak truly. What you're about to say — or hear — is permanent.</div>
+          </div>
+
+          <p>After the verses: a short sermon, then the proposal, the acceptance, the dua. That is the complete ceremony. Fifteen to twenty minutes, total.</p>
+          <p>During the dua — say Ameen. Out loud. Together. Let it be heard.</p>
         </div>
       </details>
       <details>
@@ -3136,7 +3271,7 @@
     </div>
     <div class="ev-history" style="margin-top:28px">
       <div class="ev-history-head">What to wear</div>
-      <p>Your best. This is Heritage Palace on a Sunday and they are getting married — dress accordingly. Sherwani, suit, saree, lehenga, anarkali — Indian formal is very much at home here and actively encouraged. It's a noon Nikah so the light will be beautiful and you will be photographed. Dress like you know that.</p>
+      <p>Your absolute best. This is Heritage Palace on a Sunday and they are getting married — not a rehearsal, not a casual do, an actual Nikah with actual ancestors watching. Sherwani, suit, saree, lehenga, anarkali — Indian formal is very much at home here and actively encouraged. It is a noon ceremony so the light will be extraordinary and you will absolutely be photographed. Dress accordingly. Dress like you mean it.</p>
     </div>
     <div class="couplet">
       "So race toward all that is good."
@@ -3150,12 +3285,16 @@
   </div>
 
   <div id="vp-reception">
-    <div class="ov-eyebrow">30 August · Sunday · 8 pm · Heritage Palace, Attapur</div>
+    <div class="ov-datetime">
+      <div class="ov-date-day">Sunday, 30 August 2026</div>
+      <div class="ov-date-time">8 pm</div>
+      <div class="ov-date-loc">Heritage Palace, Attapur</div>
+    </div>
     <div class="ov-title">Reception</div>
     <div class="ov-sub">The evening they've been waiting to throw</div>
-    <div class="ov-rule"></div>
-    <p class="story">This one's not about ritual — it's just them, married, wanting everyone they love in the same room at once. Dinner, music, the full evening.</p>
-    <p class="story">And if there's one meal in Hyderabad a wedding gets judged by, it's this one. Come hungry.</p>
+    <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
+    <p class="story">This one is not about ritual. There is no ceremony, no prescribed order, no correct thing to say at the correct moment. It is just them — married, finally, after an extremely well-documented courtship — wanting every single person they love in the same room at the same time. Dinner, music, the full evening. They have been planning this party since before the pandemic made planning parties briefly illegal.</p>
+    <p class="story">And if there is one meal in Hyderabad by which a wedding is remembered, judged, and referenced at family gatherings for the next fifteen years, it is the biryani served at the reception dinner. Come hungry. Come strategically hungry.</p>
     <div class="ev-history">
       <div class="ev-history-head">A little history</div>
       <p>The wedding reception dinner in Hyderabad has one metric by which it is judged above all others: the biryani. This is not hyperbole. Guests remember it, compare it, and bring it up years later. Hyderabadi dum pukht biryani — layering parboiled rice and marinated meat in a sealed vessel, cooking slowly over charcoal — was developed in the kitchens of the Asafia dynasty in the 18th century and refined under Nizam Asaf Jah I. It differs from Mughlai biryani in its use of shorter-grain rice, distinct local spicing, and a dryer finish. The Nizams' court recipes were closely guarded. Heritage Palace works from that tradition.</p>
@@ -3163,13 +3302,13 @@
     </div>
     <div class="ev-history" style="margin-top:28px">
       <div class="ev-history-head">What to wear</div>
-      <p>Full formalwear — this is the evening event, Heritage Palace is doing what Heritage Palace does, and the biryani deserves an outfit that respects it. Saree, lehenga, sherwani, suit — your absolute best. Come dressed like you're celebrating two people you love, which you are.</p>
+      <p>Full formal. This is the evening event at Heritage Palace and it is their party — the one they have been imagining for a while now. Saree, lehenga, sherwani, suit — your absolute best. The biryani deserves an outfit that respects its legacy. Come dressed like you're celebrating two people you love. You are.</p>
     </div>
     <div class="couplet">
       "Where you are absent, what worth has spring or the garden?<br>Where you are present, what need have I of either?"
       <div class="attr">Mawlana Jalal al-Din Rumi</div>
     </div>
-    <p class="guest-note">Your presence at their table is the only gift they're after.</p>
+    <p class="guest-note">Your presence at their table is the only gift they're after. Though we acknowledge the biryani is also a gift, and you will receive it.</p>
   </div>
 
 </div>
@@ -3802,6 +3941,18 @@
     document.addEventListener('keydown', function(e){
       if(!ov.classList.contains('open')) return;
       if(e.key === 'Escape') closeOv();
+    });
+  })();
+
+  /* Dress code button toggle — expands on tile without opening overlay */
+  (function(){
+    document.querySelectorAll('.vic-dress-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var tile = btn.closest('.vic-tile');
+        var isOpen = tile.classList.toggle('dress-open');
+        btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
     });
   })();
 
