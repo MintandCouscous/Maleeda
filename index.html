@@ -9,6 +9,8 @@
 <meta property="og:description" content="Three days of ceremonies, too much biryani, and everyone we love in one place. Heritage Palace, Hyderabad.">
 <meta property="og:url" content="https://zehar.co.in">
 <meta property="og:type" content="website">
+<meta property="og:image" content="https://zehar.co.in/zehar.png">
+<meta name="twitter:image" content="https://zehar.co.in/zehar.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azhar &amp; Zeenath — 28–30 August 2026">
 <meta name="twitter:description" content="Three days of ceremonies, too much biryani, and everyone we love in one place. Heritage Palace, Hyderabad.">
@@ -71,6 +73,34 @@
   /* ═══════════════════════════════════════════════
      CINEMATIC GATE — generative bokeh canvas intro
      ═══════════════════════════════════════════════ */
+  /* Zehar pre-gate screen */
+  #zehar-screen{
+    position:fixed; inset:0; z-index:9999;
+    background:#0a0604;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    gap:28px;
+    transition:opacity 0.8s ease;
+  }
+  #zehar-screen.out{ opacity:0; pointer-events:none; }
+  #zehar-poster{
+    max-height:75vh; max-width:90vw;
+    object-fit:contain;
+    box-shadow:0 8px 60px rgba(0,0,0,0.8);
+  }
+  #zehar-btn{
+    background:none;
+    border:0.75px solid rgba(197,151,58,0.6);
+    color:rgba(197,151,58,0.9);
+    font-family:'EB Garamond',serif;
+    font-size:13px; letter-spacing:0.22em;
+    padding:11px 28px; cursor:pointer;
+    transition:background 0.2s, color 0.2s;
+  }
+  #zehar-btn:hover{
+    background:rgba(197,151,58,0.12);
+    color:var(--champagne);
+  }
   #gate{
     position:fixed; inset:0; z-index:200; background:radial-gradient(ellipse 130% 80% at 50% 55%, #FAF4E8 0%, #F3EDD9 55%, #EDE4CC 100%);
     display:flex; flex-direction:column;
@@ -2138,6 +2168,11 @@
 <body>
 
 <!-- ============ GATE: press play, enter the shadikhana ============ -->
+<div id="zehar-screen">
+  <img src="zehar.png" alt="Zehar — the film" id="zehar-poster">
+  <button id="zehar-btn">okay but what's actually happening →</button>
+</div>
+
 <div id="gate">
   <canvas id="gate-canvas"></canvas>
   <!-- Whimsical botanical illustrations -->
@@ -3961,6 +3996,16 @@
 </div><!-- /#site -->
 
 <script>
+  // ============ ZEHAR PRE-SCREEN ============
+  (function(){
+    var screen = document.getElementById('zehar-screen');
+    var btn = document.getElementById('zehar-btn');
+    btn.addEventListener('click', function(){
+      screen.classList.add('out');
+      setTimeout(function(){ screen.style.display='none'; }, 850);
+    });
+  })();
+
   // ============ CINEMATIC GATE + RUMI SEQUENCE ============
   var gateEl = document.getElementById('gate');
   var enterBtn = document.getElementById('gate-enter');
