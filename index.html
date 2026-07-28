@@ -885,82 +885,7 @@
   footer .verse{ font-style:italic; max-width:480px; margin:0 auto 10px; font-size:16px; opacity:0.85; }
 
   /* ═══ HUD-HUD HOUSE — top-right panel, self-contained, never blocks content ═══ */
-  #hud{
-    position:fixed; z-index:180;
-    right:0; top:0; left:auto; bottom:auto;
-    width:188px;
-    background:rgba(255,252,247,0.97);
-    border-left:1px solid rgba(197,151,58,0.16);
-    border-bottom:1px solid rgba(197,151,58,0.18);
-    border-bottom-left-radius:24px;
-    backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    box-shadow:-2px 6px 30px rgba(58,46,34,0.1);
-    display:flex; flex-direction:column; align-items:center;
-    padding:12px 14px 0; gap:0;
-    pointer-events:none;
-    transform:translateY(-110%);
-    transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease;
-  }
-  #hud.peek-in{ transform:translateY(0); }
-  #hud.hidden{ opacity:0; pointer-events:none; transform:translateY(-110%) !important; }
-  #hud.dismissed{ opacity:0; transform:translateY(-110%) !important; pointer-events:none; }
-  #hud-avatar{
-    width:100%; height:auto;
-    display:flex; align-items:center; justify-content:center;
-    cursor:default; animation:hud-bob 2.6s ease-in-out infinite; position:relative;
-    pointer-events:all;
-  }
-  #hud-avatar svg.bird{ width:84px; height:84px; filter:drop-shadow(0 3px 10px rgba(35,15,15,0.22)); }
-  #hud-branch{
-    width:110px; margin-bottom:4px; opacity:0;
-    transition:opacity 0.5s ease; pointer-events:none;
-  }
-  #hud.perched #hud-branch{ opacity:1; }
-  #wing-l, #wing-r{ transform-origin:24px 24px; animation:hud-flap 0.9s ease-in-out infinite; }
-  #wing-r{ animation-delay:0.05s; }
-  #hud.flying #wing-l, #hud.flying #wing-r{ animation:hud-flap-fast 0.26s ease-in-out infinite; }
-  #hud.flying #hud-avatar{ animation:none; }
-  @keyframes hud-flap{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.72) rotate(-8deg);} }
-  @keyframes hud-flap-fast{ 0%,100%{ transform:scaleY(1) rotate(0deg);} 50%{ transform:scaleY(0.48) rotate(-16deg);} }
-  @keyframes hud-bob{ 0%,100%{ transform:translateY(0) rotate(-1.5deg);} 50%{ transform:translateY(-6px) rotate(1.5deg);} }
-  @keyframes hud-bow{
-    0%  { transform:translateY(0)    rotate(-1.5deg); }
-    18% { transform:translateY(14px) rotate(30deg);  }
-    36% { transform:translateY(9px)  rotate(16deg);  }
-    52% { transform:translateY(16px) rotate(28deg);  }
-    70% { transform:translateY(5px)  rotate(6deg);   }
-    85% { transform:translateY(2px)  rotate(-3deg);  }
-    100%{ transform:translateY(0)    rotate(-1.5deg); }
-  }
-  #hud.bowing #hud-avatar{ animation:hud-bow 2.2s cubic-bezier(0.22,1,0.36,1) forwards; }
-  @keyframes hud-arrive{
-    from{ opacity:0; transform:translateY(-20px) scale(0.85); }
-    to  { opacity:1; transform:translateY(0) scale(1); }
-  }
-  #hud.arriving{ animation:hud-arrive 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
-
-  /* close button — always visible, prominent */
-  #hud-close{
-    position:absolute; top:-8px; right:-8px; width:26px; height:26px; border-radius:50%;
-    background:var(--page-bg); border:1.5px solid var(--ink); color:var(--ink);
-    font-size:13px; line-height:1; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; pointer-events:all;
-    opacity:0.55; transition:opacity 0.2s, transform 0.2s;
-    font-family:serif;
-  }
-  #hud-close:hover{ opacity:1; transform:scale(1.15); }
-  /* tiny label under the bird — first visit hint */
-  #hud-hint{
-    display:block; text-align:center;
-    font-family:'EB Garamond',serif; font-size:10px;
-    color:var(--ink-soft); letter-spacing:0.06em; opacity:0;
-    padding-bottom:10px;
-    transition:opacity 0.5s ease 1.2s; pointer-events:none;
-  }
-  #hud.perched #hud-hint{ opacity:0.45; }
-  @media(max-width:640px){ #hud-close{ opacity:0.9; width:22px; height:22px; font-size:11px; } #hud-hint{ display:none; } }
-
+  #hud{ display:none !important; }
   /* Hud-hud section */
   .hudhud-section{
     position:relative; padding:clamp(32px,5vh,56px) clamp(20px,6vw,80px) clamp(36px,6vh,64px);
@@ -1075,23 +1000,24 @@
   }
   /* small tab to bring him back once dismissed */
   #hud-revive{
-    position:fixed; right:20px; bottom:20px; left:auto; z-index:80;
-    width:40px; height:40px; border-radius:50%;
-    background:rgba(255,252,247,0.95); border:1.2px solid var(--gold-soft);
-    display:flex; align-items:center; justify-content:center; cursor:pointer;
-    box-shadow:0 3px 12px rgba(58,46,34,0.15);
-    opacity:0; transform:scale(0.8); pointer-events:none;
-    transition:opacity 0.35s ease, transform 0.35s ease;
+    position:fixed; right:16px; bottom:20px; left:auto; z-index:200;
+    display:flex; align-items:center; gap:7px;
+    background:rgba(255,252,247,0.97);
+    border:1px solid rgba(197,151,58,0.3);
+    border-radius:20px;
+    padding:7px 14px 7px 10px;
+    cursor:pointer;
+    box-shadow:0 3px 14px rgba(58,46,34,0.12);
+    font-family:'EB Garamond',serif;
+    font-size:12px; letter-spacing:0.08em;
+    color:var(--ink-soft);
+    opacity:1; transform:none; pointer-events:all;
+    transition:box-shadow 0.2s ease;
   }
-  #hud-revive svg{ width:24px; height:24px; }
-  #hud-revive.show{ opacity:1; transform:scale(1); pointer-events:all; }
-
+  #hud-revive:hover{ box-shadow:0 5px 20px rgba(58,46,34,0.18); }
+  #hud-revive svg{ width:22px; height:22px; flex-shrink:0; }
   @media(max-width:640px){
-    /* Mobile has no safe zone up in the ribbon (title, date and guide text
-       fill it edge to edge), so he perches in the fixed bottom-left corner
-       instead — still bigger than before, still visible, never on top of text. */
-    #hud-branch{ width:88px; }
-    #hud-revive{ right:10px; bottom:16px; left:auto; width:36px; height:36px; }
+    #hud-revive{ right:12px; bottom:16px; font-size:11px; padding:6px 12px 6px 8px; }
   }
 
   /* ── speech bubble — contained inside the house ── */
@@ -1114,7 +1040,6 @@
   #hud-bubble::after{ display:none; }
   .who{ display:block; font-family:'Beau Rivage',cursive; font-size:18px; color:var(--gold); line-height:1.2; margin-bottom:3px; }
   @media(max-width:640px){
-    #hud{ width:158px; padding:10px 12px 0; border-bottom-left-radius:20px; }
     #hud-avatar svg.bird{ width:76px; height:76px; }
     #hud-bubble{ font-size:13px; }
     #hud-bubble.visible{ padding:9px 2px 14px; }
@@ -1200,14 +1125,6 @@
   }
   nav a:hover::after{ width:100%; }
 
-  /* ─ HUD-HUD FLYING — smooth top transition + swoop arc ─ */
-  #hud{ transition:transform 1.4s cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease; }
-  @keyframes hud-swoop{
-    0%  { transform:translateX(-24px) translateY(-28px) rotate(-12deg); }
-    55% { transform:translateX(8px)   translateY(-10px) rotate(4deg); }
-    100%{ transform:translateX(0)     translateY(0)     rotate(0deg); }
-  }
-  #hud.swooping .bird{ animation:hud-swoop 0.75s cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ─ EVENT HEAD — shimmer sweep on hover ─ */
   .ev-head::before{
@@ -4007,30 +3924,7 @@
   <h2 class="hudhud-title">Hud-hud</h2>
   <div class="hudhud-subtitle">&#1575;&#1604;&#1607;&#1583;&#1607;&#1583; &nbsp;&middot;&nbsp; The Hoopoe</div>
   <svg class="hudhud-rule" viewBox="0 0 200 12" fill="none" width="160" aria-hidden="true"><line x1="0" y1="6" x2="78" y2="6" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M86,6 Q88,2 90,6 Q92,2 94,6 Q96,2 98,6 Q100,2 102,6 Q104,2 106,6 Q108,2 110,6 Q112,2 114,6" stroke="rgba(197,151,58,0.45)" stroke-width="0.65" fill="none"/><circle cx="100" cy="6" r="2.5" fill="none" stroke="rgba(197,151,58,0.5)" stroke-width="0.6"/><circle cx="100" cy="6" r="1" fill="rgba(197,151,58,0.6)"/><line x1="122" y1="6" x2="200" y2="6" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/></svg>
-  <div class="hudhud-blocks">
-    <div class="hudhud-block">
-      <div class="hudhud-block-head">Surah An-Naml &nbsp;&middot;&nbsp; The Quran</div>
-      <p>Hud-hud is the messenger bird of the Prophet Sulayman, present at his court among all creatures. One day he is absent. Sulayman notices immediately.</p>
-      <p>When he returns, he carries news no one else could have brought: a kingdom in Saba, ruled by a queen, a people who bow to the sun. Sulayman does not dismiss him. He writes a letter beginning with Bismillah and sends it back with the same bird. The letter changes everything.</p>
-      <p>A bird entrusted with the most important message of the age. He went where his king could not see. He came back with the truth. He was believed.</p>
-    </div>
-    <div class="hudhud-block">
-      <div class="hudhud-block-head">Mantiq al-Tayr &nbsp;&middot;&nbsp; Attar, 12th century</div>
-      <p>The birds of the world must journey to find the Simurgh, their true sovereign. They are afraid. They do not know the way.</p>
-      <p>The Hoopoe steps forward. He is the only one who has been to the court of Sulayman. He knows what it means to carry a message across impossible distance. He leads them through thirty mountains of love, bewilderment, and annihilation. The ones who arrive discover that the Simurgh and themselves were always the same thing.</p>
-      <p>He is the guide because he has already been where they are going.</p>
-    </div>
-    <div class="hudhud-block">
-      <div class="hudhud-block-head">Mughal &amp; Deccani poetry</div>
-      <p>In the miniature paintings of the Mughal and Deccani courts, Hud-hud appears in the margins of love poems, perched on garden walls, always mid-journey.</p>
-      <p>He is the go-between, the one who carries letters between people who cannot reach each other. In Deccani poetry especially, he is the bird of longing, proof that two people separated by distance are still in conversation.</p>
-    </div>
-  </div>
-  <div class="hudhud-closing">
-    A wedding is a message delivered.<br>
-    Azhar and Zeenath chose the bird who knows the path<br>
-    because the best guide is one who has already arrived.
-  </div>
+  <p class="hudhud-closing">In the Quran, Hud-hud is the messenger bird of the Prophet Sulayman — trusted with the most important letter of the age. In Deccani poetry, he is the go-between, always mid-journey, carrying words between people who cannot reach each other. A wedding is a message delivered. He seemed like the right guide.</p>
 </section>
 
 <footer>
@@ -4126,13 +4020,14 @@
   </div>
 </div>
 
-<button id="hud-revive" aria-label="Bring back Hud-hud" title="Bring back Hud-hud">
+<button id="hud-revive" aria-label="Ask Hud-hud">
   <svg viewBox="0 0 48 48" fill="none">
     <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
     <path d="M8 24 C 4 18, 6 10, 12 8 C 10 13, 11 18, 14 21 Z" fill="#B8912F"/>
     <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
     <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
   </svg>
+  <span>tap me for help</span>
 </button>
 
 </div><!-- /#site -->
@@ -4451,65 +4346,12 @@
   })();
 
   function initHud(){
-    const hud = document.getElementById('hud');
-    const closeBtn = document.getElementById('hud-close');
     const reviveBtn = document.getElementById('hud-revive');
-
-    // Dismissed for the session? Stay hidden, show only the little revive tab.
-    let dismissed = sessionStorage.getItem('hudDismissed') === '1';
-    if(dismissed){
-      hud.classList.add('dismissed');
-      reviveBtn.classList.add('show');
-    } else {
-      hud.classList.remove('hidden'); /* CSS now handles via transform */
-    }
-    hud.classList.add('perched');   // he lives on the tree now — no flying
-
-    closeBtn.addEventListener('click', function(e){
-      e.stopPropagation();
-      dismissed = true;
-      hideBubble();
-      if(cycleTimer) clearTimeout(cycleTimer);
-      hud.classList.add('dismissed');
-      reviveBtn.classList.add('show');
-      sessionStorage.setItem('hudDismissed', '1');
-    });
+    if (!reviveBtn) return;
     reviveBtn.addEventListener('click', function(){
-      dismissed = false;
-      hud.classList.remove('hidden', 'dismissed');
-      reviveBtn.classList.remove('show');
-      sessionStorage.removeItem('hudDismissed');
-      cycleKey = null;
-      say(hudLines.greeting);
+      const ask = document.getElementById('ask-section') || document.querySelector('.ask-section');
+      if (ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
-
-    let lastSectionKey = null;
-    function visitSection(section){
-      const key = section.getAttribute('data-hud-key');
-      if(!key || key === lastSectionKey || dismissed) return;
-      lastSectionKey = key;
-      cycle(key);
-    }
-
-    // Drop in from above top-right — perched!
-    setTimeout(function(){
-      hud.classList.add('peek-in');
-      setTimeout(function(){
-        if(!dismissed) say([hudLines.greeting[0]]);
-        setTimeout(function(){
-          if(!dismissed) say([hudLines.greeting[1]]);
-        }, 5000);
-      }, 1000);
-    }, 600);
-    // IntersectionObserver handles section commentary on scroll
-
-    // Registry / RSVP / venue still get his commentary as you scroll to them
-    const secObs = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting && e.intersectionRatio >= 0.4) visitSection(e.target);
-      });
-    }, { threshold: [0.4] });
-    document.querySelectorAll('section[data-hud-key]').forEach(function(s){ secObs.observe(s); });
   }
 
 
