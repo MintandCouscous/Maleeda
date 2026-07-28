@@ -1702,7 +1702,7 @@
     font-family:'EB Garamond',serif;
     font-size:13px; letter-spacing:0.16em; text-transform:uppercase;
     color:var(--card-accent,rgba(197,151,58,0.95));
-    text-align:center; white-space:nowrap;
+    text-align:center;
     border:1px solid var(--card-accent,rgba(197,151,58,0.45));
     padding:10px 20px;
     transition:background 0.22s ease, color 0.22s ease;
@@ -1896,31 +1896,70 @@
     line-height:1.6;
   }
   /* ── Dress code button on tile ── */
-  .vic-dress-sub{
-    margin-top:16px;
-    padding:11px 12px 10px;
-    border-top:0.5px solid var(--card-accent,rgba(197,151,58,0.22));
-    background:rgba(197,151,58,0.045);
+  /* Dress code tile button */
+  .vic-dress-btn{
+    display:block; width:100%; margin-top:14px;
+    background:none;
+    border:0.75px solid var(--card-accent,rgba(197,151,58,0.45));
+    color:var(--card-accent,rgba(197,151,58,0.85));
+    font-family:'EB Garamond',serif;
+    font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+    padding:8px 12px; cursor:pointer;
+    transition:background 0.2s ease, color 0.2s ease;
     position:relative; z-index:5;
   }
-  .vic-dress-label{
+  .vic-dress-btn:hover{
+    background:var(--card-accent,rgba(197,151,58,0.85));
+    color:#FDFAF5;
+  }
+  /* Dress code modal */
+  #dress-modal{
+    display:none; position:fixed; inset:0; z-index:9600;
+    background:rgba(15,10,6,0.78); overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    align-items:flex-start; justify-content:center;
+    padding:32px 16px 48px;
+  }
+  #dress-modal.open{ display:flex; }
+  .dm-inner{
+    position:relative; background:var(--ivory);
+    max-width:400px; width:100%;
+    padding:44px 32px 36px;
+    border:0.75px solid rgba(197,151,58,0.2);
+    text-align:center; margin:auto;
+  }
+  .dm-close{
+    position:absolute; top:14px; right:18px;
+    background:none; border:none;
+    font-size:22px; color:rgba(74,62,56,0.45);
+    cursor:pointer; line-height:1;
+  }
+  .dm-close:hover{ color:var(--ink); }
+  .dm-art{ margin:0 auto 18px; }
+  .dm-event-name{
+    font-family:'Beau Rivage',cursive;
+    font-size:38px; color:var(--ink); line-height:1; margin-bottom:3px;
+  }
+  .dm-eyebrow{
+    font-family:'EB Garamond',serif;
+    font-size:9px; letter-spacing:0.3em; text-transform:uppercase;
+    color:rgba(197,151,58,0.7); margin-bottom:18px;
+  }
+  .dm-rule{
+    width:36px; height:0.5px; background:rgba(197,151,58,0.4);
+    margin:0 auto 20px;
+  }
+  .dm-section{ margin-bottom:14px; text-align:left; }
+  .dm-section:last-child{ margin-bottom:0; }
+  .dm-who{
     font-family:'EB Garamond',serif;
     font-size:9px; letter-spacing:0.28em; text-transform:uppercase;
-    color:var(--card-accent,rgba(197,151,58,0.75));
-    margin-bottom:5px;
+    color:rgba(197,151,58,0.8); margin-bottom:4px;
   }
-  .vic-dress-text{
+  .dm-text{
     font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:14.5px; line-height:1.65;
-    color:rgba(26,20,16,0.88);
+    font-size:16px; line-height:1.65; color:rgba(26,20,16,0.88);
   }
-  .vic-dress-who{
-    font-style:normal; font-family:'EB Garamond',serif;
-    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
-    color:var(--card-accent,rgba(197,151,58,0.85));
-    display:block; margin-bottom:3px;
-  }
-  .vic-dress-who + .vic-dress-who{ margin-top:8px; }
   /* ── Modal corner ornaments ── */
   .vic-ov-corner{
     position:absolute; width:48px; height:48px;
@@ -3452,13 +3491,7 @@
       </div>
       <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">Hyderabad's answer to Haldi</div>
-      <div class="vic-dress-sub">
-        <div class="vic-dress-label">Dress code</div>
-        <div class="vic-dress-text">
-          <span class="vic-dress-who">For her</span>Wear something yellow or orange that you don't mind losing to turmeric. It is generous with itself and plays no favourites.
-          <span class="vic-dress-who">For him</span>Wear what you like. Unless you are here to cheer Azhar through his turmeric ordeal, in which case: front row, full moral support, and maybe don't wear white.
-        </div>
-      </div>
+      <button class="vic-dress-btn" data-dress="manja">Dress Code</button>
       <div class="vic-hint">what happens</div>
     </div>
 
@@ -3501,13 +3534,7 @@
       </div>
       <div class="vic-info">Our Home, Shadnagar</div>
       <div class="vic-tag">&amp; Choodi</div>
-      <div class="vic-dress-sub">
-        <div class="vic-dress-label">Dress code</div>
-        <div class="vic-dress-text">
-          <span class="vic-dress-who">For her</span>Bright and festive. Greens, pinks, anything celebratory. Short or loose sleeves if you want henna on your arms, the paste takes a good hour to set.
-          <span class="vic-dress-who">For him</span>Bright colours are very welcome. You can absolutely get henna too. Just know it takes an hour to dry and it is not coming off for two weeks.
-        </div>
-      </div>
+      <button class="vic-dress-btn" data-dress="mehendi">Dress Code</button>
       <div class="vic-hint">what happens</div>
     </div>
 
@@ -3550,13 +3577,7 @@
       </div>
       <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">&amp; the Jalwa</div>
-      <div class="vic-dress-sub">
-        <div class="vic-dress-label">Dress code</div>
-        <div class="vic-dress-text">
-          <span class="vic-dress-who">For her</span>Indian formal. Lehenga, anarkali, saree, anything that rises to the occasion.
-          <span class="vic-dress-who">For him</span>Sherwani, bandhgala, or a well-fitted suit. Heritage Palace at noon. You will be seen.
-        </div>
-      </div>
+      <button class="vic-dress-btn" data-dress="nikah">Dress Code</button>
       <div class="vic-hint">what happens</div>
     </div>
 
@@ -3599,13 +3620,7 @@
       </div>
       <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">Dinner &amp; Salaami</div>
-      <div class="vic-dress-sub">
-        <div class="vic-dress-label">Dress code</div>
-        <div class="vic-dress-text">
-          <span class="vic-dress-who">For her</span>Saree, lehenga, anarkali, or anything that makes you feel like the evening.
-          <span class="vic-dress-who">For him</span>Sherwani, bandhgala, suit, or a really good kurta with proper trousers. Wear the thing you have been saving.
-        </div>
-      </div>
+      <button class="vic-dress-btn" data-dress="reception">Dress Code</button>
       <div class="vic-hint">what happens</div>
     </div>
 
@@ -4022,6 +4037,24 @@
   <div class="verse">"And among His signs is that He created for you from yourselves mates that you may find tranquility in them, and He placed between you affection and mercy." Surah Ar-Rum, 30:21</div>
   <div class="script" style="font-size:22px; color:var(--gold);">Azhar &amp; Zeenath</div>
 </footer>
+
+<div id="dress-modal" role="dialog" aria-modal="true" aria-label="Dress code">
+  <div class="dm-inner">
+    <button class="dm-close" id="dm-close" aria-label="Close">&times;</button>
+    <div class="dm-art" id="dm-art"></div>
+    <div class="dm-event-name" id="dm-event-name"></div>
+    <div class="dm-eyebrow">Dress Code</div>
+    <div class="dm-rule"></div>
+    <div class="dm-section">
+      <div class="dm-who">For her</div>
+      <div class="dm-text" id="dm-her"></div>
+    </div>
+    <div class="dm-section">
+      <div class="dm-who">For him</div>
+      <div class="dm-text" id="dm-him"></div>
+    </div>
+  </div>
+</div>
 
 <div id="why-hudhud-modal" role="dialog" aria-modal="true" aria-label="Why Hud-hud?">
   <div class="wh-inner">
@@ -4747,7 +4780,45 @@
     });
   })();
 
-  // ── Ask Hud-hud form ──────────────────────────────
+  /* ── Dress code modal ── */
+  (function(){
+    var svgs = {
+      manja:    '<svg viewBox="0 0 80 80" fill="none" width="72" height="72"><path d="M29 18 L23 30 L29 28 L29 64 L51 64 L51 28 L57 30 L51 18 Q40 14 29 18 Z" stroke="rgba(198,120,18,0.65)" stroke-width="1.1" fill="rgba(198,120,18,0.07)"/><path d="M34 18 Q40 23 46 18" stroke="rgba(198,120,18,0.5)" stroke-width="0.9" fill="none"/><circle cx="37" cy="38" r="2.2" fill="rgba(198,120,18,0.38)"/><circle cx="44" cy="46" r="1.6" fill="rgba(198,120,18,0.32)"/><circle cx="34" cy="51" r="1.1" fill="rgba(198,120,18,0.28)"/></svg>',
+      mehendi:  '<svg viewBox="0 0 80 80" fill="none" width="72" height="72"><circle cx="40" cy="40" r="24" stroke="rgba(54,104,62,0.6)" stroke-width="1.2" fill="none"/><circle cx="40" cy="40" r="18" stroke="rgba(54,104,62,0.42)" stroke-width="1" fill="none"/><circle cx="40" cy="40" r="12" stroke="rgba(54,104,62,0.3)" stroke-width="0.8" fill="none"/><circle cx="40" cy="16" r="1.8" fill="rgba(54,104,62,0.55)"/><circle cx="64" cy="40" r="1.8" fill="rgba(54,104,62,0.55)"/><circle cx="40" cy="64" r="1.8" fill="rgba(54,104,62,0.55)"/><circle cx="16" cy="40" r="1.8" fill="rgba(54,104,62,0.55)"/><circle cx="56" cy="24" r="1.1" fill="rgba(54,104,62,0.4)"/><circle cx="56" cy="56" r="1.1" fill="rgba(54,104,62,0.4)"/><circle cx="24" cy="56" r="1.1" fill="rgba(54,104,62,0.4)"/><circle cx="24" cy="24" r="1.1" fill="rgba(54,104,62,0.4)"/></svg>',
+      nikah:    '<svg viewBox="0 0 80 80" fill="none" width="72" height="72"><path d="M40 10 L44 28 L62 26 L48 38 L62 50 L44 48 L40 66 L36 48 L18 50 L32 38 L18 26 L36 28 Z" stroke="rgba(162,72,96,0.6)" stroke-width="1" fill="rgba(162,72,96,0.08)"/><circle cx="40" cy="38" r="5.5" stroke="rgba(162,72,96,0.55)" stroke-width="0.9" fill="rgba(162,72,96,0.14)"/><circle cx="40" cy="38" r="2.2" fill="rgba(162,72,96,0.5)"/></svg>',
+      reception:'<svg viewBox="0 0 80 80" fill="none" width="72" height="72"><path d="M34 12 L30 24 L20 70 L60 70 L50 24 L46 12 Q40 9 34 12 Z" stroke="rgba(52,44,108,0.55)" stroke-width="1.1" fill="rgba(52,44,108,0.07)"/><path d="M36 12 Q40 17 44 12" stroke="rgba(52,44,108,0.5)" stroke-width="0.9" fill="none"/><circle cx="32" cy="44" r="1.4" fill="rgba(197,151,58,0.5)"/><circle cx="48" cy="36" r="1.1" fill="rgba(197,151,58,0.45)"/><circle cx="35" cy="56" r="0.9" fill="rgba(197,151,58,0.4)"/><circle cx="50" cy="52" r="1.2" fill="rgba(197,151,58,0.42)"/></svg>'
+    };
+    var content = {
+      manja:    { name:'Manja',     her:"Wear something yellow or orange that you don't mind losing to turmeric. It is generous with itself and plays no favourites.", him:"Wear what you like. Unless you are here to cheer Azhar through his turmeric ordeal, in which case: front row, full moral support, and maybe don't wear white." },
+      mehendi:  { name:'Mehendi',   her:"Bright and festive. Greens, pinks, anything celebratory. Short or loose sleeves if you want henna — the paste takes a good hour to set.", him:"Bright colours are very welcome. You can absolutely get henna too. Just know it takes an hour to dry and it is not coming off for two weeks." },
+      nikah:    { name:'Nikah',     her:"Indian formal. Lehenga, anarkali, saree — anything that rises to the occasion.", him:"Sherwani, bandhgala, or a well-fitted suit. Heritage Palace at noon. You will be seen." },
+      reception:{ name:'Reception', her:"Saree, lehenga, anarkali, or anything that makes you feel like the evening.", him:"Sherwani, bandhgala, suit, or a really good kurta with proper trousers. Wear the thing you have been saving." }
+    };
+    var modal  = document.getElementById('dress-modal');
+    var dmArt  = document.getElementById('dm-art');
+    var dmName = document.getElementById('dm-event-name');
+    var dmHer  = document.getElementById('dm-her');
+    var dmHim  = document.getElementById('dm-him');
+    if (!modal) return;
+    function openDress(ev) {
+      var d = content[ev];
+      dmArt.innerHTML  = svgs[ev];
+      dmName.textContent = d.name;
+      dmHer.textContent  = d.her;
+      dmHim.textContent  = d.him;
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeDress() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+    document.querySelectorAll('.vic-dress-btn').forEach(function(btn) {
+      btn.addEventListener('click', function(e) { e.stopPropagation(); openDress(btn.getAttribute('data-dress')); });
+    });
+    document.getElementById('dm-close').addEventListener('click', closeDress);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeDress(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeDress(); });
+  })();
+
+
   (function(){
     var form    = document.getElementById('ask-form');
     var submit  = document.getElementById('ask-submit');
