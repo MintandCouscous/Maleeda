@@ -136,38 +136,39 @@
   #zehar-title-card.show{ opacity:1; }
   #zehar-title-card.out{ opacity:0; }
   .ztc-inner{ text-align:center; }
-  .ztc-bridge{
-    font-family:'Cormorant Garamond',serif;
-    font-style:italic;
-    font-size:clamp(15px,2.2vw,20px);
-    color:rgba(253,250,245,0.45);
-    letter-spacing:0.08em;
-    margin-bottom:28px;
-    opacity:0; transform:translateY(6px);
-    transition:opacity 1s ease, transform 1s ease;
-  }
-  #zehar-title-card.show .ztc-bridge{ opacity:1; transform:translateY(0); }
   .ztc-names{
     font-family:'Beau Rivage',cursive;
     font-size:clamp(52px,9vw,92px);
     color:#FDFAF5;
     line-height:1;
     opacity:0; transform:translateY(14px);
-    transition:opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+    transition:opacity 1.2s ease, transform 1.2s ease;
   }
   #zehar-title-card.show .ztc-names{ opacity:1; transform:translateY(0); }
   .ztc-rule{
     width:40px; height:0.5px;
     background:rgba(197,151,58,0.45);
-    margin:18px auto 16px;
-    opacity:0; transition:opacity 1s ease 1.2s;
+    margin:18px auto 14px;
+    opacity:0; transition:opacity 1s ease 0.8s;
   }
   #zehar-title-card.show .ztc-rule{ opacity:1; }
+  .ztc-bridge{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(15px,2.2vw,19px);
+    color:rgba(253,250,245,0.55);
+    letter-spacing:0.06em;
+    margin-bottom:20px;
+    opacity:0; transform:translateY(6px);
+    transition:opacity 1.1s ease 1.1s, transform 1.1s ease 1.1s;
+  }
+  #zehar-title-card.show .ztc-bridge{ opacity:1; transform:translateY(0); }
   .ztc-date{
     font-family:'EB Garamond',serif;
     font-size:11px; letter-spacing:0.32em; text-transform:uppercase;
     color:rgba(197,151,58,0.65);
-    opacity:0; transition:opacity 1s ease 1.4s;
+    margin-top:6px;
+    opacity:0; transition:opacity 1s ease 1.8s;
   }
   #zehar-title-card.show .ztc-date{ opacity:1; }
   #gate{
@@ -2244,9 +2245,9 @@
 
 <div id="zehar-title-card">
   <div class="ztc-inner">
-    <div class="ztc-bridge">behind all the drama, it was always this.</div>
     <div class="ztc-names">Azhar &amp; Zeenath</div>
     <div class="ztc-rule"></div>
+    <div class="ztc-bridge">are getting married. and they would love to have you there.</div>
     <div class="ztc-date">28 · 29 · 30 August 2026 &nbsp;·&nbsp; Hyderabad</div>
   </div>
 </div>
