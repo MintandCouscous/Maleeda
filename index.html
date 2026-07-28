@@ -1038,14 +1038,14 @@
   #hud-intro{
     position:fixed; z-index:499;
     top:clamp(52px,10vh,90px); left:50%; transform:translateX(-50%);
-    display:flex; align-items:center; gap:10px;
+    display:flex; align-items:center; gap:13px;
     background:rgba(255,252,247,0.97);
     border:1px solid rgba(197,151,58,0.28);
-    border-radius:26px;
-    padding:10px 22px 10px 14px;
-    box-shadow:0 6px 32px rgba(58,46,34,0.13);
+    border-radius:30px;
+    padding:14px 28px 14px 18px;
+    box-shadow:0 8px 36px rgba(58,46,34,0.15);
     font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:clamp(14px,2vw,17px); color:var(--ink-soft);
+    font-size:clamp(16px,2.2vw,20px); color:var(--ink-soft);
     white-space:nowrap;
     pointer-events:none;
     opacity:0;
@@ -1056,7 +1056,7 @@
     opacity:1;
     transform:translateX(-50%) translateY(0);
   }
-  #hud-intro svg{ width:30px; height:30px; flex-shrink:0; }
+  #hud-intro svg{ width:38px; height:38px; flex-shrink:0; }
   @media(max-width:480px){
     #hud-intro{ white-space:normal; width:80vw; text-align:left; font-size:13px; }
   }
@@ -4080,7 +4080,7 @@
     <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
     <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
   </svg>
-  <span id="hud-intro-text">I'll be here if you need anything.</span>
+  <span id="hud-intro-text">Hey, I'm Hud-hud. I'll be here if you need anything.</span>
 </div>
 
 <button id="hud-revive" aria-label="Ask Hud-hud">
