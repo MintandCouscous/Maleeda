@@ -102,6 +102,25 @@
     mix-blend-mode:multiply;
   }
   #zehar-screen.out{ opacity:0; pointer-events:none; }
+  #petal-layer{
+    position:fixed; inset:0; z-index:10000;
+    pointer-events:none; overflow:hidden;
+    background:rgba(45,4,12,0.97);
+    display:none;
+  }
+  #petal-layer.clearing{
+    background:rgba(253,250,245,0);
+    transition:background 2.8s ease-out;
+  }
+  .tp{ border-radius:62% 8% 62% 8%; opacity:0; }
+  @keyframes tpBloom{
+    0%  { opacity:0;    background:#6B0F1A; transform:translateY(-6px)  scale(0.75); }
+    14% { opacity:1;    background:#9B1828; }
+    42% { opacity:1;    background:#C83050; transform:translateY(6px)   scale(1);    }
+    68% { opacity:0.9;  background:#E87898; transform:translateY(16px)  scale(1.04); }
+    85% { opacity:0.5;  background:#F5C0CC; }
+    100%{ opacity:0;    background:#FDF0F3; transform:translateY(28px)  scale(1.09); }
+  }
   #zehar-poster{
     max-height:72vh; max-width:88vw;
     object-fit:contain;
@@ -2238,6 +2257,8 @@
 <body>
 
 <!-- ============ GATE: press play, enter the shadikhana ============ -->
+<div id="petal-layer" aria-hidden="true"></div>
+
 <div id="zehar-screen">
   <img src="zehar.png" alt="Zehar — the film" id="zehar-poster">
   <button id="zehar-btn">okay but what's actually happening →</button>
@@ -4080,6 +4101,25 @@
     var screen = document.getElementById('zehar-screen');
     var card   = document.getElementById('zehar-title-card');
     var btn    = document.getElementById('zehar-btn');
+    function spawnPetals(){
+      var layer = document.getElementById('petal-layer');
+      layer.style.display = 'block';
+      // small tick so display:block settles before transition fires
+      setTimeout(function(){ layer.classList.add('clearing'); }, 60);
+      for(var i=0; i<68; i++){
+        var wrap = document.createElement('div');
+        wrap.style.cssText = 'position:absolute;left:'+(Math.random()*112-6)+'%;top:'+(Math.random()*112-6)+'%;transform:rotate('+(Math.random()*360)+'deg);';
+        var p = document.createElement('div');
+        p.className = 'tp';
+        var w = 16 + Math.random()*38;
+        var dur = 1.6 + Math.random()*1.8;
+        var del = Math.random()*0.9;
+        p.style.cssText = 'position:absolute;width:'+w+'px;height:'+(w*(0.48+Math.random()*0.3))+'px;animation:tpBloom '+dur+'s ease-in-out '+del+'s forwards;';
+        wrap.appendChild(p); layer.appendChild(wrap);
+      }
+      setTimeout(function(){ layer.innerHTML=''; layer.style.display='none'; }, 3800);
+    }
+
     btn.addEventListener('click', function(){
       // pop art fades out slowly
       screen.classList.add('out');
@@ -4088,14 +4128,15 @@
         screen.style.display = 'none';
         card.classList.add('show');
       }, 900);
-      // hold long enough for all elements to stagger in and breathe
+      // hold 2s longer than before, then petal dissolve
       setTimeout(function(){
         card.classList.remove('show');
         card.classList.add('out');
-      }, 4200);
+        spawnPetals();
+      }, 6200);
       setTimeout(function(){
         card.style.display = 'none';
-      }, 5500);
+      }, 7800);
     });
   })();
 
