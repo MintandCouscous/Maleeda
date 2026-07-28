@@ -125,6 +125,33 @@
     transform:translate(2px,2px);
     box-shadow:2px 2px 0 #1A1410;
   }
+  /* Title card between pop art and gate */
+  #zehar-title-card{
+    position:fixed; inset:0; z-index:9998;
+    background:#0e0a06;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none;
+    transition:opacity 0.7s ease;
+  }
+  #zehar-title-card.show{ opacity:1; }
+  #zehar-title-card.out{ opacity:0; }
+  .ztc-inner{ text-align:center; }
+  .ztc-names{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(48px,9vw,88px);
+    color:#FDFAF5;
+    opacity:0; transform:translateY(12px);
+    transition:opacity 1s ease, transform 1s ease;
+  }
+  #zehar-title-card.show .ztc-names{ opacity:1; transform:translateY(0); }
+  .ztc-date{
+    font-family:'EB Garamond',serif;
+    font-size:12px; letter-spacing:0.35em; text-transform:uppercase;
+    color:rgba(197,151,58,0.7);
+    margin-top:14px;
+    opacity:0; transition:opacity 1s ease 0.5s;
+  }
+  #zehar-title-card.show .ztc-date{ opacity:1; }
   #gate{
     position:fixed; inset:0; z-index:200; background:radial-gradient(ellipse 130% 80% at 50% 55%, #FAF4E8 0%, #F3EDD9 55%, #EDE4CC 100%);
     display:flex; flex-direction:column;
@@ -2194,7 +2221,14 @@
 <!-- ============ GATE: press play, enter the shadikhana ============ -->
 <div id="zehar-screen">
   <img src="zehar.png" alt="Zehar — the film" id="zehar-poster">
-  <button id="zehar-btn">okay but what's actually happening →</button>
+  <button id="zehar-btn">yaar. it's a wedding. come in.</button>
+</div>
+
+<div id="zehar-title-card">
+  <div class="ztc-inner">
+    <div class="ztc-names">Azhar &amp; Zeenath</div>
+    <div class="ztc-date">28 · 29 · 30 August 2026 &nbsp;·&nbsp; Hyderabad</div>
+  </div>
 </div>
 
 <div id="gate">
@@ -4022,11 +4056,25 @@
 <script>
   // ============ ZEHAR PRE-SCREEN ============
   (function(){
-    var screen = document.getElementById('zehar-screen');
-    var btn = document.getElementById('zehar-btn');
+    var screen  = document.getElementById('zehar-screen');
+    var card    = document.getElementById('zehar-title-card');
+    var btn     = document.getElementById('zehar-btn');
     btn.addEventListener('click', function(){
+      // 1. Pop art fades out
       screen.classList.add('out');
-      setTimeout(function(){ screen.style.display='none'; }, 850);
+      // 2. Title card fades in
+      setTimeout(function(){
+        screen.style.display = 'none';
+        card.classList.add('show');
+      }, 750);
+      // 3. Title card holds, then fades out into gate
+      setTimeout(function(){
+        card.classList.add('out');
+        card.classList.remove('show');
+      }, 2600);
+      setTimeout(function(){
+        card.style.display = 'none';
+      }, 3350);
     });
   })();
 
