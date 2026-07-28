@@ -1753,6 +1753,26 @@
     color:rgba(26,20,16,0.55);
     margin-top:10px;
   }
+  /* question teasers on tile */
+  .vic-qs{
+    list-style:none; margin:14px 0 0; padding:0;
+    border-top:0.5px solid var(--card-accent,rgba(197,151,58,0.25));
+    padding-top:12px;
+    text-align:left;
+  }
+  .vic-qs li{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:13px; line-height:1.5;
+    color:rgba(26,20,16,0.52);
+    padding:3px 0 3px 14px;
+    position:relative;
+  }
+  .vic-qs li::before{
+    content:'?'; position:absolute; left:0;
+    font-style:normal; font-size:11px;
+    color:var(--card-accent,rgba(197,151,58,0.6));
+    font-family:'EB Garamond',serif;
+  }
   /* open hint */
   .vic-hint{
     display:block;
@@ -3635,6 +3655,11 @@
       </div>
       <div class="vic-info">Heritage Palace, Attapur</div>
       <div class="vic-tag">&amp; the Jalwa</div>
+      <ul class="vic-qs">
+        <li>What's actually said in the ceremony?</li>
+        <li>Why are they in separate rooms?</li>
+        <li>What happens at the Jalwa?</li>
+      </ul>
       <button class="vic-dress-btn" data-dress="nikah">Dress Code</button>
       <div class="vic-hint">what happens</div>
     </div>
@@ -3779,6 +3804,52 @@
     <div class="ov-sub">&amp; the Jalwa</div>
     <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
     <p class="story">The Nikah is fifteen minutes, maybe twenty. No aisle, no processional. A short sermon, three verses from the Quran, a proposal, an acceptance, and a signed contract. When the Qubool Hai lands, everyone in the room feels it. It is quiet and it is complete.</p>
+
+    <div class="qa">
+      <details>
+        <summary><span>What actually happens in the ceremony?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>The Qazi recites three Quranic verses, gives a short sermon, then the proposal is made on Azhar's behalf and carried to Zeenath by her Wali. She says <em>Qubool Hai</em> three times — "I accept." That is her signature. In classical Islamic jurisprudence, a statement repeated three times carries distinct legal weight.</p>
+          <p>A Nikah has five legal requirements unchanged since the 7th century: Ijab (proposal), Qubool (acceptance), two Muslim male witnesses, a Wali (guardian for the bride), and an agreed Mahr (dower). A ceremony in a living room with five people is legally identical to one in a palace with five hundred. The Mahr belongs entirely to the bride — it cannot be given away or taken back.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>The Nikah has the formal structure of a contract: one party makes an offer, the other accepts, both in the presence of witnesses. His side and her side are seated apart. The proposal travels from Azhar's room to Zeenath's by her Wali. Two witnesses are with her.</p>
+          <p>The moment that completes it is hers alone — Zeenath's three Qubool Hais, spoken in the room with her Wali and witnesses. The two-room structure is not separation. It is the form the contract requires.</p>
+        </div>
+      </details>
+      <details>
+        <summary><span>What are the three verses in the Khutbah?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O believers, be mindful of God as He deserves, and do not die except in a state of willing surrender."</div>
+            <div class="ov-verse-ref">Surah Al-Imran · 3:102</div>
+            <div class="ov-verse-note"><em>Taqwa</em> — awareness that one is seen and that choices carry weight. The Nikah begins here because everything that follows assumes it.</div>
+          </div>
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O humanity, be mindful of your Lord Who created you from a single soul, and from it created its mate, and from both of them spread countless men and women."</div>
+            <div class="ov-verse-ref">Surah An-Nisa · 4:1</div>
+            <div class="ov-verse-note">The Arabic word for spouse, <em>zawj</em>, means counterpart — the other of a pair. This verse says: this is not a new thing happening. This is a very old thing completing itself.</div>
+          </div>
+          <div class="ov-verse-block">
+            <div class="ov-verse-text">"O believers, be mindful of God and speak the truth. He will set your deeds right for you and forgive your wrongs."</div>
+            <div class="ov-verse-ref">Surah Al-Ahzab · 33:70</div>
+            <div class="ov-verse-note">The root <em>sadid</em>: speech that hits what it intends. This verse arrives just before the ceremony because the proposal and the three Qubool Hais are not descriptions of a thing — they are the thing itself.</div>
+          </div>
+        </div>
+      </details>
+      <details>
+        <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
+        <div class="qa-body">
+          <p>Three Deccani rasms, performed together in the evening after the Nikah luncheon, traced to the Bahmani and Qutb Shahi courts.</p>
+          <p><strong>Arsi Mushaf:</strong> A shawl is drawn over Azhar and Zeenath together and a mirror is held between them. Their first look at each other as husband and wife is a reflection — shared, indirect, witnessed. The indirection is not modesty. It is form.</p>
+          <p><strong>Salaami:</strong> Family and guests offer their blessings to the couple in turn.</p>
+          <p><strong>Maleeda:</strong> A traditional Hyderabadi sweet — roasted wheat, ghee, and jaggery, crumbled by hand — distributed as you leave. Taking it home is considered a blessing.</p>
+        </div>
+      </details>
+    </div>
 
     <div class="rasm-tl">
 
