@@ -585,6 +585,97 @@
   .event-section.mehendi   .tl-row{ border-color:rgba(46,96,64,0.3); }
   .event-section.nikah    { color:var(--nikah-ink); }
   .event-section.nikah     .tl-row{ border-color:rgba(138,32,64,0.3); }
+
+  /* ── Rasm interactive timeline (Nikah overlay) ── */
+  .rasm-tl{ margin:32px 0 0; }
+  .rasm-item{ display:flex; gap:0; position:relative; }
+  .rasm-item:last-child .rasm-line{ display:none; }
+  .rasm-left{
+    width:90px; flex-shrink:0;
+    display:flex; flex-direction:column; align-items:center;
+    padding-top:4px;
+  }
+  .rasm-time{
+    font-family:'EB Garamond',serif; font-size:12px;
+    letter-spacing:0.12em; color:rgba(138,32,64,0.7);
+    text-align:center; line-height:1.3; margin-bottom:8px;
+    white-space:nowrap;
+  }
+  .rasm-dot{
+    width:9px; height:9px; border-radius:50%;
+    border:1.5px solid rgba(138,32,64,0.5);
+    background:var(--ivory); flex-shrink:0;
+    transition:background 0.2s ease, border-color 0.2s ease;
+  }
+  .rasm-item.open .rasm-dot{ background:rgba(138,32,64,0.7); border-color:rgba(138,32,64,0.7); }
+  .rasm-line{
+    width:1px; flex:1; min-height:32px;
+    background:rgba(138,32,64,0.15);
+    margin-top:6px;
+  }
+  .rasm-right{ flex:1; padding:0 0 32px 18px; }
+  .rasm-head{
+    display:flex; align-items:baseline; gap:10px; width:100%;
+    background:none; border:none; padding:0; cursor:pointer;
+    text-align:left;
+  }
+  .rasm-name{
+    font-family:'Cormorant Garamond',serif; font-size:22px;
+    font-weight:500; color:var(--nikah-ink); line-height:1.2;
+    flex:1;
+  }
+  .rasm-loc{
+    font-family:'EB Garamond',serif; font-size:11px;
+    letter-spacing:0.18em; text-transform:uppercase;
+    color:rgba(138,32,64,0.45); white-space:nowrap;
+  }
+  .rasm-toggle{
+    font-family:'Cormorant Garamond',serif; font-size:20px;
+    font-weight:300; color:rgba(138,32,64,0.4);
+    transition:transform 0.3s ease; flex-shrink:0; margin-left:4px;
+  }
+  .rasm-item.open .rasm-toggle{ transform:rotate(45deg); }
+  .rasm-tagline{
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:15px; color:rgba(74,24,40,0.5);
+    margin:3px 0 0; display:block;
+  }
+  .rasm-body{
+    max-height:0; overflow:hidden;
+    transition:max-height 0.5s cubic-bezier(0.22,1,0.36,1);
+  }
+  .rasm-item.open .rasm-body{ max-height:900px; }
+  .rasm-body-inner{
+    padding:14px 0 4px;
+    font-family:'Cormorant Garamond',serif; font-size:16.5px;
+    line-height:1.72; color:rgba(74,24,40,0.82);
+  }
+  .rasm-body-inner p + p{ margin-top:10px; }
+  .rasm-body-inner em{ font-style:italic; }
+  .rasm-sub-head{
+    font-family:'EB Garamond',serif; font-size:11px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    color:rgba(138,32,64,0.55); margin:14px 0 5px; display:block;
+  }
+  .rasm-verse{
+    margin:12px 0 0; padding:12px 16px;
+    border-left:2px solid rgba(138,32,64,0.2);
+    font-style:italic; font-size:15.5px; color:rgba(74,24,40,0.75);
+  }
+  .rasm-verse-ref{
+    font-style:normal; font-size:11px; letter-spacing:0.16em;
+    text-transform:uppercase; color:rgba(138,32,64,0.45);
+    margin-top:6px; display:block;
+  }
+  .rasm-note{
+    margin-top:10px; font-size:14.5px; line-height:1.65;
+    color:rgba(74,24,40,0.58); font-style:normal;
+  }
+  @media(max-width:640px){
+    .rasm-left{ width:70px; }
+    .rasm-name{ font-size:19px; }
+    .rasm-body-inner{ font-size:15.5px; }
+  }
   .event-section.reception { color:var(--reception-ink); }
   .event-section.reception  .tl-row{ border-color:rgba(26,20,16,0.25); }
 
@@ -3687,70 +3778,130 @@
     <div class="ov-title">Nikah</div>
     <div class="ov-sub">&amp; the Jalwa</div>
     <svg class="ov-rule" viewBox="0 0 260 16" fill="none" aria-hidden="true"><line x1="0" y1="8" x2="104" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><path d="M112,8 Q116,2 120,8 Q124,2 128,8 Q132,2 136,8 Q140,2 144,8 Q148,2 152,8" stroke="rgba(197,151,58,0.45)" stroke-width="0.7" fill="none"/><circle cx="130" cy="8" r="3" fill="none" stroke="rgba(197,151,58,0.52)" stroke-width="0.7"/><circle cx="130" cy="8" r="1.2" fill="rgba(197,151,58,0.6)"/><line x1="156" y1="8" x2="260" y2="8" stroke="rgba(197,151,58,0.35)" stroke-width="0.6"/><circle cx="20" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/><circle cx="240" cy="8" r="1.2" fill="rgba(197,151,58,0.32)"/></svg>
-    <p class="story">The Nikah is fifteen minutes, maybe twenty. There is a short sermon, three verses from the Quran, a proposal, an acceptance, and a signed marriage contract. That is the whole ceremony — no aisle, no processional, no ring exchange during the ceremony itself. When the Qubool Hai lands, everyone in the room feels it. It is quiet and it is complete.</p>
-    <div class="qa">
-      <details>
-        <summary><span>What happens in the khutbah?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>The Qazi recites three Quranic verses before the sermon. Each has a specific purpose within the ceremony.</p>
+    <p class="story">The Nikah is fifteen minutes, maybe twenty. No aisle, no processional. A short sermon, three verses from the Quran, a proposal, an acceptance, and a signed contract. When the Qubool Hai lands, everyone in the room feels it. It is quiet and it is complete.</p>
 
-          <div class="ov-verse-block">
-            <div class="ov-verse-text">"O believers, be mindful of God as He deserves, and do not die except in a state of willing surrender."</div>
-            <div class="ov-verse-ref">Surah Al-Imran · 3:102</div>
-            <div class="ov-verse-note">Taqwa, the word usually translated as "mindfulness of God," is better understood as a continuous state of consciousness: awareness that one is seen and that choices carry weight. The verse asks that this awareness be held at its fullest pitch, not as a passing sentiment but as a permanent condition. The Nikah begins here because everything that follows assumes it.</div>
-          </div>
+    <div class="rasm-tl">
 
-          <div class="ov-verse-block">
-            <div class="ov-verse-text">"O humanity, be mindful of your Lord Who created you from a single soul, and from it created its mate, and from both of them spread countless men and women."</div>
-            <div class="ov-verse-ref">Surah An-Nisa · 4:1</div>
-            <div class="ov-verse-note">The Arabic word for spouse, <em>zawj</em>, means counterpart or the other of a pair. The verse describes creation as beginning with a single soul from which its mate was drawn; from those two, all of humanity followed. Marriage is not incidental to this account. It is written into the structure of how the world was made. When this verse is read at a Nikah, it is saying: this is not a new thing happening. This is a very old thing completing itself.</div>
-          </div>
-
-          <div class="ov-verse-block">
-            <div class="ov-verse-text">"O believers, be mindful of God and speak the truth. He will set your deeds right for you and forgive your wrongs. Whoever obeys God and His Messenger has won something immense."</div>
-            <div class="ov-verse-ref">Surah Al-Ahzab · 33:70-71</div>
-            <div class="ov-verse-note">The Arabic <em>qawlan sadida</em> is usually translated as "speak the truth" or "speak rightly," but the root <em>sadid</em> carries additional meaning: straight, sound, well-aimed. Speech that hits what it intends. The verse arrives precisely before the words of the ceremony because the proposal, the acceptance, and the three Qubool Hais are speech acts in the strictest sense: they are not descriptions of a thing, they are the thing itself. To say Qubool Hai is to make it true.</div>
-          </div>
-
-          <p>After the three verses the Qazi gives a short sermon, then the proposal, acceptance, and dua follow. Total: fifteen to twenty minutes. The room knows when the Qubool Hai lands.</p>
-
+      <!-- Nashta -->
+      <div class="rasm-item">
+        <div class="rasm-left">
+          <div class="rasm-time">9 am</div>
+          <div class="rasm-dot"></div>
+          <div class="rasm-line"></div>
         </div>
-      </details>
-      <details>
-        <summary><span>Why are they in separate rooms?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>His side and her side are seated apart. The Nikah has the formal structure of a contract: one party makes an offer, the other accepts, both in the presence of witnesses. The proposal is made on Azhar's behalf and carried to Zeenath by her Wali (guardian). Two Muslim male witnesses are present in the room with her.</p>
-          <p>The moment that completes the contract is Zeenath's <em>Qubool Hai</em>: "I accept," said three times. In classical Islamic jurisprudence, a statement repeated three times carries distinct legal weight. Her three Qubool Hais are her signature.</p>
+        <div class="rasm-right">
+          <button class="rasm-head" aria-expanded="false">
+            <div>
+              <div class="rasm-name">Nashta</div>
+              <span class="rasm-tagline">at home · the last breakfast</span>
+            </div>
+            <span class="rasm-loc">Shadnagar</span>
+            <span class="rasm-toggle">+</span>
+          </button>
+          <div class="rasm-body"><div class="rasm-body-inner">
+            <p>On the morning of the Nikah, the family gathers at home for breakfast before the bride leaves for the venue. It is informal and unhurried — the table is full, the chai is hot, and everyone is being careful not to say anything that will make anyone cry too early.</p>
+            <p>In older Hyderabadi custom this meal carried weight: it was the last time the bride ate in her family home as a daughter rather than a wife. The feeling lingers even if no one names it. Come hungry. Be there for it.</p>
+          </div></div>
         </div>
-      </details>
-      <details>
-        <summary><span>What happens at the Jalwa?</span><span class="icon">+</span></summary>
-        <div class="qa-body">
-          <p>The Jalwa is a set of two Deccani traditions traced to the Bahmani and Qutb Shahi courts, performed in the evening after the Nikah luncheon.</p>
-<p>Then the <em>Arsi Mushaf</em>: a single shawl is drawn over both Azhar and Zeenath and a mirror is held between them so their first look at each other as husband and wife is a reflection. The moment is shared, indirect, witnessed. There is a long tradition of this kind of first meeting in Deccani weddings: seen through a mirror, under a shared canopy, never quite direct. The indirection is not modesty. It is form.</p>
-          <p>The Salaami follows: family and guests offer their blessings to the couple in turn. Maleeda is distributed on the way out, a traditional Hyderabadi sweet made from roasted wheat, ghee, and jaggery, crumbled by hand and given at the close of a celebration. Taking it home is considered a blessing.</p>
+      </div>
+
+      <!-- Nikah -->
+      <div class="rasm-item">
+        <div class="rasm-left">
+          <div class="rasm-time">12 noon</div>
+          <div class="rasm-dot"></div>
+          <div class="rasm-line"></div>
         </div>
-      </details>
+        <div class="rasm-right">
+          <button class="rasm-head" aria-expanded="false">
+            <div>
+              <div class="rasm-name">Nikah</div>
+              <span class="rasm-tagline">fifteen minutes · the most permanent words</span>
+            </div>
+            <span class="rasm-loc">Heritage Palace</span>
+            <span class="rasm-toggle">+</span>
+          </button>
+          <div class="rasm-body"><div class="rasm-body-inner">
+            <p>His side and her side are seated in separate rooms. The Nikah has the formal structure of a contract: one party makes an offer, the other accepts, both in the presence of witnesses. The proposal is made on Azhar's behalf and carried to Zeenath by her Wali. Two witnesses are with her.</p>
+            <p>The moment that completes the contract is Zeenath's <em>Qubool Hai</em> — "I accept," said three times. In classical Islamic jurisprudence, a statement repeated three times carries distinct legal weight. Her three Qubool Hais are her signature.</p>
+            <span class="rasm-sub-head">The Khutbah — three verses</span>
+            <div class="rasm-verse">
+              "O believers, be mindful of God as He deserves, and do not die except in a state of willing surrender."
+              <span class="rasm-verse-ref">Surah Al-Imran · 3:102</span>
+              <p class="rasm-note"><em>Taqwa</em> — awareness that one is seen and that choices carry weight. The Nikah begins here because everything that follows assumes it.</p>
+            </div>
+            <div class="rasm-verse">
+              "O humanity, be mindful of your Lord Who created you from a single soul, and from it created its mate."
+              <span class="rasm-verse-ref">Surah An-Nisa · 4:1</span>
+              <p class="rasm-note">The Arabic word for spouse, <em>zawj</em>, means counterpart — the other of a pair. This verse says: this is not a new thing happening. This is a very old thing completing itself.</p>
+            </div>
+            <div class="rasm-verse">
+              "O believers, be mindful of God and speak the truth."
+              <span class="rasm-verse-ref">Surah Al-Ahzab · 33:70</span>
+              <p class="rasm-note">The root <em>sadid</em>: speech that hits what it intends. This verse arrives just before the ceremony because the proposal, the acceptance, and the three Qubool Hais are not descriptions of a thing — they are the thing itself.</p>
+            </div>
+            <span class="rasm-sub-head">A little history</span>
+            <p>A Nikah has five legal requirements unchanged since the 7th century: Ijab (proposal), Qubool (acceptance), two witnesses, a Wali, and an agreed Mahr. A ceremony in a living room with five people present is legally identical to one in a palace with five hundred. The Mahr belongs entirely to the bride — it cannot be given away or taken back.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- Walima -->
+      <div class="rasm-item">
+        <div class="rasm-left">
+          <div class="rasm-time">~1 pm</div>
+          <div class="rasm-dot"></div>
+          <div class="rasm-line"></div>
+        </div>
+        <div class="rasm-right">
+          <button class="rasm-head" aria-expanded="false">
+            <div>
+              <div class="rasm-name">Walima</div>
+              <span class="rasm-tagline">the wedding lunch · for everyone</span>
+            </div>
+            <span class="rasm-loc">Heritage Palace</span>
+            <span class="rasm-toggle">+</span>
+          </button>
+          <div class="rasm-body"><div class="rasm-body-inner">
+            <p>The Walima is the celebratory meal that follows the Nikah — a sunnah, one of the first obligations of a new marriage. Everyone present is fed. It begins immediately after the ceremony.</p>
+            <p>This is also the first time Azhar and Zeenath are in the same room as a married couple. The food will be good. The mood will be high. Stay for it.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- Jalwa -->
+      <div class="rasm-item">
+        <div class="rasm-left">
+          <div class="rasm-time">Evening</div>
+          <div class="rasm-dot"></div>
+          <div class="rasm-line"></div>
+        </div>
+        <div class="rasm-right">
+          <button class="rasm-head" aria-expanded="false">
+            <div>
+              <div class="rasm-name">Jalwa</div>
+              <span class="rasm-tagline">three rasms · Deccani tradition</span>
+            </div>
+            <span class="rasm-loc">Heritage Palace</span>
+            <span class="rasm-toggle">+</span>
+          </button>
+          <div class="rasm-body"><div class="rasm-body-inner">
+            <p>Three rasms performed together in the evening, traced to the Bahmani and Qutb Shahi courts of the Deccan.</p>
+            <span class="rasm-sub-head">Arsi Mushaf</span>
+            <p>A single shawl is drawn over Azhar and Zeenath together. A mirror is held between them. Their first look at each other as husband and wife is a reflection — shared, indirect, witnessed. There is a long tradition of this kind of first meeting in Deccani weddings. The indirection is not modesty. It is form.</p>
+            <span class="rasm-sub-head">Salaami</span>
+            <p>Family and guests offer their blessings to the couple in turn. You will be called up. It is brief and it means something.</p>
+            <span class="rasm-sub-head">Maleeda</span>
+            <p>A traditional Hyderabadi sweet — roasted wheat, ghee, and jaggery, crumbled by hand. Distributed as you leave. Taking it home is considered a blessing. The wedding that shares Maleeda is the wedding that ends well.</p>
+          </div></div>
+        </div>
+      </div>
 
     </div>
-    <div class="ev-history">
-      <div class="ev-history-head">A little history</div>
-      <p>A Nikah has five legal requirements that have not changed since the 7th century: Ijab (proposal), Qubool (acceptance), two Muslim male witnesses, a Wali (guardian for the bride), and an agreed Mahr (dower). A ceremony performed in a living room with five people present is legally identical to one performed in a palace with five hundred.</p>
-      <p>The Mahr belongs entirely to the bride. It cannot be given to anyone else and cannot be taken back. It is her financial entitlement established by the contract, not a payment made to her family. The amount is agreed before the ceremony; here it remains private.</p>
-      <p>The two-room structure preserves the formal nature of a contract: one party makes an offer, the other accepts, both in the presence of witnesses. The bride's three Qubool Hais are spoken in the room with her Wali and witnesses. That is her signature.</p>
-    </div>
-    <div class="ev-history" style="margin-top:28px">
-      <div class="ev-history-head">What to wear</div>
-      <p>Indian formal. Sherwani, suit, saree, lehenga, or anarkali. Heritage Palace at noon, good light, photographs everywhere. Come dressed for it.</p>
-    </div>
-    <div class="couplet">
+
+    <div class="couplet" style="margin-top:36px">
       "So race toward all that is good."
       <div class="attr">Surah Al-Baqarah, 2:148</div>
-    </div>
-    <div class="timeline">
-      <div class="tl-row"><div class="tl-time">12 noon</div><div><div class="tl-event">Nikah</div><div class="tl-note">Fifteen minutes. The most permanent words.</div></div></div>
-      <div class="tl-row"><div class="tl-time">~1 pm</div><div><div class="tl-event">Luncheon</div><div class="tl-note">Straight after, for everyone.</div></div></div>
-      <div class="tl-row"><div class="tl-time">Evening</div><div><div class="tl-event">Jalwa</div><div class="tl-note">Jalwa, Arsi Mushaf, Salaami. Maleeda on the way out.</div></div></div>
     </div>
   </div>
 
@@ -4410,6 +4561,16 @@
     modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
     document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&modal.classList.contains('open')) closeModal(); });
   })();
+
+  // ── Rasm timeline expand/collapse ──
+  document.querySelectorAll('.rasm-head').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.rasm-item');
+      var isOpen = item.classList.contains('open');
+      item.classList.toggle('open', !isOpen);
+      btn.setAttribute('aria-expanded', !isOpen);
+    });
+  });
 
   function hudIntro(){
     var intro = document.getElementById('hud-intro');
