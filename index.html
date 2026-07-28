@@ -1697,17 +1697,16 @@
   }
   /* open hint */
   .vic-hint{
-    position:absolute;
-    bottom:13px; left:50%; transform:translateX(-50%);
+    display:block;
+    margin-top:16px;
     font-family:'EB Garamond',serif;
-    font-size:11px; letter-spacing:0.18em;
-    color:rgba(197,151,58,0.72);
-    white-space:nowrap;
-    display:flex; align-items:center; gap:5px;
-    transition:color 0.25s ease, gap 0.25s ease;
+    font-size:12px; letter-spacing:0.2em; text-transform:uppercase;
+    color:rgba(197,151,58,0.88);
+    text-align:center; white-space:nowrap;
+    transition:color 0.25s ease, letter-spacing 0.25s ease;
   }
-  .vic-hint::after{ content:'↓'; font-size:10px; display:inline-block; transition:transform 0.25s ease; }
-  .vic-tile:hover .vic-hint{ color:rgba(197,151,58,1); gap:7px; }
+  .vic-hint::after{ content:' ↓'; display:inline-block; transition:transform 0.25s ease; }
+  .vic-tile:hover .vic-hint{ color:rgba(197,151,58,1); letter-spacing:0.26em; }
   .vic-tile:hover .vic-hint::after{ transform:translateY(2px); }
   /* footer ornament */
   .vic-footer{
@@ -1908,9 +1907,16 @@
   }
   .vic-dress-text{
     font-family:'Cormorant Garamond',serif; font-style:italic;
-    font-size:14px; line-height:1.6;
-    color:rgba(26,20,16,0.72);
+    font-size:14.5px; line-height:1.65;
+    color:rgba(26,20,16,0.88);
   }
+  .vic-dress-who{
+    font-style:normal; font-family:'EB Garamond',serif;
+    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--card-accent,rgba(197,151,58,0.85));
+    display:block; margin-bottom:3px;
+  }
+  .vic-dress-who + .vic-dress-who{ margin-top:8px; }
   /* ── Modal corner ornaments ── */
   .vic-ov-corner{
     position:absolute; width:48px; height:48px;
@@ -3446,7 +3452,7 @@
         <div class="vic-dress-label">Dress code</div>
         <div class="vic-dress-text">Wear something yellow or orange that you don't mind losing to turmeric. It is generous with itself and it plays no favourites.</div>
       </div>
-      <div class="vic-hint">read the story</div>
+      <div class="vic-hint">what happens</div>
     </div>
 
     <!-- II : Mehendi -->
@@ -3492,7 +3498,7 @@
         <div class="vic-dress-label">Dress code</div>
         <div class="vic-dress-text">Bright and festive. Greens, pinks, anything celebratory. Short or loose sleeves if you want henna on your arms — the paste takes a good hour to set.</div>
       </div>
-      <div class="vic-hint">read the story</div>
+      <div class="vic-hint">what happens</div>
     </div>
 
     <!-- III : Nikah -->
@@ -3538,7 +3544,7 @@
         <div class="vic-dress-label">Dress code</div>
         <div class="vic-dress-text">Indian formal. Lehenga, anarkali, sherwani, or a beautiful suit. It is Heritage Palace at noon and every single person in that room will be dressed for the occasion.</div>
       </div>
-      <div class="vic-hint">read the story</div>
+      <div class="vic-hint">what happens</div>
     </div>
 
     <!-- IV : Reception -->
@@ -3582,9 +3588,12 @@
       <div class="vic-tag">Dinner &amp; Salaami</div>
       <div class="vic-dress-sub">
         <div class="vic-dress-label">Dress code</div>
-        <div class="vic-dress-text">Full formal. For her: saree, lehenga, anarkali, or anything that makes you feel like the evening. For him: sherwani, bandhgala, suit, or a really good kurta with proper trousers. This is the one to wear the thing you have been saving.</div>
+        <span class="vic-dress-who">For her</span>
+        Saree, lehenga, anarkali, or anything that makes you feel like the evening.
+        <span class="vic-dress-who">For him</span>
+        Sherwani, bandhgala, suit, or a really good kurta with proper trousers. Wear the thing you have been saving.
       </div>
-      <div class="vic-hint">read the story</div>
+      <div class="vic-hint">what happens</div>
     </div>
 
   </div>
