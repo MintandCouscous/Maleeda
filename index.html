@@ -4121,22 +4121,20 @@
     }
 
     btn.addEventListener('click', function(){
-      // pop art fades out slowly
+      // pop art fades; title card appears immediately behind it — covers Rumi
       screen.classList.add('out');
-      // title card fades in as pop art finishes
+      card.classList.add('show');
       setTimeout(function(){
         screen.style.display = 'none';
-        card.classList.add('show');
       }, 900);
-      // hold 2s longer than before, then petal dissolve
       setTimeout(function(){
         card.classList.remove('show');
         card.classList.add('out');
         spawnPetals();
-      }, 6200);
+      }, 4200);
       setTimeout(function(){
         card.style.display = 'none';
-      }, 7800);
+      }, 5800);
     });
   })();
 
