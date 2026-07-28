@@ -131,25 +131,43 @@
     background:#0e0a06;
     display:flex; align-items:center; justify-content:center;
     opacity:0; pointer-events:none;
-    transition:opacity 0.7s ease;
+    transition:opacity 1.2s ease;
   }
   #zehar-title-card.show{ opacity:1; }
   #zehar-title-card.out{ opacity:0; }
   .ztc-inner{ text-align:center; }
-  .ztc-names{
-    font-family:'Beau Rivage',cursive;
-    font-size:clamp(48px,9vw,88px);
-    color:#FDFAF5;
-    opacity:0; transform:translateY(12px);
+  .ztc-bridge{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(15px,2.2vw,20px);
+    color:rgba(253,250,245,0.45);
+    letter-spacing:0.08em;
+    margin-bottom:28px;
+    opacity:0; transform:translateY(6px);
     transition:opacity 1s ease, transform 1s ease;
   }
+  #zehar-title-card.show .ztc-bridge{ opacity:1; transform:translateY(0); }
+  .ztc-names{
+    font-family:'Beau Rivage',cursive;
+    font-size:clamp(52px,9vw,92px);
+    color:#FDFAF5;
+    line-height:1;
+    opacity:0; transform:translateY(14px);
+    transition:opacity 1.2s ease 0.6s, transform 1.2s ease 0.6s;
+  }
   #zehar-title-card.show .ztc-names{ opacity:1; transform:translateY(0); }
+  .ztc-rule{
+    width:40px; height:0.5px;
+    background:rgba(197,151,58,0.45);
+    margin:18px auto 16px;
+    opacity:0; transition:opacity 1s ease 1.2s;
+  }
+  #zehar-title-card.show .ztc-rule{ opacity:1; }
   .ztc-date{
     font-family:'EB Garamond',serif;
-    font-size:12px; letter-spacing:0.35em; text-transform:uppercase;
-    color:rgba(197,151,58,0.7);
-    margin-top:14px;
-    opacity:0; transition:opacity 1s ease 0.5s;
+    font-size:11px; letter-spacing:0.32em; text-transform:uppercase;
+    color:rgba(197,151,58,0.65);
+    opacity:0; transition:opacity 1s ease 1.4s;
   }
   #zehar-title-card.show .ztc-date{ opacity:1; }
   #gate{
@@ -2221,12 +2239,14 @@
 <!-- ============ GATE: press play, enter the shadikhana ============ -->
 <div id="zehar-screen">
   <img src="zehar.png" alt="Zehar — the film" id="zehar-poster">
-  <button id="zehar-btn">yaar. it's a wedding. come in.</button>
+  <button id="zehar-btn">okay but what's actually happening →</button>
 </div>
 
 <div id="zehar-title-card">
   <div class="ztc-inner">
+    <div class="ztc-bridge">behind all the drama, it was always this.</div>
     <div class="ztc-names">Azhar &amp; Zeenath</div>
+    <div class="ztc-rule"></div>
     <div class="ztc-date">28 · 29 · 30 August 2026 &nbsp;·&nbsp; Hyderabad</div>
   </div>
 </div>
@@ -4056,25 +4076,25 @@
 <script>
   // ============ ZEHAR PRE-SCREEN ============
   (function(){
-    var screen  = document.getElementById('zehar-screen');
-    var card    = document.getElementById('zehar-title-card');
-    var btn     = document.getElementById('zehar-btn');
+    var screen = document.getElementById('zehar-screen');
+    var card   = document.getElementById('zehar-title-card');
+    var btn    = document.getElementById('zehar-btn');
     btn.addEventListener('click', function(){
-      // 1. Pop art fades out
+      // pop art fades out slowly
       screen.classList.add('out');
-      // 2. Title card fades in
+      // title card fades in as pop art finishes
       setTimeout(function(){
         screen.style.display = 'none';
         card.classList.add('show');
-      }, 750);
-      // 3. Title card holds, then fades out into gate
+      }, 900);
+      // hold long enough for all elements to stagger in and breathe
       setTimeout(function(){
-        card.classList.add('out');
         card.classList.remove('show');
-      }, 2600);
+        card.classList.add('out');
+      }, 4200);
       setTimeout(function(){
         card.style.display = 'none';
-      }, 3350);
+      }, 5500);
     });
   })();
 
