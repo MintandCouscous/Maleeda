@@ -998,9 +998,11 @@
     font-style:italic; font-size:18px;
     color:var(--ink); text-align:center; line-height:1.65;
   }
-  /* small tab to bring him back once dismissed */
+  /* Hud-hud pill — hidden until intro, then settles bottom-right */
   #hud-revive{
-    position:fixed; right:16px; bottom:20px; left:auto; z-index:200;
+    position:fixed; z-index:500;
+    /* resting position */
+    right:16px; bottom:20px;
     display:flex; align-items:center; gap:7px;
     background:rgba(255,252,247,0.97);
     border:1px solid rgba(197,151,58,0.3);
@@ -1011,13 +1013,59 @@
     font-family:'EB Garamond',serif;
     font-size:12px; letter-spacing:0.08em;
     color:var(--ink-soft);
-    opacity:1; transform:none; pointer-events:all;
-    transition:box-shadow 0.2s ease;
+    /* starts invisible */
+    opacity:0; pointer-events:none;
+    transform:translateY(0) scale(0.85);
+    transition:opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1), box-shadow 0.2s ease;
   }
+  #hud-revive.visible{ opacity:1; pointer-events:all; transform:translateY(0) scale(1); }
   #hud-revive:hover{ box-shadow:0 5px 20px rgba(58,46,34,0.18); }
   #hud-revive svg{ width:22px; height:22px; flex-shrink:0; }
+
+  /* intro state — appears top-center, larger bird, with speech line */
+  #hud-revive.intro{
+    right:auto; left:50%; bottom:auto; top:clamp(60px,12vh,100px);
+    transform:translateX(-50%) scale(1);
+    padding:12px 20px 12px 14px;
+    gap:10px;
+    border-radius:24px;
+    box-shadow:0 6px 28px rgba(58,46,34,0.16);
+  }
+  #hud-revive.intro svg{ width:34px; height:34px; }
+  #hud-revive.intro #hud-pill-text{ font-size:14px; letter-spacing:0.06em; }
+
+  /* intro card — top-centre, bird + one line */
+  #hud-intro{
+    position:fixed; z-index:499;
+    top:clamp(52px,10vh,90px); left:50%; transform:translateX(-50%);
+    display:flex; align-items:center; gap:10px;
+    background:rgba(255,252,247,0.97);
+    border:1px solid rgba(197,151,58,0.28);
+    border-radius:26px;
+    padding:10px 22px 10px 14px;
+    box-shadow:0 6px 32px rgba(58,46,34,0.13);
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:clamp(14px,2vw,17px); color:var(--ink-soft);
+    white-space:nowrap;
+    pointer-events:none;
+    opacity:0;
+    transition:opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    transform:translateX(-50%) translateY(-12px);
+  }
+  #hud-intro.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+  }
+  #hud-intro svg{ width:30px; height:30px; flex-shrink:0; }
+  @media(max-width:480px){
+    #hud-intro{ white-space:normal; width:80vw; text-align:left; font-size:13px; }
+  }
+
   @media(max-width:640px){
     #hud-revive{ right:12px; bottom:16px; font-size:11px; padding:6px 12px 6px 8px; }
+    #hud-revive.intro{ padding:10px 16px 10px 12px; }
+    #hud-revive.intro svg{ width:28px; height:28px; }
+    #hud-speech{ font-size:13px; white-space:normal; width:80vw; }
   }
 
   /* ── speech bubble — contained inside the house ── */
@@ -4020,6 +4068,21 @@
   </div>
 </div>
 
+<!-- Hud-hud intro card — appears top-centre, then fades as pill takes over -->
+<div id="hud-intro" aria-hidden="true">
+  <svg viewBox="0 0 48 48" fill="none">
+    <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
+    <path d="M8 24 C 4 18, 6 10, 12 8 C 10 13, 11 18, 14 21 Z" fill="#B8912F"/>
+    <path d="M11 14 C 9 8, 11 2, 13 4 C 13 8, 13 12, 14 13 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
+    <circle cx="13" cy="3" r="2.2" fill="#3A2E22"/>
+    <path d="M17 11 C 17 4, 20 0, 22 3 C 21 6, 20 9, 19 11 Z" fill="#B8912F" stroke="#7A5A12" stroke-width="0.4"/>
+    <circle cx="22" cy="2" r="2.2" fill="#3A2E22"/>
+    <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
+    <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
+  </svg>
+  <span id="hud-intro-text">I'll be here if you need anything.</span>
+</div>
+
 <button id="hud-revive" aria-label="Ask Hud-hud">
   <svg viewBox="0 0 48 48" fill="none">
     <ellipse cx="22" cy="28" rx="13" ry="10" fill="#EFD9A6" stroke="#B8912F" stroke-width="1.4"/>
@@ -4027,7 +4090,7 @@
     <path d="M34 24 L44 22 L34 27 Z" fill="#3A2E22"/>
     <circle cx="17" cy="24" r="1.6" fill="#3A2E22"/>
   </svg>
-  <span>tap me for help</span>
+  <span id="hud-pill-text">tap me for help</span>
 </button>
 
 </div><!-- /#site -->
@@ -4071,6 +4134,7 @@
       }, 4200);
       setTimeout(function(){
         card.style.display = 'none';
+        hudIntro();
       }, 5800);
     });
   })();
@@ -4345,12 +4409,28 @@
     document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&modal.classList.contains('open')) closeModal(); });
   })();
 
+  function hudIntro(){
+    var intro = document.getElementById('hud-intro');
+    var pill  = document.getElementById('hud-revive');
+    if (!intro || !pill) return;
+    // bird drops in from above
+    setTimeout(function(){ intro.classList.add('show'); }, 80);
+    // after reading time, fade intro out and slide pill up from corner
+    setTimeout(function(){
+      intro.classList.remove('show');
+    }, 3800);
+    setTimeout(function(){
+      intro.style.display = 'none';
+      pill.classList.add('visible');
+    }, 4500);
+  }
+
   function initHud(){
-    const reviveBtn = document.getElementById('hud-revive');
-    if (!reviveBtn) return;
-    reviveBtn.addEventListener('click', function(){
-      const ask = document.getElementById('ask-section') || document.querySelector('.ask-section');
-      if (ask) ask.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var pill = document.getElementById('hud-revive');
+    if (!pill) return;
+    pill.addEventListener('click', function(){
+      var ask = document.getElementById('ask-section') || document.querySelector('.ask-section');
+      if (ask) ask.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   }
 
