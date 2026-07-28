@@ -584,12 +584,13 @@
     font-size:clamp(15px,1.8vw,18px); color:rgba(74,62,56,0.7);
     margin-top:32px; line-height:1.7; max-width:480px; margin-left:auto; margin-right:auto;
   }
-  .stay-contact a{
+  .stay-contact a, .stay-ask-link{
     color:var(--champagne); text-decoration:none;
     border-bottom:0.5px solid rgba(197,151,58,0.35);
     transition:border-color 0.2s;
+    cursor:pointer;
   }
-  .stay-contact a:hover{ border-color:var(--champagne); }
+  .stay-contact a:hover, .stay-ask-link:hover{ border-color:var(--champagne); }
 
   .stay-locations{
     display:flex; align-items:center; justify-content:center;
@@ -2923,7 +2924,7 @@
       <span class="r-line r-paradox r-paradox-2 r-l5">If you do come, these do not matter.</span>
     </div>
   </div>
-  <div class="rumi-attr r-attr">&#8212; Rumi</div>
+  <div class="rumi-attr r-attr">Jalal ud-Din Rumi &nbsp;·&nbsp; Divan-e Shams-e Tabrizi</div>
   <div class="rumi-scroll r-scroll">scroll<span class="rumi-scroll-line"></span></div>
 </section>
 
@@ -3565,9 +3566,9 @@
       <div class="stay-loc-events">Nikah &amp; Reception</div>
     </div>
   </div>
-  <p class="stay-body">The Manja and Mehendi are at our home in Shadnagar. From Thursday evening, everything moves to Heritage Palace and your accommodation is a four-minute walk from the venue. You do not need a car, you do not need to plan a route, and you will not be stranded after the reception.</p>
-  <p class="stay-body">If anything comes up before you arrive or across the weekend, we want to know about it.</p>
-  <p class="stay-contact">Reach us at <a href="mailto:jahaanzeenath@gmail.com">jahaanzeenath@gmail.com</a> at any hour.</p>
+  <p class="stay-body">The Manja and Mehendi are at our home in Shadnagar, and we would love for you to feel at home there too. From Thursday evening everything moves to Heritage Palace, and your room is a four-minute walk from the venue. You will not need a car, you will not need to navigate, and you will not be left figuring anything out alone.</p>
+  <p class="stay-body">We have thought about this so you do not have to. Just come.</p>
+  <p class="stay-contact"><a href="#ask-section" class="stay-ask-link">Leave a question for Hud-hud</a> and we will get back to you.</p>
 </section>
 
 <section class="ask-section" data-hud-key="ask">
@@ -3932,6 +3933,15 @@
       say(lines);
     }, 12000 + Math.random()*4000);
   }
+
+  // ── Stay → Ask Hud-hud scroll link ────────────────────────────────────
+  document.querySelectorAll('a[href="#ask-section"]').forEach(function(el){
+    el.addEventListener('click', function(e){
+      e.preventDefault();
+      var target = document.querySelector('.ask-section');
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
 
   (function(){
     var btn = document.getElementById('why-hudhud-btn');
